@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import MarkDownTest from './MarkDownTest';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <a href="https://github.com/ckinan">
             <img src="https://img.icons8.com/color/96/000000/github.png" />
         </a>
+        <MarkDownTest />
     </div>
   );
 }
