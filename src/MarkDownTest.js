@@ -6,7 +6,7 @@ class MarkDownTest extends Component {
     constructor(props) {
       super(props)
   
-      this.state = { myMd: null }
+      this.state = { myMd: null };
     }
   
     componentWillMount() {
@@ -20,8 +20,8 @@ class MarkDownTest extends Component {
         <div className="content">
           <ReactMarkdown source={this.state.myMd} />
         </div>
-      )
+      );
     }
   }
   
-  export default MarkDownTest
+  export default MarkDownTest;
