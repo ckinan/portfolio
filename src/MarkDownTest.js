@@ -12,7 +12,7 @@ class MarkDownTest extends Component {
     componentWillMount() {
       fetch(MyMdPath).then((response) => response.text()).then((text) => {
         this.setState({ myMd: text })
-      })
+      });
     }
   
     render() {

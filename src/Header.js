@@ -4,7 +4,7 @@ import './App.css';
 class Header extends React.Component {
     render() {
         return (
-            <div>
+            <div className="header">
                 <ul className="nav">
                     <li>
                         <a href="http://ckina.com">
