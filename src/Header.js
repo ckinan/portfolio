@@ -8,9 +8,7 @@ class Header extends React.Component {
                 <ul className="nav">
                     <li>
                         <Link to="/">
-                            <a href="http://ckina.com">
-                                <img src="https://img.icons8.com/bubbles/30/000000/home-page.png" />
-                            </a>
+                            <img src="https://img.icons8.com/bubbles/30/000000/home-page.png" />
                         </Link>
                     </li>
                     <li>
