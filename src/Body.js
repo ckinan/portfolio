@@ -1,17 +1,15 @@
 import React from 'react';
-import './App.css';
+import Home from './Home';
+import MarkDownTest from './MarkDownTest';
+import { Switch, Route } from 'react-router-dom';
 
-class Body extends React.Component {
-    render() {
-        return (
-            <div>
-                <h1>Hi, Cesar here</h1>
-                <p>Software Developer</p>
-                <p>Some years of experience coding</p>
-                <p>Hopefully, today, I will learn something new</p>
-            </div>
-          );
-    }
+function Body() {
+  return (
+      <Switch>
+          <Route exact path='/' component={Home}/>
+          <Route path='/react-js' component={MarkDownTest}/>
+      </Switch>
+  );
 }
 
 export default Body;

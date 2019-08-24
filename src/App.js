@@ -2,15 +2,16 @@ import React from 'react';
 import './App.css';
 import Header from './Header';
 import Body from './Body';
-import PostList from './PostList';
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
-    <div>
-        <Header />
-        <Body />
-        <PostList />
-    </div>
+    <BrowserRouter>
+      <div>
+          <Header />
+          <Body />
+      </div>
+    </BrowserRouter>
   );
 }
 

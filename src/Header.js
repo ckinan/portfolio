@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import { Link } from "react-router-dom";
 
 class Header extends React.Component {
     render() {
@@ -7,9 +7,11 @@ class Header extends React.Component {
             <div className="header">
                 <ul className="nav">
                     <li>
-                        <a href="http://ckina.com">
-                            <img src="https://img.icons8.com/bubbles/30/000000/home-page.png" />
-                        </a>
+                        <Link to="/">
+                            <a href="http://ckina.com">
+                                <img src="https://img.icons8.com/bubbles/30/000000/home-page.png" />
+                            </a>
+                        </Link>
                     </li>
                     <li>
                         <a href="https://www.linkedin.com/in/ckina/">
