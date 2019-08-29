@@ -1,16 +1,15 @@
 body {
   font-family: Ubuntu;
   text-align: center;
-  background-color: #282a36;
+  background-color: #232931;
   color: #e6e6e6;
-  border-color: #e6e6e6;
   margin: 0;
 }
 body h1 {
-  color: #42b983;
+  color: #4ecca3;
 }
 .header {
-  background-color: #3B6E67;
+  background-color: #393e46;
 }
 .header .nav {
   padding: 0;
