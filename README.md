@@ -2,4 +2,5 @@
 
 My personal website
 
-Testing
+docker build -t my-portfolio .
+docker run -p 80:80 my-portfolio
