@@ -5,8 +5,13 @@ body {
   color: #e6e6e6;
   margin: 0;
 }
-body h1 {
+h1 {
   color: #4ecca3;
+  font-family: monospace;
+}
+a:-webkit-any-link {
+  color: #4ecca3;
+  text-decoration: none;
 }
 .header {
   background-color: #393e46;
