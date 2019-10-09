@@ -5,8 +5,9 @@ body {
   color: #e6e6e6;
   margin: 0;
 }
-body h1 {
+h1, h2, h3 {
   color: #4ecca3;
+  font-family: monospace;
 }
 .header {
   background-color: #393e46;

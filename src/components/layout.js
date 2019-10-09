@@ -1,65 +1,40 @@
 import React from "react"
 import { Link } from "gatsby"
 
-import { rhythm, scale } from "../utils/typography"
-
 class Layout extends React.Component {
   render() {
     const { location, title, children } = this.props
     const rootPath = `${__PATH_PREFIX__}/`
     let header
 
-    if (location.pathname === rootPath) {
-      header = (
-        <h1
-          style={{
-            ...scale(1.5),
-            marginBottom: rhythm(1.5),
-            marginTop: 0,
-          }}
-        >
-          <Link
-            style={{
-              boxShadow: `none`,
-              textDecoration: `none`,
-              color: `inherit`,
-            }}
-            to={`/`}
-          >
-            {title}
-          </Link>
-        </h1>
-      )
-    } else {
-      header = (
-        <h3
-          style={{
-            fontFamily: `Montserrat, sans-serif`,
-            marginTop: 0,
-          }}
-        >
-          <Link
-            style={{
-              boxShadow: `none`,
-              textDecoration: `none`,
-              color: `inherit`,
-            }}
-            to={`/`}
-          >
-            {title}
-          </Link>
-        </h3>
-      )
-    }
+    header = (
+      <div className="header">
+          <ul className="nav">
+              <li>
+                  <Link to={`/`}>
+                      <img src="https://img.icons8.com/bubbles/96/000000/home-page.png" alt="Home"/>
+                  </Link>
+              </li>
+              <li>
+                  <a href="https://www.linkedin.com/in/ckina/" target="_blank" rel="noopener noreferrer">
+                      <img src="https://img.icons8.com/color/96/000000/linkedin-circled.png" alt="Linkedin"/>
+                  </a>
+              </li>
+              <li>
+                  <a href="https://github.com/ckinan" target="_blank" rel="noopener noreferrer">
+                      <img src="https://img.icons8.com/color/96/000000/github.png" alt="GitHub"/>
+                  </a>
+              </li>
+              <li>
+                  <a href="https://www.hackerrank.com/ckina" target="_blank" rel="noopener noreferrer">
+                      <img src="https://hrcdn.net/fcore/assets/brand/h_mark_sm-966d2b45e3.svg" alt="HackerRank"/>
+                  </a>
+              </li>
+          </ul>
+      </div>
+    )
     return (
-      <div
-        style={{
-          marginLeft: `auto`,
-          marginRight: `auto`,
-          maxWidth: rhythm(24),
-          padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-        }}
-      >
+      <div>
         <header>{header}</header>
         <main>{children}</main>
         <footer>

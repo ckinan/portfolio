@@ -1,11 +1,11 @@
 module.exports = {
   siteMetadata: {
     title: `Cesar K.`,
-    author: `Kyle Mathews`,
+    author: `Cesar K`,
     description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
+    siteUrl: `https://ckinan.com/`,
     social: {
-      twitter: `kylemathews`,
+      linkedin: `ckina`,
     },
   },
   plugins: [
@@ -68,11 +68,5 @@ module.exports = {
     },
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
-    },
   ],
 }

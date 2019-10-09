@@ -4,9 +4,8 @@ import { Link, graphql } from "gatsby"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { rhythm } from "../utils/typography"
 
-import App from './App';
+import './App.css';
 
 class BlogIndex extends React.Component {
   render() {
@@ -16,7 +15,15 @@ class BlogIndex extends React.Component {
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
-        <App />
+        
+        <div>
+            <h1>Cesar K.</h1>
+            <p>Software Engineer</p>
+            <h1>About me</h1>
+            <p>Over 10 years of experience in software development projects.</p>
+            <p>Analytical skills, self-learner and aware of the software quality.</p>
+        </div>
+
         <SEO title="All posts" />
         <Bio />
         {posts.map(({ node }) => {
@@ -24,11 +31,7 @@ class BlogIndex extends React.Component {
           return (
             <article key={node.fields.slug}>
               <header>
-                <h3
-                  style={{
-                    marginBottom: rhythm(1 / 4),
-                  }}
-                >
+                <h3>
                   <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
                     {title}
                   </Link>
