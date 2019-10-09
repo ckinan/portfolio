@@ -29,7 +29,8 @@
     "react-typography": "^0.16.19",
     "typeface-merriweather": "0.0.72",
     "typography": "^0.16.19",
-    "typography-theme-wordpress-2016": "^0.16.19"
+    "typography-theme-wordpress-2016": "^0.16.19",
+    "webpack": "^4.41.0"
   },
   "scripts": {
     "build": "gatsby build",
