@@ -13,7 +13,8 @@ Open source technology to build websites, based on React. Nice features and plug
 # [Netlify](https://www.netlify.com/)
 Platform that gives us a full integrated environment to host a web project. I'm publishing my website to this platform which pulls all my codebase (from Github), build the app and deploy it into a production environment using my own domain. All the infraestructure and deployment-related work are handled by this so useful tool.
 
+# Final Notes
+
 I am totally new on these technologies, so I might not be using them properly or not aware of all the features they provide. However, for now I am able to rely on few of their products and they're working amazingly.
 
-# Final Notes
 So, for this first article, I just wanted to point out that building things from scratch is fine, but using platforms and technology built by more expert guys, learn and apply them is even better.
