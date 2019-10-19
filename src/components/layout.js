@@ -8,7 +8,7 @@ class Layout extends React.Component {
     let header
 
     header = (
-      <div className="header">
+      <div>
           <ul className="nav">
               <li>
                   <Link to={`/`}>

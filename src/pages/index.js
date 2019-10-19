@@ -24,7 +24,7 @@ class BlogIndex extends React.Component {
             <p>Analytical skills, self-learner and aware of the software quality.</p>
         </div>
 
-        <SEO title="All posts" />
+        <SEO title="Home" />
         <Bio />
         <h1>Articles</h1>
         {posts.map(({ node }) => {
