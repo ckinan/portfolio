@@ -26,25 +26,17 @@ class BlogIndex extends React.Component {
 
         <SEO title="All posts" />
         <Bio />
+        <h1>Articles</h1>
         {posts.map(({ node }) => {
           const title = node.frontmatter.title || node.fields.slug
           return (
             <article key={node.fields.slug}>
-              <header>
-                <h3>
-                  <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
-                    {title}
-                  </Link>
-                </h3>
-                <small>{node.frontmatter.date}</small>
-              </header>
-              <section>
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: node.frontmatter.description || node.excerpt,
-                  }}
-                />
-              </section>
+              <span>{node.frontmatter.date}: </span>
+              <span>
+                <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
+                  {title}
+                </Link>
+              </span>
             </article>
           )
         })}
@@ -70,7 +62,7 @@ export const pageQuery = graphql`
             slug
           }
           frontmatter {
-            date(formatString: "MMMM DD, YYYY")
+            date(formatString: "YYYY-MM-DD")
             title
             description
           }
