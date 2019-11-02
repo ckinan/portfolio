@@ -4,6 +4,7 @@ import { Link, graphql } from "gatsby"
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import SelfIntro from "../components/self-intro"
 
 class BlogIndex extends React.Component {
   render() {
@@ -14,16 +15,14 @@ class BlogIndex extends React.Component {
     return (
       <Layout location={this.props.location} title={siteTitle}>
         
-        <div>
-            <h1>Cesar K.</h1>
-            <p>Software Engineer</p>
-            <h1>About me</h1>
-            <p>Over 10 years of experience in software development projects.</p>
-            <p>Analytical skills, self-learner and aware of the software quality.</p>
-        </div>
-
-        <SEO title="Home" />
-        <Bio />
+        <SelfIntro />
+        {
+          /*
+          Not used by now. Will uncomment this block once I have a more clear understanding of it
+          */
+          //<SEO title="Home" />
+          //<Bio />
+        }
         <h1>Articles</h1>
         {posts.map(({ node }) => {
           const title = node.frontmatter.title || node.fields.slug
