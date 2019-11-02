@@ -46,3 +46,8 @@ article section {
   text-align: left;
   margin: 10px;
 }
+
+article .article-list {
+  text-align: left;
+  margin: 10px;
+}
