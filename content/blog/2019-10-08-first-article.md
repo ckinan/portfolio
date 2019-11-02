@@ -2,6 +2,7 @@
 title: First article
 date: "2019-10-08T18:01:00.000Z"
 description: "First article"
+slug: first-article
 ---
 
 # Intro
