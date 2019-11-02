@@ -1,9 +1,6 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
-
-import Bio from "../components/bio"
 import Layout from "../components/layout"
-import SEO from "../components/seo"
 import SelfIntro from "../components/self-intro"
 
 class BlogIndex extends React.Component {
@@ -16,13 +13,7 @@ class BlogIndex extends React.Component {
       <Layout location={this.props.location} title={siteTitle}>
         
         <SelfIntro />
-        {
-          /*
-          Not used by now. Will uncomment this block once I have a more clear understanding of it
-          */
-          //<SEO title="Home" />
-          //<Bio />
-        }
+
         <h1>Articles</h1>
         {posts.map(({ node }) => {
           const title = node.frontmatter.title || node.fields.slug
