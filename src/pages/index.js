@@ -17,7 +17,8 @@ class BlogIndex extends React.Component {
 
         <SEO title="Home" />
 
-        <h1>Articles</h1>
+        <h1>Stuff</h1>
+        <p>Not articles, but things I'd want to write incrementally...</p>
         {posts.map(({ node }) => {
           const title = node.frontmatter.title || node.fields.slug
           return (
