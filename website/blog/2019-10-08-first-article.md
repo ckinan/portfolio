@@ -5,8 +5,9 @@ description: "First article"
 slug: first-article
 ---
 
-# Intro
-This is the first article of this website. As software engineer, I would be writing stuff related to that field. For now, I just want to mention the awesome tools I found to build this website:
+This is the first article of this website. As software engineer, I would be writing stuff related to that field (mmhh or maybe not). For now, I just want to mention the awesome tools I found to build this website.
+
+<!--truncate-->
 
 # [Gatsby](https://www.gatsbyjs.org/)
 Open source technology to build websites, based on React. Nice features and plugins that can help anyone to develop modern sites. What I really loved about it is that it supports markdown for my posts, plus the starters they provide and share to us, which was so nice since I didn't have to build this site totally from scratch.
