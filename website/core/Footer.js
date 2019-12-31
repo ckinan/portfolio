@@ -46,6 +46,13 @@ class Footer extends React.Component {
             <a href={`${this.props.config.baseUrl}blog`}>Blog</a>
             <a href="https://www.linkedin.com/in/ckina/" target="_blank">Linkedin</a>
             <a href="https://github.com/ckinan/" target="_blank">GitHub</a>
+            <a
+              href="https://www.netlify.com"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="fbOpenSource">
+              <img src="https://www.netlify.com/img/global/badges/netlify-color-bg.svg" />
+            </a>
           </div>
         </section>
 
