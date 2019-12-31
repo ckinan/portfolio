@@ -1,9 +1,12 @@
 ---
+id: git
 title: Git
-date: "2019-12-28T20:37:14.000Z"
-description: "Git"
-slug: git
+sidebar_label: Git
 ---
+
+Some notes on `git`
+
+<!--truncate-->
 
 # Draft
 
