@@ -103,6 +103,12 @@ const siteConfig = {
   // You may provide arbitrary config keys to be used as needed by your
   // template. For example, if you need your repo's URL...
   repoUrl: 'https://github.com/ckinan/portfolio',
+
+  blogSidebarCount: 'ALL',
+
+  blogSidebarTitle: { default: 'Recent posts', all: 'All blog posts' },
+
+  editUrl: 'https://github.com/facebook/docusaurus/edit/master/docs/',
 };
 
 module.exports = siteConfig;
