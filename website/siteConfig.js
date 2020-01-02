@@ -21,7 +21,7 @@ const users = [
 ];
 
 const siteConfig = {
-  title: 'Cesar Kina', // Title for your website.
+  title: 'Cesar', // Title for your website.
   tagline: 'Software Engineer',
   url: 'https://ckinan.com', // Your website URL
   baseUrl: '/', // Base URL for your project */
