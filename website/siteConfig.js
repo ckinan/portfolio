@@ -52,8 +52,8 @@ const siteConfig = {
 
   /* Colors for website */
   colors: {
-    primaryColor: '#313131',
-    secondaryColor: '#4ECCA3',
+    primaryColor: '#222831',
+    secondaryColor: '#393e46',
   },
 
   /* Custom fonts for website */
@@ -109,6 +109,8 @@ const siteConfig = {
   blogSidebarTitle: { default: 'Recent posts', all: 'All blog posts' },
 
   editUrl: 'https://github.com/facebook/docusaurus/edit/master/docs/',
+
+  disableHeaderTitle: false,
 };
 
 module.exports = siteConfig;
