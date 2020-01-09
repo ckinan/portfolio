@@ -111,6 +111,8 @@ const siteConfig = {
   editUrl: 'https://github.com/facebook/docusaurus/edit/master/docs/',
 
   disableHeaderTitle: false,
+
+  gaTrackingId: "UA-155856844-1",
 };
 
 module.exports = siteConfig;
