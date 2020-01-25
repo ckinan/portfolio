@@ -1,4 +1,4 @@
-# portfolio
+# ckinan.com
 
 My own personal website powered by Docusaurus, Github and Netlify.
 
