@@ -4,6 +4,8 @@ title: Git
 sidebar_label: Git
 ---
 
+> Note: I don't want to re-do the documentation in [`git-scm.com`](https://git-scm.com/doc). My goal is to have valuable examples in this document and real experiences of the git commands that need to be handy.
+
 One of the most used version control system in the world. Most of this doc page is using structure and explanation from [`git-scm.com`](https://git-scm.com/doc).
 
 ## Commands
@@ -40,6 +42,36 @@ git checkout develop
 git checkout -b my_feature
 ```
 
+### Inspection and Comparison
+
+#### log
+
+Show commit logs
+
+```bash
+# Your log in (guess what?) one line
+git log --oneline
+# See commits that is in develop branch but not in master
+git log master..develop
+# Use --no-merges to avoid noise of merge commits
+git log master..develop --oneline --no-merges
+# Some format
+git log --pretty=format:"%h - %an, %ad (%ar) : %s"
+# Some format + filtering by author
+git log --pretty=format:"%H - %an, %ad (%ar) : %s" --author='Kina'
+```
+
+### Patching
+
+#### cherry-pick
+
+Apply the changes introduced by some existing commits
+
+```bash
+# Cherrypick a specific commit
+git cherry-pick baa4e741b9109ac0bac14659e5a6421b55d13bc7
+```
+
 ### Still Pending...
 
 ```bash
@@ -56,12 +88,6 @@ git merge develop --squash
 git fetch
 git pull
 git push origin my-feature
-
-# Inspection and Comparison
-git log --oneline
-git log master..develop
-git log --pretty=format:"%h - %an, %ad (%ar) : %s"
-git log --pretty=format:"%H - %an, %ad (%ar) : %s" --author='Kina'
 ```
 
 ## Tools
