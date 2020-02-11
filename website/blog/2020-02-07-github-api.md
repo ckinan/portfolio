@@ -18,7 +18,7 @@ Playing with Github API using plain javascript.
 - Make calls using plan javascript
 - Create simple app that lists repos and PRs of the authenticated user
 
-## 
+## Basics
 
 Link: https://developer.github.com/v3/guides/getting-started/
 
@@ -64,3 +64,25 @@ $ curl https://api.github.com/users/ckinan
 There is a limited amount of requests that you can make to the API without being authenticated. Quoting:
 
 > Unauthenticated clients can make 60 requests per hour. To get more requests per hour, we'll need to authenticate. In fact, doing anything interesting with the GitHub API requires authentication.
+
+## Authentication types
+
+For authentication, you have 2 options:
+
+- Using personal access tokens : https://developer.github.com/v3/guides/getting-started/#using-personal-access-tokens
+
+> The easiest and best way to authenticate with the GitHub API is by using Basic Authentication via OAuth tokens. OAuth tokens include personal access tokens.
+
+- Using OAuth tokens for apps : https://developer.github.com/v3/guides/getting-started/#using-oauth-tokens-for-apps
+
+> Apps that need to read or write private information using the API on behalf of another user should use OAuth.
+
+I would like to get further with the second option, since I can see some use cases for an app authenticating users through Github Login page.
+
+## OAuth
+
+Links:
+
+- https://developer.github.com/apps/about-apps/
+- https://developer.github.com/apps/building-oauth-apps/
+
