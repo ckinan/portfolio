@@ -73,6 +73,14 @@ For authentication, you have 2 options:
 
 > The easiest and best way to authenticate with the GitHub API is by using Basic Authentication via OAuth tokens. OAuth tokens include personal access tokens.
 
+Examples:
+
+```bash
+curl -i -u <your_username>:<your_access_token> https://api.github.com/user/repos
+```
+
+Provide privileges to your token to read your repos.
+
 - Using OAuth tokens for apps : https://developer.github.com/v3/guides/getting-started/#using-oauth-tokens-for-apps
 
 > Apps that need to read or write private information using the API on behalf of another user should use OAuth.
@@ -85,4 +93,3 @@ Links:
 
 - https://developer.github.com/apps/about-apps/
 - https://developer.github.com/apps/building-oauth-apps/
-
