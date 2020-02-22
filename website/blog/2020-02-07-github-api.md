@@ -85,11 +85,58 @@ Provide privileges to your token to read your repos.
 
 > Apps that need to read or write private information using the API on behalf of another user should use OAuth.
 
-I would like to get further with the second option, since I can see some use cases for an app authenticating users through Github Login page.
+Seems like using personal access token is easier to get used to the API. Lets go further with this authentication type.
+
+### Endpoints
+
+Ref (overview of the API): https://developer.github.com/v3/
+
+Github docs give the endpoints paths like this (not the full url).
+
+Example of user repos: `GET /user/repos`
+
+#### Get repos
+
+Endpoint: `GET /user/repos`
+Ref: https://developer.github.com/v3/repos/#list-your-repositories
+
+Example:
+
+```bash
+$ curl -i -u <your_username>:<your_access_token> https://api.github.com/user/repos
+```
+
+#### Get pull requests
+
+Endpoint: `GET /repos/:owner/:repo/pulls`
+Ref: https://developer.github.com/v3/pulls/#list-pull-requests
+
+```bash
+$ curl -i -u <your_username>:<your_access_token> https://api.github.com/repos/ckinan/ckinan.com/pulls?state=all
+```
+
+> Parameters are also available, like `state` in the example above to list "Either open, closed, or all to filter by state. Default: open"
+
+#### List reviews of a pull request
+
+Endpoint: `GET /repos/:owner/:repo/pulls/:pull_number/reviews`
+Ref: https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
+
+```bash
+$ curl -i -u <your_username>:<your_access_token> https://api.github.com/repos/ckinan/ckinan.com/pulls/9/reviews
+```
+
+This is interesting, because you can see who submitted the review, whether this review refers to a comment only, request changes or approval.
 
 ## OAuth
+
+I would like to get further with the second option, since I can see some use cases for an app authenticating users through Github Login page.
 
 Links:
 
 - https://developer.github.com/apps/about-apps/
 - https://developer.github.com/apps/building-oauth-apps/
+- https://developer.github.com/apps/differences-between-apps/
+
+- https://functions-playground.netlify.com/
+- https://kentcdodds.com/blog/super-simple-start-to-serverless
