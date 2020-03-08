@@ -19,7 +19,7 @@ I may use the outcome of this (quick) research not only for this company, but an
 
 ## Steps
 
-This is the list of points this article/research will have as scope:
+This is the list of things this article/research will cover:
 
 - Step #1: Take a look at their docs (overview)
 - Step #2: Understand their authentication processes
