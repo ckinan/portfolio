@@ -9,4 +9,11 @@ WIP
 
 <!--truncate-->
 
-Read this: https://kentcdodds.com/blog/super-simple-start-to-serverless
+Read this:
+- https://www.npmjs.com/package/netlify-lambda
+- https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346
+- https://docs.netlify.com/functions/overview/
+- https://kentcdodds.com/blog/super-simple-start-to-serverless
+
+yarn add netlify-lambda
+
