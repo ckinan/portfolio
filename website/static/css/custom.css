@@ -25,3 +25,7 @@
 body {
     font-family: $myFont;
 }
+
+.post a {
+    text-decoration: underline;
+}
