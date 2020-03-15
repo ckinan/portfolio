@@ -9,7 +9,7 @@ Exploring Netlify Functions: Concepts and some examples to get started with serv
 
 ![Post pic](assets/img/undraw_functions_egi3.png)
 
-# Motivation
+## Motivation
 
 Sometimes I want to build simple web applications for demos or just for fun. These ideas relates interactions with APIs (free ones in most of the cases). However, even when these APIs have free plans, they force you to create an API KEY, which you don't want to expose for security reasons.
 
@@ -181,16 +181,14 @@ exports.handler = async (event, context) => {
 };
 ```
 
-Here, `GREETING` is your environment variable. This is why you "hide" certain values you don't want to share publicly to your clients behind a serverless function like this. Even if your source code is public in Github, you won't need to have secret information in your code, but in environment variables like so.
+Here, `GREETING` is your environment variable. This is how you "hide" certain values you don't want to share publicly to your clients behind a serverless function like this. Even if your source code is public in Github, you won't need to have secret information in your code, but in environment variables like so.
 
 In the above example, if you are running:
 
-- Locally: Follow this comment https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346
+- Locally: Follow instructions in this link https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346
 - On Netlify: Just create an environment variable under `Project > Settings > Build & Deploy > Environment` option.
 
 ![Netlify-Env-Var](assets/img/netlify-functions-env-var.png)
-
-Some particular configurations to run it locally are required: https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346
 
 ## Final thoughts
 
