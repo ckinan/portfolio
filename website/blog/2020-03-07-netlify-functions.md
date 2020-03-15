@@ -181,6 +181,8 @@ exports.handler = async (event, context) => {
 };
 ```
 
+Here, `GREETING` is your environment variable. This is why you "hide" certain values you don't want to share publicly to your clients behind a serverless function like this. Even if your source code is public in Github, you won't need to have secret information in your code, but in environment variables like so.
+
 In the above example, if you are running:
 
 - Locally: Follow this comment https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346
