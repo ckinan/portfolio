@@ -109,6 +109,9 @@ git branch -D
 git fetch
 git pull
 git push origin my-feature
+
+# Others
+git update-index --assume-unchanged <file>
 ```
 
 ## Tools
