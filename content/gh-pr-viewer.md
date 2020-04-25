@@ -1,6 +1,6 @@
 ---
-title: Project: Github Pull Request Viewer
-author: Cesar
+title: Project Github Pull Request Viewer
+date: 2020-04-24
 ---
 
 > In progress
@@ -9,7 +9,7 @@ How I built a pull request viewer using Github API. What I learned and what I fa
 
 <!--truncate-->
 
-![Post pic](assets/img/github.png)
+![Post pic](./img/github.png)
 
 Tried to clone https://github.com/pulls page plus some variations using the following:
 
@@ -25,11 +25,11 @@ Variations are:
 
 Official Github View looks like this:
 
-![Github view](assets/img/gh-pr-viewer-1.png)
+![Github view](./img/gh-pr-viewer-1.png)
 
 Mine looks like this:
 
-![My view](assets/img/gh-pr-viewer-2.png)
+![My view](./img/gh-pr-viewer-2.png)
 
 If they look very similar in terms of styles, it's because I am using [Primer CSS](https://primer.style/css/), no way I can do these styles by hand. So I had to study a little bit how to use these styles in my project, I didn't have any problems with it, actually the documentation is pretty good and simple to understand.
 

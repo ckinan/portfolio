@@ -1,13 +1,13 @@
 ---
-title: Netlify: Functions
-author: Cesar
+title: Netlify Functions
+date: 2020-03-07
 ---
 
 Exploring Netlify Functions: Concepts and some examples to get started with serverless functions.
 
 <!--truncate-->
 
-![Post pic](assets/img/undraw_functions_egi3.png)
+![Post pic](./img/undraw_functions_egi3.png)
 
 ## Motivation
 
@@ -22,6 +22,7 @@ There are some options I was checking to create and use serverless functions, bu
 Serverless functions on AWS Lambda, handled by Netlify. Create, build, deploy and test these serverless functions on Netlify and locally with some great tools that Netlify provides.
 
 Currently, supported languages are:
+
 - JavaScript
 - Go
 
@@ -53,12 +54,12 @@ Example:
 From a "hello world" example found here: https://functions-playground.netlify.com/
 
 ```js
-exports.handler = function(event, context, callback) {
+exports.handler = function (event, context, callback) {
   callback(null, {
     statusCode: 200,
-    body: "Hello, World"
-  });
-};
+    body: "Hello, World",
+  })
+}
 ```
 
 Declare `exports.handler` function with the following parameters:
@@ -108,17 +109,17 @@ yarn add netlify-lambda
 5. Create your first function and name the file as `hello-world.js`.
 
 ```js
-exports.handler = function(event, context, callback) {
+exports.handler = function (event, context, callback) {
   callback(null, {
     statusCode: 200,
-    body: "Hello, World"
-  });
-};
+    body: "Hello, World",
+  })
+}
 ```
 
 Your source tree should look like:
 
-![Source-Tree](assets/img/netlify-functions-source-tree.png)
+![Source-Tree](./img/netlify-functions-source-tree.png)
 
 7. Deploy
 
@@ -143,17 +144,17 @@ Open in a browser: http://localhost:9000/.netlify/functions/hello-world
 
 You will see the response of the function: "Hello, World"
 
-![Local](assets/img/netlify-functions-local.png)
+![Local](./img/netlify-functions-local.png)
 
 7.2. Deploy on Netlify
 
 Commit and push your project into Github/Gitlab/Bitbucket, and deploy your project in Netlify, where the "Build Command" should be in this case: `npm run install`. Once it got deployed, you can see the list of functions in Netlify under `Project > Functions`.
 
-![Netlify-Preview](assets/img/netlify-functions-preview.png)
+![Netlify-Preview](./img/netlify-functions-preview.png)
 
 Click on any of your functions, you will see the URL to invoke it. Example
 
-![Netlify-Prod](assets/img/netlify-functions-prod.png)
+![Netlify-Prod](./img/netlify-functions-prod.png)
 
 > Note: There are really good examples provided by Netlify Team of what you can do within a single function. I actually used them for this article. Link: https://functions-playground.netlify.com/
 
@@ -171,14 +172,14 @@ Quoting docs: https://docs.netlify.com/functions/logs/
 Following another example from https://functions-playground.netlify.com/ to get environment variables, create `env.js` under `src` folder.
 
 ```js
-const GREETING = process.env.GREETING;
+const GREETING = process.env.GREETING
 
 exports.handler = async (event, context) => {
   return {
     statusCode: 200,
-    body: GREETING
-  };
-};
+    body: GREETING,
+  }
+}
 ```
 
 Here, `GREETING` is your environment variable. This is how you "hide" certain values you don't want to share publicly to your clients behind a serverless function like this. Even if your source code is public in Github, you won't need to have secret information in your code, but in environment variables like so.
@@ -188,7 +189,7 @@ In the above example, if you are running:
 - Locally: Follow instructions in this link https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346
 - On Netlify: Just create an environment variable under `Project > Settings > Build & Deploy > Environment` option.
 
-![Netlify-Env-Var](assets/img/netlify-functions-env-var.png)
+![Netlify-Env-Var](./img/netlify-functions-env-var.png)
 
 ## Final thoughts
 
