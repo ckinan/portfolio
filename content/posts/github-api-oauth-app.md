@@ -7,7 +7,7 @@ How to use OAuth tokens for apps with Github API to authorize the access of cert
 
 <!--truncate-->
 
-![Post pic](./img/github.png)
+![Post pic](../images/github.png)
 
 ## Github Web flow
 
@@ -27,7 +27,7 @@ Summary:
 2. Get repos of the authenticated user
 3. Get pull requests per each repo
 
-![Diagram](./img/github-api-oauth-diagram.png)
+![Diagram](../images/github-api-oauth-diagram.png)
 
 Details:
 
@@ -126,19 +126,19 @@ const showReview = async repo => {
 
 Login through web flow:
 
-![Step 1](./img/github-api-oauth-s1.png)
+![Step 1](../images/github-api-oauth-s1.png)
 
 Redirected to Github Login Page:
 
-![Step 2](./img/github-api-oauth-s2.png)
+![Step 2](../images/github-api-oauth-s2.png)
 
 You need to authorize this app:
 
-![Step 3](./img/github-api-oauth-s3.png)
+![Step 3](../images/github-api-oauth-s3.png)
 
 Final result:
 
-![Step 4](./img/github-api-oauth-s4.png)
+![Step 4](../images/github-api-oauth-s4.png)
 
 ## Final thoughts
 

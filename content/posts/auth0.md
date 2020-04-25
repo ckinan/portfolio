@@ -11,7 +11,7 @@ First steps with Auth0 following their tutorial to create a simple login page wi
 
 Auth0 is a complete platfom that helps you to handle authentication and authorization services in your application. It provides SDKs to connect to their solution for many technologies such as Angular, Javascript, React Vue for SPA applications, not to mention Node, PHP, Python, Java (and others) for backend and others for mobile apps.
 
-![Post pic](./img/undraw_authentication_fsn5.png)
+![Post pic](../images/undraw_authentication_fsn5.png)
 
 This post is intended to get started with Auth0 by following the steps of the tutorial they have in their website using Vanilla JS (which is great and very detailed). However, after I completed all the steps, I decided to remove some parts of the code from the code, because all I wanted to have there was the most minimal version of this login page just to avoid being distracted by other things that are not directly related to the Auth0 SDK.
 
@@ -29,7 +29,7 @@ After executing all the steps in there I got this configuration in my first appl
 
 Domain and Client ID, you will need them later in your JS app.
 
-![Settings 1](./img/auth0-settings-1.png)
+![Settings 1](../images/auth0-settings-1.png)
 
 Configure the following:
 
@@ -39,7 +39,7 @@ Configure the following:
 
 > One Auth0-Application supports many Allowed Callback URLs, Web Origins and Logout URLs, so I have set only one application to accomplish multiple environments (local and github.io in my case).
 
-![Settings 2](./img/auth0-settings-2.png)
+![Settings 2](../images/auth0-settings-2.png)
 
 ### index.html
 
@@ -187,15 +187,15 @@ Whatever happens with the authentication process won't be effectively readable i
 
 Open [https://ckinan.github.io/auth0-javascript-tutorial/](https://ckinan.github.io/auth0-javascript-tutorial/) and click on the "Login in" button.
 
-![Test 1](./img/auth0-test-1.png)
+![Test 1](../images/auth0-test-1.png)
 
 You will be redirected to Auth0 Authentication page where you can login to this app using your Google or Github account. By the way, the free plan allows you to set up to two social connections.
 
-![Test 2](./img/auth0-test-2.png)
+![Test 2](../images/auth0-test-2.png)
 
 After login success, it will redirect to your page and the user information will be displayed.
 
-![Test 3](./img/auth0-test-3.png)
+![Test 3](../images/auth0-test-3.png)
 
 ## Conclusions
 

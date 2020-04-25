@@ -7,7 +7,7 @@ First steps with Github API, looking at the official docs, executing some APIs a
 
 <!--truncate-->
 
-![Post pic](./img/github.png)
+![Post pic](../images/github.png)
 
 ## Motivation
 

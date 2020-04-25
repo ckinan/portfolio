@@ -7,7 +7,7 @@ Exploring Netlify Functions: Concepts and some examples to get started with serv
 
 <!--truncate-->
 
-![Post pic](./img/undraw_functions_egi3.png)
+![Post pic](../images/undraw_functions_egi3.png)
 
 ## Motivation
 
@@ -119,7 +119,7 @@ exports.handler = function (event, context, callback) {
 
 Your source tree should look like:
 
-![Source-Tree](./img/netlify-functions-source-tree.png)
+![Source-Tree](../images/netlify-functions-source-tree.png)
 
 7. Deploy
 
@@ -144,17 +144,17 @@ Open in a browser: http://localhost:9000/.netlify/functions/hello-world
 
 You will see the response of the function: "Hello, World"
 
-![Local](./img/netlify-functions-local.png)
+![Local](../images/netlify-functions-local.png)
 
 7.2. Deploy on Netlify
 
 Commit and push your project into Github/Gitlab/Bitbucket, and deploy your project in Netlify, where the "Build Command" should be in this case: `npm run install`. Once it got deployed, you can see the list of functions in Netlify under `Project > Functions`.
 
-![Netlify-Preview](./img/netlify-functions-preview.png)
+![Netlify-Preview](../images/netlify-functions-preview.png)
 
 Click on any of your functions, you will see the URL to invoke it. Example
 
-![Netlify-Prod](./img/netlify-functions-prod.png)
+![Netlify-Prod](../images/netlify-functions-prod.png)
 
 > Note: There are really good examples provided by Netlify Team of what you can do within a single function. I actually used them for this article. Link: https://functions-playground.netlify.com/
 
@@ -189,7 +189,7 @@ In the above example, if you are running:
 - Locally: Follow instructions in this link https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346
 - On Netlify: Just create an environment variable under `Project > Settings > Build & Deploy > Environment` option.
 
-![Netlify-Env-Var](./img/netlify-functions-env-var.png)
+![Netlify-Env-Var](../images/netlify-functions-env-var.png)
 
 ## Final thoughts
 
