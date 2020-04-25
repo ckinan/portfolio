@@ -13,7 +13,7 @@ export default () => {
               id
               frontmatter {
                 title
-                date(formatString: "YYYY-MM-DD")
+                date(formatString: "ddd DD MMMM YYYY")
               }
               excerpt
               fields {
@@ -28,13 +28,20 @@ export default () => {
 
   return (
     <Layout>
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto p-4 max-w-screen-md">
         <div>
           {data.allMarkdownRemark.edges.map(({ node }) => (
-            <div key={node.id}>
-              <span>
-                <Link to={node.fields.slug}>{node.frontmatter.title}</Link>{" "}
-                <span> - {node.frontmatter.date}</span>
+            <div key={node.id} className="hover:bg-gray-200">
+              <span className="grid grid-cols-1 lg:grid-cols-6 border-b py-2">
+                <Link
+                  className="col-span-6 lg:col-span-4"
+                  to={node.fields.slug}
+                >
+                  {node.frontmatter.title}
+                </Link>
+                <span className="col-span-6 lg:col-span-2 text-left text-xs text-gray-600 lg:text-right">
+                  {node.frontmatter.date}
+                </span>
               </span>
             </div>
           ))}

@@ -7,7 +7,7 @@
 module.exports = {
   /* Your site config here */
   siteMetadata: {
-    title: `ckinan.com`,
+    title: `ckinan`,
   },
   plugins: [
     `gatsby-plugin-sharp`,
