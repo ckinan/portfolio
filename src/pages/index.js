@@ -28,7 +28,7 @@ export default () => {
 
   return (
     <Layout>
-      <div>
+      <div className="container mx-auto p-4">
         <div>
           {data.allMarkdownRemark.edges.map(({ node }) => (
             <div key={node.id}>

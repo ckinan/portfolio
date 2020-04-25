@@ -15,7 +15,11 @@ export default ({ children }) => {
   )
   return (
     <div>
-      <Link to="/">{data.site.siteMetadata.title}</Link>
+      <div className="bg-gray-800 text-white">
+        <div className="container mx-auto p-4">
+          <Link to="/">{data.site.siteMetadata.title}</Link>
+        </div>
+      </div>
       {children}
     </div>
   )
