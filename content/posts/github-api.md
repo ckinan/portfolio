@@ -1,13 +1,13 @@
 ---
-title: Github API: First glance
-author: Cesar
+title: Github API First glance
+date: 2020-02-07
 ---
 
 First steps with Github API, looking at the official docs, executing some APIs and discovering what I can do with that.
 
 <!--truncate-->
 
-![Post pic](assets/img/github.png)
+![Post pic](../images/github.png)
 
 ## Motivation
 

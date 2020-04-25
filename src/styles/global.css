@@ -1,0 +1,16 @@
+@tailwind base;
+
+/* Define any of your own custom base styles directly after @tailwind base and before @tailwind components to avoid specificity issues */
+/*
+a {
+  @apply underline;
+}
+*/
+
+@tailwind components;
+
+/* Add custom component classes before your utilities */
+
+@import "./markdown.css";
+
+@tailwind utilities;

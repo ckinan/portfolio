@@ -1,13 +1,13 @@
 ---
-title: Github API: OAuth tokens for apps
-author: Cesar
+title: Github API OAuth tokens for apps
+date: 2020-03-13
 ---
 
 How to use OAuth tokens for apps with Github API to authorize the access of certain data on behalf of the logged in user.
 
 <!--truncate-->
 
-![Post pic](assets/img/github.png)
+![Post pic](../images/github.png)
 
 ## Github Web flow
 
@@ -27,7 +27,7 @@ Summary:
 2. Get repos of the authenticated user
 3. Get pull requests per each repo
 
-![Diagram](assets/img/github-api-oauth-diagram.png)
+![Diagram](../images/github-api-oauth-diagram.png)
 
 Details:
 
@@ -52,6 +52,7 @@ Once the user is authenticated through Github Login Page, Github will redirect t
 The public site makes a call to the Netlify Function located in the same project under the path `/.netlify/functions/github-client?code=<CODE>`. Where `<CODE>` is what Github had sent to the callback url in the previous step.
 
 The Netlify Function will make a call to `https://github.com/login/oauth/access_token` sending:
+
 - Client Secret (Environment Variable)
 - Client ID (Environment Variable)
 - Code (Query Param)
@@ -66,55 +67,78 @@ Now that we have available the access token, we can make calls from the Front En
 
 ```js
 const showRepos = async () => {
-    fetch('https://api.github.com/user/repos', {
-        method: 'GET',
-        headers: { 'Authorization': 'Bearer ' + localStorage.getItem(GH_ACCESS_TOKEN_KEY) }
-    }).then(function(response) {
-        return response.json();
-    }).then(function(data){
-        document.getElementById('result').innerHTML += "<br/><br/>Repos";
-        data.forEach(function (repo, index) {
-            showReview(repo);
-        });
-    });
-};
+  fetch("https://api.github.com/user/repos", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem(GH_ACCESS_TOKEN_KEY),
+    },
+  })
+    .then(function (response) {
+      return response.json()
+    })
+    .then(function (data) {
+      document.getElementById("result").innerHTML += "<br/><br/>Repos"
+      data.forEach(function (repo, index) {
+        showReview(repo)
+      })
+    })
+}
 ```
 
 3. Get pull requests per each repo retrieved from previous step through `GET /repos/:owner/:repo/pulls` endpoint. Ref: https://developer.github.com/v3/pulls/#list-pull-requests
 
 ```js
 const showReview = async repo => {
-    fetch('https://api.github.com/repos/' + repo.full_name + '/pulls?state=all', {
-        method: 'GET',
-        headers: { 'Authorization': 'Bearer ' + localStorage.getItem(GH_ACCESS_TOKEN_KEY) }
-    }).then(function(response) {
-        return response.json();
-    }).then(function(data){
-        document.getElementById('result').innerHTML += '<br/><a href="' + repo.html_url + '" target="_blank">' + repo.full_name + '</a>';
-        data.forEach(function (pr, index) {
-            document.getElementById('result').innerHTML += '<br/><a href="' + pr.html_url + '" target="_blank">---- #' + pr.number + ': ' + pr.title + ' (' + pr.state + ')' + '</a>';
-        });
-    });
-};
+  fetch("https://api.github.com/repos/" + repo.full_name + "/pulls?state=all", {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem(GH_ACCESS_TOKEN_KEY),
+    },
+  })
+    .then(function (response) {
+      return response.json()
+    })
+    .then(function (data) {
+      document.getElementById("result").innerHTML +=
+        '<br/><a href="' +
+        repo.html_url +
+        '" target="_blank">' +
+        repo.full_name +
+        "</a>"
+      data.forEach(function (pr, index) {
+        document.getElementById("result").innerHTML +=
+          '<br/><a href="' +
+          pr.html_url +
+          '" target="_blank">---- #' +
+          pr.number +
+          ": " +
+          pr.title +
+          " (" +
+          pr.state +
+          ")" +
+          "</a>"
+      })
+    })
+}
 ```
 
 ## Test
 
 Login through web flow:
 
-![Step 1](assets/img/github-api-oauth-s1.png)
+![Step 1](../images/github-api-oauth-s1.png)
 
 Redirected to Github Login Page:
 
-![Step 2](assets/img/github-api-oauth-s2.png)
+![Step 2](../images/github-api-oauth-s2.png)
 
 You need to authorize this app:
 
-![Step 3](assets/img/github-api-oauth-s3.png)
+![Step 3](../images/github-api-oauth-s3.png)
 
 Final result:
 
-![Step 4](assets/img/github-api-oauth-s4.png)
+![Step 4](../images/github-api-oauth-s4.png)
 
 ## Final thoughts
 
@@ -125,6 +149,7 @@ I would like to create a more elaborated app that can show more information abou
 Github repo: https://github.com/ckinan/ckn-github-oauth-app
 
 ## Refs
+
 - https://developer.github.com/v3/guides/getting-started/#using-oauth-tokens-for-apps
 - https://developer.github.com/v3/guides/basics-of-authentication/
 - https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/
