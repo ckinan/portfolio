@@ -1,11 +1,17 @@
 import React from "react"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import Layout from "../components/layout"
+import { Helmet } from "react-helmet"
 
 export default () => {
   const data = useStaticQuery(
     graphql`
       query {
+        site {
+          siteMetadata {
+            title
+          }
+        }
         allMarkdownRemark(sort: { order: DESC, fields: frontmatter___date }) {
           totalCount
           edges {
@@ -28,6 +34,7 @@ export default () => {
 
   return (
     <Layout>
+      <Helmet title={data.site.siteMetadata.title} />
       <div className="container mx-auto p-4 max-w-screen-md">
         <div>
           {data.allMarkdownRemark.edges.map(({ node }) => (

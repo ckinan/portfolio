@@ -1,11 +1,15 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
+import { Helmet } from "react-helmet"
 
 export default ({ data }) => {
   const post = data.markdownRemark
   return (
     <Layout>
+      <Helmet
+        title={`${post.frontmatter.title} : ${data.site.siteMetadata.title}`}
+      />
       <div className="container mx-auto p-4 max-w-screen-md">
         <h1 className="leading-tight text-4xl font-semibold mt-4 pb-0">
           {post.frontmatter.title}
@@ -24,6 +28,11 @@ export default ({ data }) => {
 
 export const query = graphql`
   query($slug: String!) {
+    site {
+      siteMetadata {
+        title
+      }
+    }
     markdownRemark(fields: { slug: { eq: $slug } }) {
       html
       frontmatter {

@@ -16,12 +16,14 @@
   "dependencies": {
     "gatsby": "^2.20.35",
     "gatsby-plugin-postcss": "^2.2.4",
+    "gatsby-plugin-react-helmet": "^3.2.5",
     "gatsby-plugin-sharp": "^2.5.7",
     "gatsby-remark-images": "^3.2.6",
     "gatsby-source-filesystem": "^2.2.5",
     "gatsby-transformer-remark": "^2.7.5",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "react-helmet": "^6.0.0"
   },
   "devDependencies": {
     "prettier": "2.0.4",
