@@ -1,29 +1,19 @@
 import React from "react"
-import { graphql, Link, useStaticQuery } from "gatsby"
+import { Link } from "gatsby"
+import Layout from "../components/layout"
+
 export default () => {
-  const data = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-          }
-        }
-      }
-    `
-  )
   return (
-    <div>
-      <Link to="/">
-        <h1>{data.site.siteMetadata.title}</h1>
-      </Link>
-      <p>
-        Oops! Page not found. Go{" "}
-        <Link to="/">
-          <span>home</span>
-        </Link>{" "}
-        :)
-      </p>
-    </div>
+    <Layout>
+      <div>
+        <p>
+          Oops! Page not found. Go{" "}
+          <Link to="/">
+            <span>home</span>
+          </Link>{" "}
+          :)
+        </p>
+      </div>
+    </Layout>
   )
 }

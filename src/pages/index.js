@@ -1,15 +1,11 @@
 import React from "react"
 import { useStaticQuery, graphql, Link } from "gatsby"
+import Layout from "../components/layout"
 
 export default () => {
   const data = useStaticQuery(
     graphql`
       query {
-        site {
-          siteMetadata {
-            title
-          }
-        }
         allMarkdownRemark(sort: { order: DESC, fields: frontmatter___date }) {
           totalCount
           edges {
@@ -31,19 +27,19 @@ export default () => {
   )
 
   return (
-    <div>
-      <h1>{data.site.siteMetadata.title}</h1>
-
+    <Layout>
       <div>
-        {data.allMarkdownRemark.edges.map(({ node }) => (
-          <div key={node.id}>
-            <span>
-              <Link to={node.fields.slug}>{node.frontmatter.title}</Link>{" "}
-              <span> - {node.frontmatter.date}</span>
-            </span>
-          </div>
-        ))}
+        <div>
+          {data.allMarkdownRemark.edges.map(({ node }) => (
+            <div key={node.id}>
+              <span>
+                <Link to={node.fields.slug}>{node.frontmatter.title}</Link>{" "}
+                <span> - {node.frontmatter.date}</span>
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </Layout>
   )
 }
