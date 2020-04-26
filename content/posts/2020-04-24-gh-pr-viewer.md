@@ -4,8 +4,6 @@ date: 2020-04-24
 slug: gh-pr-viewer
 ---
 
-> In progress
-
 How I built a pull request viewer using Github API. What I learned and what I failed.
 
 ## Introduction
