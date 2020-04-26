@@ -55,16 +55,16 @@
   @apply text-base border-l-4 border-gray-300 pl-4 pr-4 text-gray-600;
 }
 
-.markdown code {
-  @apply font-mono text-sm inline bg-gray-200 rounded px-1 py-1 text-xs;
+.markdown code,
+.markdown pre code,
+.markdown p code,
+.markdown ul code,
+.markdown ol code {
+  @apply text-xs;
 }
 
 .markdown pre {
   @apply bg-gray-100 rounded p-4;
-}
-
-.markdown pre code {
-  @apply block bg-transparent p-0 overflow-visible rounded-none overflow-x-auto text-xs;
 }
 
 .markdown ul {
