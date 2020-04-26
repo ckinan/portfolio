@@ -6,10 +6,6 @@ slug: netlify-function
 
 Exploring Netlify Functions: Concepts and some examples to get started with serverless functions.
 
-<!--truncate-->
-
-![Post pic](../images/undraw_functions_egi3.png)
-
 ## Motivation
 
 Sometimes I want to build simple web applications for demos or just for fun. These ideas relates interactions with APIs (free ones in most of the cases). However, even when these APIs have free plans, they force you to create an API KEY, which you don't want to expose for security reasons.

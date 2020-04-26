@@ -6,10 +6,6 @@ slug: github-api
 
 First steps with Github API, looking at the official docs, executing some APIs and discovering what I can do with that.
 
-<!--truncate-->
-
-![Post pic](../images/github.png)
-
 ## Motivation
 
 Currently, the company I am working with uses Github as git repository/platform. Code reviews, documentation, merges and other stuff going through there. It's going great.

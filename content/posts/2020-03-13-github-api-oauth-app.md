@@ -6,10 +6,6 @@ slug: github-api-oauth-app
 
 How to use OAuth tokens for apps with Github API to authorize the access of certain data on behalf of the logged in user.
 
-<!--truncate-->
-
-![Post pic](../images/github.png)
-
 ## Github Web flow
 
 Quoting Github docs:
