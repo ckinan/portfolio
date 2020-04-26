@@ -19,7 +19,7 @@ export default ({ children }) => {
       <div className="text-white-900 shadow-md">
         <div className="container mx-auto p-4 max-w-screen-md text-center">
           <Link className="inline" to="/">
-            <img className="h-5 inline pr-2" src={cap} />
+            <img className="h-5 inline pr-2" src={cap} alt="cap" />
             {data.site.siteMetadata.title}
           </Link>
         </div>

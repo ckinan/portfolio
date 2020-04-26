@@ -1,6 +1,7 @@
 ---
 title: Github API OAuth tokens for apps
 date: 2020-03-13
+slug: github-api-oauth-app
 ---
 
 How to use OAuth tokens for apps with Github API to authorize the access of certain data on behalf of the logged in user.

@@ -1,6 +1,7 @@
 ---
 title: Project Github Pull Request Viewer
 date: 2020-04-24
+slug: gh-pr-viewer
 ---
 
 > In progress

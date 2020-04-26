@@ -1,6 +1,7 @@
 ---
 title: Netlify Functions
 date: 2020-03-07
+slug: netlify-function
 ---
 
 Exploring Netlify Functions: Concepts and some examples to get started with serverless functions.
