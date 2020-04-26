@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-starter-hello-world",
+  "name": "ckinan.com",
   "private": true,
   "description": "A simplified bare-bones starter for Gatsby",
   "version": "0.1.0",
@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "gatsby": "^2.20.35",
+    "gatsby-plugin-google-analytics": "^2.2.5",
     "gatsby-plugin-postcss": "^2.2.4",
     "gatsby-plugin-react-helmet": "^3.2.5",
     "gatsby-plugin-sharp": "^2.5.7",
@@ -31,9 +32,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
-  },
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/ckinan/ckinan.com"
   }
 }
