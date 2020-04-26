@@ -7,6 +7,10 @@
   @apply mt-0 mb-4;
 }
 
+.markdown p {
+  @apply mb-4;
+}
+
 .markdown li + li {
   @apply mt-1;
 }
@@ -94,4 +98,8 @@
 /* Override pygments style background color. */
 .markdown .highlight pre {
   @apply bg-gray-100 !important;
+}
+
+.markdown a img {
+  @apply rounded border-2;
 }
