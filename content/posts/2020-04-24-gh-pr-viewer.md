@@ -103,7 +103,7 @@ I also developed two ways to be "authenticated" and consume the API:
 - Method #1: Authorizing OAuth Apps. Ref: https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/
 - Method #2: Store a Personal Access Token as Environment Variable. (Only meant to be used locally)
 
-I believe this is the main reason I can't get this project deployed in the cloud, because I can't figure this thing out yet...
+~~I believe this is the main reason I can't get this project deployed in the cloud, because I can't figure this thing out yet...~~ . UPDATE: Deployed on Netlify: https://gh-pr-viewer.netlify.app/
 
 #### 5. Test
 
@@ -128,3 +128,4 @@ Moving forward, I'll be still making more updates to this project, but for now, 
 ## Links
 
 - Repo: https://github.com/ckinan/gh-pr-viewer
+- Netlify instance: https://gh-pr-viewer.netlify.app/
