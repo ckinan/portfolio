@@ -24,7 +24,7 @@ Summary:
 2. Get repos of the authenticated user
 3. Get pull requests per each repo
 
-![Diagram](../images/github-api-oauth-diagram.png)
+![Diagram](https://res.cloudinary.com/dawontqn5/image/upload/v1587945519/ckinan.com/github-api-oauth-diagram_dbt9bg.png)
 
 Details:
 
@@ -123,19 +123,19 @@ const showReview = async repo => {
 
 Login through web flow:
 
-![Step 1](../images/github-api-oauth-s1.png)
+![Step 1](https://res.cloudinary.com/dawontqn5/image/upload/v1587945520/ckinan.com/github-api-oauth-s1_pepvqo.png)
 
 Redirected to Github Login Page:
 
-![Step 2](../images/github-api-oauth-s2.png)
+![Step 2](https://res.cloudinary.com/dawontqn5/image/upload/v1587945518/ckinan.com/github-api-oauth-s2_da3mer.png)
 
 You need to authorize this app:
 
-![Step 3](../images/github-api-oauth-s3.png)
+![Step 3](https://res.cloudinary.com/dawontqn5/image/upload/v1587945518/ckinan.com/github-api-oauth-s3_aeyk21.png)
 
 Final result:
 
-![Step 4](../images/github-api-oauth-s4.png)
+![Step 4](https://res.cloudinary.com/dawontqn5/image/upload/v1587945518/ckinan.com/github-api-oauth-s4_sbkgrc.png)
 
 ## Final thoughts
 

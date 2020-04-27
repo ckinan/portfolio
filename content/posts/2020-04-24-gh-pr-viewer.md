@@ -18,11 +18,11 @@ Before going to the details, I want to start showing two images that somewhat ex
 
 Official Github Pull Requests View looks like this:
 
-![Github view](../images/gh-pr-viewer-1.png)
+![Github view](https://res.cloudinary.com/dawontqn5/image/upload/v1587945519/ckinan.com/gh-pr-viewer-1_sj90mm.png)
 
 My clone looks like this:
 
-![My view](../images/gh-pr-viewer-2.png)
+![My view](https://res.cloudinary.com/dawontqn5/image/upload/v1587945519/ckinan.com/gh-pr-viewer-2_uw0u0t.png)
 
 ## Expectations
 

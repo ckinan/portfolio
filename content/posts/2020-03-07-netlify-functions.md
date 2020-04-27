@@ -116,7 +116,7 @@ exports.handler = function (event, context, callback) {
 
 Your source tree should look like:
 
-![Source-Tree](../images/netlify-functions-source-tree.png)
+![Source-Tree](https://res.cloudinary.com/dawontqn5/image/upload/v1587945517/ckinan.com/netlify-functions-source-tree_msdvax.png)
 
 7. Deploy
 
@@ -141,17 +141,17 @@ Open in a browser: http://localhost:9000/.netlify/functions/hello-world
 
 You will see the response of the function: "Hello, World"
 
-![Local](../images/netlify-functions-local.png)
+![Local](https://res.cloudinary.com/dawontqn5/image/upload/v1587945517/ckinan.com/netlify-functions-local_l6rbiy.png)
 
 7.2. Deploy on Netlify
 
 Commit and push your project into Github/Gitlab/Bitbucket, and deploy your project in Netlify, where the "Build Command" should be in this case: `npm run install`. Once it got deployed, you can see the list of functions in Netlify under `Project > Functions`.
 
-![Netlify-Preview](../images/netlify-functions-preview.png)
+![Netlify-Preview](https://res.cloudinary.com/dawontqn5/image/upload/v1587945517/ckinan.com/netlify-functions-preview_iby0fd.png)
 
 Click on any of your functions, you will see the URL to invoke it. Example
 
-![Netlify-Prod](../images/netlify-functions-prod.png)
+![Netlify-Prod](https://res.cloudinary.com/dawontqn5/image/upload/v1587945517/ckinan.com/netlify-functions-prod_cwklsb.png)
 
 > Note: There are really good examples provided by Netlify Team of what you can do within a single function. I actually used them for this article. Link: https://functions-playground.netlify.com/
 
@@ -186,7 +186,7 @@ In the above example, if you are running:
 - Locally: Follow instructions in this link https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346
 - On Netlify: Just create an environment variable under `Project > Settings > Build & Deploy > Environment` option.
 
-![Netlify-Env-Var](../images/netlify-functions-env-var.png)
+![Netlify-Env-Var](https://res.cloudinary.com/dawontqn5/image/upload/v1587945517/ckinan.com/netlify-functions-env-var_jn9dak.png)
 
 ## Final thoughts
 
