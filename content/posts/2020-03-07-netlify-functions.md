@@ -137,7 +137,7 @@ Lambda server is listening on 9000
 
 Open in a browser: http://localhost:9000/.netlify/functions/hello-world
 
-> Note: The path of the URL is: http://{host}:{port}/.netlify/functions/{your-function-name}) . We can't change the `.netlify/functions` as far as I know.
+> Note: The path of the URL is: http://{host}:{port}/.netlify/functions/{your-function-name}) . UPDATE: I tried to change the `.netlify/functions` path thing, but it was not possible. But, it is possible to redirect requests asking for your functions to whatever alias you want to have like `/api` for instance. See: [Netlify Routing Redirects](https://docs.netlify.com/routing/redirects/#syntax-for-the-netlify-configuration-file).
 
 You will see the response of the function: "Hello, World"
 
