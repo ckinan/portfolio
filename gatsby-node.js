@@ -3,9 +3,7 @@ const { createFilePath } = require(`gatsby-source-filesystem`)
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
   if (node.internal.type === `MarkdownRemark`) {
-    const slug = `/${new Date(node.frontmatter.date).getUTCFullYear()}/${
-      new Date(node.frontmatter.date).getUTCMonth() + 1
-    }/${new Date(node.frontmatter.date).getUTCDate()}/${node.frontmatter.slug}`
+    const slug = `/blog/${node.frontmatter.slug}`
 
     createNodeField({
       node,
