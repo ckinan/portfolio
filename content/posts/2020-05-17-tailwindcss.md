@@ -48,7 +48,7 @@ Now my steps to accomplish some styling are (example):
 
 2. How is this in plain CSS? Example for the green background: `background-color: #48bb78;` . I think this is the most difficult step at least in my case, there are a lot of things in CSS that are unknown to me.
 
-3. Go to Tailwind CSS docs and search for the CSS property. Link: https://tailwindcss.com/docs/background-color
+3. Go to Tailwind CSS docs and search for the CSS property. Link: https://tailwindcss.com/docs/background-color . For the Green Background, the Tailwind CSS "equivalent class" should be `class="bg-green-500"`
 
 4. Isolate the code and test. You can also test directly in your project, but I strongly recommend to test any style in a separate environment, so if something fails, you are not confused by the question "is it because of something in my project or is it with Tailwind or is it me doing something wrong?" (you know what I mean...) Example:
 
