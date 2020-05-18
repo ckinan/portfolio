@@ -1,0 +1,56 @@
+---
+title: Tailwind CSS
+date: 2020-05-17
+slug: tailwind-css
+---
+
+In my whole career, even when I was in college, every time I had to build an application that involves UI or styles, I always struggled with the design. After some years now, I still have the same problem. Colors, text size, layouts, etc are simply a nightmare to me. This is one of the things I usually try to avoid in web development when there is some CSS file I have to (inevitable) make some changes, I just say "oh God, please help me".
+
+## Introduction
+
+Ultimately, I've been hearing a lot about Tailwind CSS, a utility-first framework that comes with a bunch of amazing stuff for your design process, like for example predefined attributes to create a nice green button with rounded corners and a hover effect, but Tailwind doesn't give you the whole class for the button, instead it brings with the necessary little pieces that you have to combine nicely to build the design for that button.
+
+This is an example of how a green button using Tailwind CSS would look like:
+
+```html
+<button
+  type="button"
+  class="w-full rounded bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border-solid border-2 border-green-600"
+>
+  Login
+</button>
+```
+
+![Button](https://res.cloudinary.com/dawontqn5/image/upload/v1589763414/ckinan.com/tailwind-green-button_x9esqq.png)
+
+Someone might say, "why would I need that if there are other tools or frameworks that provide the whole button component styles out of the box". Well, that was me. But, after giving it a try, I noticed that you can get exactly what the other frameworks can give you, but now you know exactly what you are including in your styles. Meaning, you get full control of how things are presented in your UI.
+
+## Motivation
+
+There are a couple of things I really like about Tailwind CSS:
+
+- Documentation: Nice examples, well explained and I go there every time I need to do an isolated thing before doing it in my project.
+- Easy to get started: When I want to try something new, one of the first things I look for is the "Get Started" section. Well, here it is [Get Started](https://tailwindcss.com/docs/installation/). I went to the "Using CDN" section because I just wanted to get a quick demo to explore.
+- Community: I see more and more people using it and sharing their projects or knowledge about it. One thing that convinced me to take a look at it was one guy replicating a whole application using Tailwind CSS. I was like "what? is that possible?", so cool.
+
+Another thing I got from there, and this might be something more "personal", is that after I started using it I got myself more interested in to know more properties I can use in CSS, because, Tailwind can give you the utilities you need, but in order to use them, you have to know how you would accomplish that with plain CSS, then go to Tailwind docs and look for it without creating a single CSS line, you have everything you need available to use in your HTML.
+
+It's like my development process, in terms of design, changed quite a bit. I now feel I have more control of how I build my UI
+
+<iframe height="512" style="width: 100%;" scrolling="no" title="Tailwind login form" src="https://codepen.io/ckinan/embed/JjYePyW?height=512&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/ckinan/pen/JjYePyW'>Tailwind login form</a> by Cesar
+  (<a href='https://codepen.io/ckinan'>@ckinan</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+Now my steps to accomplish some styling are:
+
+1. What do I need?
+2. How is this in plain CSS?
+3. Go to Tailwind CSS docs
+4. Search for the CSS property
+5. Isolate the code and test
+6. Incorporate this in your project
+
+## Final thoughts
+
+Tailwind CSS is a different way to see design in my development process. It didn't magically solve all my problems with the design, and I don't see it as something that I needed to do my styles looking better, but it kind of helped me to do more things directly in the HTML files, instead of doing it in CSS files just to make my design unique. Finally, the feeling of having control of every single detail in how my components look like without having to write any much CSS, keeps me motivated to continue utilizing Tailwind.
