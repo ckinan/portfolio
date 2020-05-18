@@ -35,14 +35,7 @@ There are a couple of things I really like about Tailwind CSS:
 
 Another thing I got from there, and this might be something more "personal", is that after I started using it I got myself more interested in to know more properties I can use in CSS, because, Tailwind can give you the utilities you need, but in order to use them, you have to know how you would accomplish that with plain CSS, then go to Tailwind docs and look for it without creating a single CSS line, you have everything you need available to use in your HTML.
 
-It's like my development process, in terms of design, changed quite a bit. I now feel I have more control of how I build my UI
-
-<iframe height="512" style="width: 100%;" scrolling="no" title="Tailwind login form" src="https://codepen.io/ckinan/embed/JjYePyW?height=512&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href='https://codepen.io/ckinan/pen/JjYePyW'>Tailwind login form</a> by Cesar
-  (<a href='https://codepen.io/ckinan'>@ckinan</a>) on <a href='https://codepen.io'>CodePen</a>.
-</iframe>
-
-Now my steps to accomplish some styling are (example):
+It's like my development process, in terms of design, changed quite a bit. I now feel I have more control of how I build my UI. Now, my steps to accomplish some styling are (example):
 
 1. What do I need? I need a green button for my login page. Specs: Green background, white text, border and rounded corners.
 
@@ -73,7 +66,12 @@ Now my steps to accomplish some styling are (example):
 </html>
 ```
 
-5. Incorporate this in your project.
+5. Incorporate this in your project. You should make the changes according to your project needs once you get the desired results in your isolated tests.
+
+<iframe height="512" style="width: 100%;" scrolling="no" title="Tailwind login form" src="https://codepen.io/ckinan/embed/JjYePyW?height=512&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/ckinan/pen/JjYePyW'>Tailwind login form</a> by Cesar
+  (<a href='https://codepen.io/ckinan'>@ckinan</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
 
 ## Final thoughts
 
