@@ -2,9 +2,10 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import { Helmet } from "react-helmet"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 export default ({ data }) => {
-  const post = data.markdownRemark
+  const post = data.mdx
   return (
     <Layout>
       <Helmet
@@ -17,24 +18,23 @@ export default ({ data }) => {
         <div className="border-b mt-1 mb-5 text-xs text-gray-600">
           {post.frontmatter.date}
         </div>
-        <div
-          className="markdown"
-          dangerouslySetInnerHTML={{ __html: post.html }}
-        />
+        <div className="markdown">
+          <MDXRenderer>{post.body}</MDXRenderer>
+        </div>
       </div>
     </Layout>
   )
 }
 
 export const query = graphql`
-  query($slug: String!) {
+  query($id: String!) {
     site {
       siteMetadata {
         title
       }
     }
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
+    mdx(id: { eq: $id }) {
+      body
       frontmatter {
         title
         date(formatString: "dddd DD MMMM YYYY")

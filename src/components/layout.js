@@ -1,6 +1,12 @@
 import React from "react"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import cap from "../images/cap.png"
+import { MDXProvider } from "@mdx-js/react"
+import CodeBlock from "./CodeBlock"
+
+const components = {
+  code: CodeBlock,
+}
 
 export default ({ children }) => {
   const data = useStaticQuery(
@@ -24,7 +30,9 @@ export default ({ children }) => {
           </Link>
         </div>
       </div>
-      <div className="pt-16">{children}</div>
+      <div className="pt-16">
+        <MDXProvider components={components}>{children}</MDXProvider>
+      </div>
     </div>
   )
 }

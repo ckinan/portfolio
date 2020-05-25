@@ -12,7 +12,7 @@ export default () => {
             title
           }
         }
-        allMarkdownRemark(sort: { order: DESC, fields: frontmatter___date }) {
+        allMdx(sort: { order: DESC, fields: frontmatter___date }) {
           totalCount
           edges {
             node {
@@ -37,7 +37,7 @@ export default () => {
       <Helmet title={data.site.siteMetadata.title} />
       <div className="container mx-auto p-4 max-w-screen-md">
         <div>
-          {data.allMarkdownRemark.edges.map(({ node }) => (
+          {data.allMdx.edges.map(({ node }) => (
             <div
               key={node.id}
               className="hover:bg-gray-100 border-b overflow-hidden"

@@ -13,16 +13,10 @@ module.exports = {
     `gatsby-plugin-sharp`,
     `gatsby-plugin-react-helmet`,
     {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        plugins: [`gatsby-remark-images`, `gatsby-remark-prismjs`],
-      },
-    },
-    {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `content`,
-        path: `${__dirname}/content`,
+        name: `posts`,
+        path: `${__dirname}/content/posts`,
       },
     },
     `gatsby-plugin-postcss`,
@@ -30,6 +24,13 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: `UA-155856844-1`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        plugins: [`gatsby-remark-images`],
+        extensions: [".mdx", ".md"],
       },
     },
   ],

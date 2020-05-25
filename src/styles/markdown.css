@@ -60,15 +60,8 @@
 }
 
 .markdown code,
-.markdown pre code,
-.markdown p code,
-.markdown ul code,
-.markdown ol code {
-  @apply text-xs;
-}
-
 .markdown pre {
-  @apply bg-gray-100 rounded p-4;
+  @apply text-xs;
 }
 
 .markdown ul {
@@ -79,8 +72,8 @@
   @apply text-base pl-8 list-decimal;
 }
 
-.markdown kbd {
-  @apply text-xs inline-block rounded border px-1 py-1 align-middle font-normal font-mono shadow;
+.markdown code {
+  @apply inline-block rounded border px-1 align-middle font-normal font-mono bg-gray-100;
 }
 
 .markdown table {
@@ -95,12 +88,11 @@
   @apply border py-1 px-3;
 }
 
-/* Override pygments style background color. */
-.markdown .highlight pre {
-  @apply bg-gray-100 !important;
-}
-
 .markdown p img,
 .markdown a img {
   @apply rounded border-2 m-auto;
+}
+
+.markdown pre {
+  @apply rounded overflow-x-auto;
 }
