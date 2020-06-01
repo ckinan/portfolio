@@ -2,7 +2,7 @@ import React from "react"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import cap from "../images/cap.png"
 import { MDXProvider } from "@mdx-js/react"
-import CodeBlock from "./CodeBlock"
+import CodeBlock from "./codeBlock"
 
 const components = {
   code: CodeBlock,
