@@ -3,6 +3,7 @@ import { useStaticQuery, graphql, Link } from "gatsby"
 import cap from "../images/cap.png"
 import { MDXProvider } from "@mdx-js/react"
 import CodeBlock from "./codeblock"
+import Footer from "./footer"
 
 const components = {
   code: CodeBlock,
@@ -21,16 +22,19 @@ export default ({ children }) => {
     `
   )
   return (
-    <div>
-      <div className="z-40 fixed bg-white w-full p-4 text-center shadow-md">
-        <Link className="inline" to="/">
-          <img className="h-5 inline pr-2" src={cap} alt="cap" />
-          {data.site.siteMetadata.title}
-        </Link>
+    <div className="flex flex-col justify-between min-h-screen">
+      <div>
+        <div className="z-40 fixed w-full p-4 text-center shadow-md bg-white">
+          <Link className="inline" to="/">
+            <img className="h-5 inline pr-2" src={cap} alt="cap" />
+            {data.site.siteMetadata.title}
+          </Link>
+        </div>
+        <div className="pt-16">
+          <MDXProvider components={components}>{children}</MDXProvider>
+        </div>
       </div>
-      <div className="pt-16">
-        <MDXProvider components={components}>{children}</MDXProvider>
-      </div>
+      <Footer />
     </div>
   )
 }
