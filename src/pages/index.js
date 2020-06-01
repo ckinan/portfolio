@@ -44,13 +44,11 @@ export default () => {
             >
               <span>
                 <Link
-                  className="grid grid-cols-1 lg:grid-cols-6 p-3"
+                  className="flex flex-col lg:flex-row lg:items-center justify-between p-3"
                   to={node.fields.slug}
                 >
-                  <span className="col-span-6 lg:col-span-4">
-                    {node.frontmatter.title}
-                  </span>
-                  <span className="col-span-6 lg:col-span-2 text-left text-xs text-gray-600 lg:text-right">
+                  <span className="">{node.frontmatter.title}</span>
+                  <span className="text-xs text-gray-600">
                     {node.frontmatter.date}
                   </span>
                 </Link>
