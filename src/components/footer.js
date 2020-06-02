@@ -2,7 +2,7 @@ import React from "react"
 
 export default () => {
   return (
-    <div className="w-full text-center p-2 border-t">
+    <div className="w-full text-center p-2 border-t bg-white">
       <a
         href="https://github.com/ckinan"
         target="_blank"
