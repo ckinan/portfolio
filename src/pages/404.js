@@ -1,19 +1,22 @@
 import React from "react"
 import { Link } from "gatsby"
-import Layout from "../components/layout"
+import { HomeLayout } from "../components/layout"
 
 export default () => {
   return (
-    <Layout>
-      <div>
+    <HomeLayout>
+      <div className="flex flex-col items-center">
         <p>
-          Oops! Page not found. Go{" "}
-          <Link to="/">
-            <span>home</span>
-          </Link>{" "}
+          Oops! Page not found. Go
+          <Link
+            className="inline border-solid border-b-2 border-gray-900 font-medium mx-1"
+            to="/"
+          >
+            Home
+          </Link>
           :)
         </p>
       </div>
-    </Layout>
+    </HomeLayout>
   )
 }
