@@ -1,38 +1,45 @@
 import React from "react"
-import { useStaticQuery, graphql, Link } from "gatsby"
-import cap from "../images/cap.png"
-import { MDXProvider } from "@mdx-js/react"
-import CodeBlock from "./codeblock"
+import { Link } from "gatsby"
 import Footer from "./footer"
 
-const components = {
-  code: CodeBlock,
-}
-
-export default ({ children }) => {
-  const data = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-          }
-        }
-      }
-    `
-  )
+export const HomeLayout = ({ children }) => {
   return (
     <div className="flex flex-col justify-between min-h-screen">
       <div>
         <div className="z-40 fixed w-full p-4 text-center shadow-md bg-white">
-          <Link className="inline" to="/">
-            <img className="h-5 inline pr-2" src={cap} alt="cap" />
-            {data.site.siteMetadata.title}
+          <Link
+            className="inline mx-2 border-solid border-b-2 border-gray-900 font-medium"
+            to="/"
+          >
+            Home
+          </Link>
+          <Link className="inline mx-2 font-hairline" to="/blog">
+            Blog
           </Link>
         </div>
-        <div className="pt-16">
-          <MDXProvider components={components}>{children}</MDXProvider>
+      </div>
+      <div>{children}</div>
+      <Footer />
+    </div>
+  )
+}
+
+export const BlogLayout = ({ children }) => {
+  return (
+    <div className="flex flex-col justify-between min-h-screen">
+      <div>
+        <div className="z-40 fixed w-full p-4 text-center shadow-md bg-white">
+          <Link className="inline mx-2 font-hairline" to="/">
+            Home
+          </Link>
+          <Link
+            className="inline mx-2 border-solid border-b-2 border-gray-900 font-medium"
+            to="/blog"
+          >
+            Blog
+          </Link>
         </div>
+        <div>{children}</div>
       </div>
       <Footer />
     </div>

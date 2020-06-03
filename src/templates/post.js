@@ -1,17 +1,23 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Layout from "../components/layout"
+import { BlogLayout } from "../components/layout"
 import { Helmet } from "react-helmet"
 import { MDXRenderer } from "gatsby-plugin-mdx"
+import { MDXProvider } from "@mdx-js/react"
+import CodeBlock from "../components/codeblock"
+
+const components = {
+  code: CodeBlock,
+}
 
 export default ({ data }) => {
   const post = data.mdx
   return (
-    <Layout>
+    <BlogLayout>
       <Helmet
         title={`${post.frontmatter.title} : ${data.site.siteMetadata.title}`}
       />
-      <div className="container mx-auto p-4 max-w-screen-md">
+      <div className="container mx-auto px-4 pt-16 max-w-screen-md">
         <h1 className="leading-tight text-4xl font-semibold mt-4 pb-0">
           {post.frontmatter.title}
         </h1>
@@ -19,10 +25,12 @@ export default ({ data }) => {
           {post.frontmatter.date}
         </div>
         <div className="markdown">
-          <MDXRenderer>{post.body}</MDXRenderer>
+          <MDXProvider components={components}>
+            <MDXRenderer>{post.body}</MDXRenderer>
+          </MDXProvider>
         </div>
       </div>
-    </Layout>
+    </BlogLayout>
   )
 }
 
