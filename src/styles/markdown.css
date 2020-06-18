@@ -61,7 +61,7 @@
 
 .markdown code,
 .markdown pre {
-  @apply text-xs;
+  @apply text-xs break-normal;
 }
 
 .markdown ul {
