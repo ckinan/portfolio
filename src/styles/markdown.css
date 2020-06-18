@@ -59,11 +59,6 @@
   @apply text-base border-l-4 border-gray-300 pl-4 pr-4 text-gray-600;
 }
 
-.markdown code,
-.markdown pre {
-  @apply text-xs break-normal;
-}
-
 .markdown ul {
   @apply text-base pl-8 list-disc;
 }
@@ -94,5 +89,5 @@
 }
 
 .markdown pre {
-  @apply rounded overflow-x-auto;
+  @apply rounded overflow-x-auto break-normal;
 }
