@@ -1,6 +1,6 @@
 /* Markdown. Thanks to: https://github.com/iandinwoodie/github-markdown-tailwindcss/blob/master/markdown.css */
 .markdown {
-  @apply text-gray-900 leading-normal;
+  @apply text-gray-900 leading-normal break-words;
 }
 
 .markdown > * + * {
@@ -8,7 +8,7 @@
 }
 
 .markdown p {
-  @apply mb-4 break-words;
+  @apply mb-4;
 }
 
 .markdown li + li {
