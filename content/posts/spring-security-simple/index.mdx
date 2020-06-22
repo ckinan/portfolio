@@ -1,14 +1,110 @@
 ---
-title: Spring Security - Simple Example
+title: Spring Security - First Look
 date: 2020-06-01
-slug: spring-security-simple-example
+slug: spring-security-first-look
 status: IN_PROGRESS
 ---
 
 > In Progress
 
-How to get started with Spring Security with a very (VERY) simple example.
+Getting started with Spring Security by doing a simple example to understand the basics.
 
-- Create a spring boot project
+## Pre-requisites
+
+- Java 14 (not mandatory to have this version for this example)
+- IDE of your preference (Intellij Idea, Eclipse, etc)
+
+## Create project
+
+Go to https://start.spring.io/ and add the following dependencies:
+
+- Spring Web
+- Spring Security
+
+![](./images/0.png)
+
+## Run the application
+
+`cd` to the project directory, and execute the following:
+
+```bash
+$ ./mvnw spring-boot:run
+```
+
+Logs should look like:
+
+![](./images/1.png)
+
+1. Spring Security provides you a default password (for a default user) out of the box just by adding the Spring Security dependency. In the above screenshot, the password is `c916dd57-3b15-49e8-906e-163c7aadf1b5` for the user `user`.
+2. The filter chain created for your requests. There are 15 filters in the chain added for you and in the order they are printed in the logs within the array. If you open a text editor and put all them in one line each, you should see something like:
+
+```
+org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@f951a7f
+org.springframework.security.web.context.SecurityContextPersistenceFilter@360bc645
+org.springframework.security.web.header.HeaderWriterFilter@6cd5122d
+org.springframework.security.web.csrf.CsrfFilter@3fe46690
+org.springframework.security.web.authentication.logout.LogoutFilter@79fd6f95
+org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6726cc69
+org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@2241f05b
+org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@20cece0b
+org.springframework.security.web.authentication.www.BasicAuthenticationFilter@5300cac
+org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5d51e129
+org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@109a2025
+org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4c777e7b
+org.springframework.security.web.session.SessionManagementFilter@10c07b8d
+org.springframework.security.web.access.ExceptionTranslationFilter@b16e202
+org.springframework.security.web.access.intercept.FilterSecurityInterceptor@fd9ebde
+```
+
+Each of these have a purpose, and they make the whole flow of the security layer possible. Remember, they are filters chained that will take actions in that order whenever a new request comes.
+
+3. The port that your application is running. In this case, it's in 8080.
+
 - Create a rest controller
 - Secure a REST API
+
+## Open the application
+
+Open http://localhost:8080 in your browser, a login page should be displayed:
+
+![](./images/2.png)
+
+By default and by just adding the Spring Security dependency to the project, it generates a login page that sends the credentials to a generated endpoint `/login` that is in charge of verify whether the username and password are valid for the application and give access to the protected resources.
+
+Let's enter the credentials printed in logs into the form and click on the `Sign in` button (or just press enter).
+
+- Username: `user`
+- Password: `c916dd57-3b15-49e8-906e-163c7aadf1b5`
+
+An error page is displayed:
+
+![](./images/3.png)
+
+This is expected. In order to understand what happened, let's go to the Network Tab in the Dev Tools.
+
+![](./images/4.png)
+
+1. The credentials were sent to the endpoint `login`. Spring Security created that for us for free and the request will be processed by the filter chain we saw in the logs earlier.
+2. Information are sent from the pre-generated form. Notice the keys are already pre-defined `username`, `password` and a third one `_csrf`, which is meant to tackle the CSRF vulnerabilities. All them will be interpreted by the `login` endpoint.
+
+So, why we get an error page if I utilized the correct credentials? Let's see the second record in the Network Tab.
+
+![](./images/5.png)
+
+1. The resource that was asked was: `http://localhost:8080/`. Think of it as it requested the `/` resource from `http://localhost:8080`.
+2. 404 (not found). It means, the resource `/` doesn't exist.
+3. The referer or who had initiated that request was `http://localhost:8080/login` which is the location where the credentials were sent through the form.
+
+The error message refers to a resource that was not found. And that is because Spring Security only provides us the security stuff for the resources we want to protect. But, as we didn't touch anything in the codebase, actually we didn't even open the project in the IDE, then there is nothing to protect (yet) and the resource `/` (I suspect) is the default path right after a successful login is attempted.
+
+One more thing to notice, in Application Tab there in the Dev Tools, there is a new Cookie created under the name `JSESSION`.
+
+![](./images/6.png)
+
+That is what keeps the already-logged-in user in session in the Spring Security context.
+
+## First Pause
+
+A lot of things have happened by just adding the Spring Security dependency into the project. I didn't write any single line of code to get all the above stuff with Spring Security out of the box.
+
+Now, it's time to go to the code and do some customizations to the project so then we can connect pieces of what is happening and what we can do with it.

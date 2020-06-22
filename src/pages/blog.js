@@ -52,7 +52,7 @@ export default () => {
                     <span>{node.frontmatter.title}</span>
                     {node.frontmatter.status === "IN_PROGRESS" ? (
                       <span className="lg:ml-2 bg-yellow-300 text-yellow-700 text-xs mt-1 lg:mt-0 font-thin px-2 border-solid border-2 border-yellow-400 rounded-lg">
-                        In progress
+                        WIP
                       </span>
                     ) : (
                       ""
