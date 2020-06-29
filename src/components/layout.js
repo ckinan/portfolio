@@ -13,7 +13,7 @@ export const HomeLayout = ({ children }) => {
           >
             Home
           </Link>
-          <Link className="inline mx-2 font-hairline" to="/blog">
+          <Link className="inline mx-2 font-thin" to="/blog">
             Blog
           </Link>
         </div>
@@ -29,7 +29,7 @@ export const BlogLayout = ({ children }) => {
     <div className="flex flex-col justify-between min-h-screen">
       <div>
         <div className="z-40 fixed w-full p-4 text-center shadow-md bg-white">
-          <Link className="inline mx-2 font-hairline" to="/">
+          <Link className="inline mx-2 font-thin" to="/">
             Home
           </Link>
           <Link

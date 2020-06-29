@@ -1,0 +1,11 @@
+---
+title: Spring Security - Filter Chain
+date: 2020-06-29
+slug: spring-security-filter-chain
+---
+
+https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-securityfilterchain
+
+> First, it provides a starting point for all of Spring Security’s Servlet support. For that reason, if you are attempting to troubleshoot Spring Security’s Servlet support, adding a debug point in `FilterChainProxy` is a great place to start.
+
+https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-authentication

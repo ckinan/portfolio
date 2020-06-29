@@ -19,7 +19,8 @@ export default () => {
               id
               frontmatter {
                 title
-                date(formatString: "ddd DD MMMM YYYY")
+                monthYear: date(formatString: "MMMM YYYY")
+                day: date(formatString: "ddd DD")
               }
               excerpt
               fields {
@@ -32,34 +33,45 @@ export default () => {
     `
   )
 
+  const getPosts = () => {
+    let currentMonthYear = ""
+    let renderMonthYear = true
+
+    return data.allMdx.edges.map(({ node }) => {
+      renderMonthYear = node.frontmatter.monthYear !== currentMonthYear
+      if (renderMonthYear) {
+        currentMonthYear = node.frontmatter.monthYear
+      }
+
+      return (
+        <div key={node.id}>
+          {renderMonthYear ? (
+            <div className="mt-2 font-bold">{node.frontmatter.monthYear}</div>
+          ) : (
+            <></>
+          )}
+          <div>
+            <span className="grid grid-cols-12">
+              <div className="col-span-3 lg:col-span-1 text-right text-gray-600 font-light">
+                {node.frontmatter.day}
+              </div>
+              <div className="col-span-9 lg:col-span-11 ml-2">
+                <Link className="hover:underline" to={node.fields.slug}>
+                  <span>{node.frontmatter.title}</span>
+                </Link>
+              </div>
+            </span>
+          </div>
+        </div>
+      )
+    })
+  }
+
   return (
     <BlogLayout>
       <Helmet title={`Blog : ${data.site.siteMetadata.title}`} />
-      <div className="container mx-auto px-4 pt-16 max-w-screen-md">
-        <div>
-          {data.allMdx.edges.map(({ node }) => (
-            <div
-              key={node.id}
-              className="hover:bg-gray-100 border-b overflow-hidden"
-            >
-              <span>
-                <Link
-                  className="flex flex-col lg:flex-row lg:items-center justify-between p-3"
-                  to={node.fields.slug}
-                >
-                  <div className="flex flex-col items-start justify-start lg:flex-row lg:items-center">
-                    <span>{node.frontmatter.title}</span>
-                  </div>
-                  <div>
-                    <span className="text-xs text-gray-600">
-                      {node.frontmatter.date}
-                    </span>
-                  </div>
-                </Link>
-              </span>
-            </div>
-          ))}
-        </div>
+      <div className="container mx-auto px-4 pt-16 mb-2 max-w-screen-md">
+        <div>{getPosts()}</div>
       </div>
     </BlogLayout>
   )

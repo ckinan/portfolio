@@ -7,7 +7,7 @@ export default () => {
         href="https://github.com/ckinan"
         target="_blank"
         rel="noopener noreferrer"
-        className="text-blue-600 mx-2"
+        className="text-blue-600 mx-2 hover:underline"
       >
         Github
       </a>
@@ -15,7 +15,7 @@ export default () => {
         href="https://www.linkedin.com/in/ckinan"
         target="_blank"
         rel="noopener noreferrer"
-        className="text-blue-600 mx-2"
+        className="text-blue-600 mx-2 hover:underline"
       >
         Linkedin
       </a>
