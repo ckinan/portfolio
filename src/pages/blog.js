@@ -20,7 +20,6 @@ export default () => {
               frontmatter {
                 title
                 date(formatString: "ddd DD MMMM YYYY")
-                status
               }
               excerpt
               fields {
@@ -50,13 +49,6 @@ export default () => {
                 >
                   <div className="flex flex-col items-start justify-start lg:flex-row lg:items-center">
                     <span>{node.frontmatter.title}</span>
-                    {node.frontmatter.status === "IN_PROGRESS" ? (
-                      <span className="lg:ml-2 bg-yellow-300 text-yellow-700 text-xs mt-1 lg:mt-0 font-thin px-2 border-solid border-2 border-yellow-400 rounded-lg">
-                        WIP
-                      </span>
-                    ) : (
-                      ""
-                    )}
                   </div>
                   <div>
                     <span className="text-xs text-gray-600">
