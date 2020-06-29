@@ -46,20 +46,18 @@ export default () => {
       return (
         <div key={node.id}>
           {renderMonthYear ? (
-            <div className="mt-2 font-bold">{node.frontmatter.monthYear}</div>
+            <div className="font-semibold">{node.frontmatter.monthYear}</div>
           ) : (
             <></>
           )}
-          <div>
-            <span className="grid grid-cols-12">
-              <div className="col-span-3 lg:col-span-1 text-right text-gray-600 font-light">
-                {node.frontmatter.day}
-              </div>
-              <div className="col-span-9 lg:col-span-11 ml-2">
-                <Link className="hover:underline" to={node.fields.slug}>
-                  <span>{node.frontmatter.title}</span>
-                </Link>
-              </div>
+          <div className="border-l-4 my-2 ml-2 pl-2">
+            <span className="text-gray-600 font-light">
+              {node.frontmatter.day}:
+            </span>
+            <span className="ml-2">
+              <Link className="hover:underline" to={node.fields.slug}>
+                <span>{node.frontmatter.title}</span>
+              </Link>
             </span>
           </div>
         </div>
