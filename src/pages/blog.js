@@ -69,6 +69,10 @@ export default () => {
     <BlogLayout>
       <Helmet title={`Blog : ${data.site.siteMetadata.title}`} />
       <div className="container mx-auto px-4 pt-16 mb-2 max-w-screen-md">
+        <h1 className="leading-tight text-4xl font-semibold mt-4 pb-0">Blog</h1>
+        <div className="border-b mt-1 mb-5 text-xs text-gray-600">
+          Find all my posts here
+        </div>
         <div>{getPosts()}</div>
       </div>
     </BlogLayout>
