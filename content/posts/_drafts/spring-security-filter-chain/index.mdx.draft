@@ -8,4 +8,12 @@ https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#
 
 > First, it provides a starting point for all of Spring Security’s Servlet support. For that reason, if you are attempting to troubleshoot Spring Security’s Servlet support, adding a debug point in `FilterChainProxy` is a great place to start.
 
+- When the filter chain is initialized
+- Disable a filter?
+- Main filters
+- Debug filters
+- Add filters
+
 https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-authentication
+
+https://www.youtube.com/watch?v=8rnOsF3RVQc
