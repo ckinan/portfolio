@@ -89,5 +89,5 @@
 }
 
 .markdown pre {
-  @apply rounded overflow-x-auto break-normal;
+  @apply rounded overflow-x-auto break-normal text-xs;
 }
