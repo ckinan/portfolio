@@ -55,7 +55,10 @@ export default () => {
               {node.frontmatter.day}:
             </span>
             <span className="ml-2">
-              <Link className="hover:underline" to={node.fields.slug}>
+              <Link
+                className="hover:underline font-light"
+                to={node.fields.slug}
+              >
                 <span>{node.frontmatter.title}</span>
               </Link>
             </span>
@@ -69,9 +72,9 @@ export default () => {
     <BlogLayout>
       <Helmet title={`Blog : ${data.site.siteMetadata.title}`} />
       <div className="container mx-auto px-4 pt-16 mb-2 max-w-screen-md">
-        <h1 className="leading-tight text-4xl font-semibold mt-4 pb-0">Blog</h1>
-        <div className="border-b mt-1 mb-5 text-xs text-gray-600">
-          Find all my posts here
+        <h1 className="leading-tight text-4xl mt-4 pb-0 font-light">Blog</h1>
+        <div className="border-b mt-1 mb-5 text-xs text-gray-600 font-light">
+          Anything, everthing, here
         </div>
         <div>{getPosts()}</div>
       </div>

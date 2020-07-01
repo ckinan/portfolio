@@ -1,6 +1,6 @@
 /* Markdown. Thanks to: https://github.com/iandinwoodie/github-markdown-tailwindcss/blob/master/markdown.css */
 .markdown {
-  @apply text-gray-900 leading-normal break-words;
+  @apply text-gray-900 leading-normal break-words font-light leading-snug;
 }
 
 .markdown > * + * {
@@ -24,11 +24,11 @@
 }
 
 .markdown a {
-  @apply text-blue-600;
+  @apply text-blue-600 underline;
 }
 
 .markdown strong a {
-  @apply font-bold;
+  @apply font-bold underline;
 }
 
 .markdown h1 {
@@ -68,7 +68,7 @@
 }
 
 .markdown code {
-  @apply rounded border px-1 align-middle font-normal font-mono bg-gray-100;
+  @apply rounded border px-1 bg-gray-100 text-sm;
 }
 
 .markdown table {

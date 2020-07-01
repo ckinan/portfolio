@@ -8,7 +8,7 @@ export const HomeLayout = ({ children }) => {
       <div>
         <div className="z-40 fixed w-full p-4 text-center shadow-md bg-white">
           <Link
-            className="inline mx-2 border-solid border-b-2 border-gray-900 font-medium"
+            className="inline mx-2 border-solid border-b-2 border-gray-900"
             to="/"
           >
             Home
@@ -33,7 +33,7 @@ export const BlogLayout = ({ children }) => {
             Home
           </Link>
           <Link
-            className="inline mx-2 border-solid border-b-2 border-gray-900 font-medium"
+            className="inline mx-2 border-solid border-b-2 border-gray-900"
             to="/blog"
           >
             Blog

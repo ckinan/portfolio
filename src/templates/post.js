@@ -21,7 +21,7 @@ export default ({ data }) => {
         <h1 className="leading-tight text-4xl font-semibold mt-4 pb-0">
           {post.frontmatter.title}
         </h1>
-        <div className="border-b mt-1 mb-5 text-xs text-gray-600">
+        <div className="border-b mt-1 mb-5 text-xs text-gray-600 font-light">
           {post.frontmatter.date}
         </div>
         <div className="markdown">
