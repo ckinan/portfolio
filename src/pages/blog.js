@@ -45,12 +45,8 @@ export default () => {
 
       return (
         <div key={node.id}>
-          {renderMonthYear ? (
-            <div className="font-semibold">{node.frontmatter.monthYear}</div>
-          ) : (
-            <></>
-          )}
-          <div className="border-l-4 my-2 ml-2 pl-2">
+          {renderMonthYear ? <div>{node.frontmatter.monthYear}</div> : <></>}
+          <div className="border-l-4 my-2 ml-2 pl-2 leading-snug">
             <span className="text-gray-600 font-light">
               {node.frontmatter.day}:
             </span>
@@ -71,10 +67,12 @@ export default () => {
   return (
     <BlogLayout>
       <Helmet title={`Blog : ${data.site.siteMetadata.title}`} />
-      <div className="container mx-auto px-4 pt-16 mb-2 max-w-screen-md">
-        <h1 className="leading-tight text-4xl mt-4 pb-0 font-light">Blog</h1>
+      <div className="container mx-auto px-4 pt-16 mb-6 max-w-screen-md">
+        <h1 className="leading-tight text-4xl mt-4 pb-0 font-semibold">
+          Writing
+        </h1>
         <div className="border-b mt-1 mb-5 text-xs text-gray-600 font-light">
-          Anything, everthing, here
+          All my content is here
         </div>
         <div>{getPosts()}</div>
       </div>
