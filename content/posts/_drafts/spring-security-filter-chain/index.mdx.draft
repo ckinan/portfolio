@@ -1,10 +1,42 @@
 ---
 title: Spring Security - Filter Chain
-date: 2020-06-29
+date: 2020-07-01
 slug: spring-security-filter-chain
 ---
 
-https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-securityfilterchain
+After playing with few basic configurations of Spring Security, I noticed there is something important to understand before moving to check other features in the framework, which is its **Filter Chain**. This time I'll take a look at how Spring Security acts on the requests coming from the client, which involves a set of Filters, each of them with a very specific goal.
+
+## Introduction
+
+The most complete explanation I could find regarding how the Security Filter Chain is built in the entire architecture is in the official documentation in here: https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture
+
+It doesn't make sense to copy and paste the whole thing from there, so I will try to illustrate some concepts by doing some testing and debugging (being this the way I can see this in action and the way I learn).
+
+## Main Components
+
+There are five pieces (in the documentation I pointed out in the previous section) that I want to visit here. They are:
+
+### Filters
+
+First of all, "Filters" (in the Servlet's world) came from the `Java Specification Requests (JSR) #53`. Look at this:
+- Ref: https://jcp.org/en/jsr/detail?id=53
+- Direct link to the PDF (See Page #43): https://download.oracle.com/otn-pub/jcp/7840-servlet-2.3-spec-oth-JSpec/servlet-2_3-fcs-spec.pdf?AuthParam=1593651764_bd0a8306800ffcc92df386c00a6c89f0
+
+Filters are a sequence of instructions that do something before or after a Request is processed by a Servlet. By configuring a filter into a web application, the container where the application is deployed (e.g. a Tomcat) will know that a Request, in order to access a Servlet, it needs first to pass through one or more filters before (or after, depending on the configurations).
+
+Filters have multiple purposes, it is not only restricted to be for Security mechanisms. They are meant to read or write (any logic in general) with the Request. For example: one filter can print some audit logs, another one can add some headers to the request, and so on.
+
+In the Spring Security's world, we have a set of Filters strategically ordered to prevent subsequent filters or the controller itself being called if they find the request not matching with the security configuration. The most straightforward example may be, imagine a user entering a wrong password, there is one filter dedicated to verify whether the password is correct or not. If not, then the at some point of the Filter Chain, one of the Filters will reject the request to access a resource (that can be a controller or any other thing in the server) by responding with a 401 status code to the client, being all these the work of one Filter only in the whole Filter Chain.
+
+### DelegatingFilterProxy
+
+From here, it's time to see some classes and code to get a deeper understanding of how the Filter Chain is built.
+
+### FilterChainProxy
+
+### SecurityFilterChain
+
+### Security Filters
 
 > First, it provides a starting point for all of Spring Security’s Servlet support. For that reason, if you are attempting to troubleshoot Spring Security’s Servlet support, adding a debug point in `FilterChainProxy` is a great place to start.
 
@@ -17,3 +49,5 @@ https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#
 https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-authentication
 
 https://www.youtube.com/watch?v=8rnOsF3RVQc
+
+https://www.youtube.com/watch?v=k32KqrckLEE
