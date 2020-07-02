@@ -21,12 +21,6 @@ module.exports = {
     },
     `gatsby-plugin-postcss`,
     {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: `UA-155856844-1`,
-      },
-    },
-    {
       resolve: `gatsby-plugin-mdx`,
       options: {
         gatsbyRemarkPlugins: [
