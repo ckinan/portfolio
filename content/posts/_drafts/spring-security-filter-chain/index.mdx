@@ -6,11 +6,13 @@ slug: spring-security-filter-chain
 
 After playing with few basic configurations of Spring Security, I noticed there is something important to understand before moving to check other features in the framework, which is its **Filter Chain**. This time I'll take a look at how Spring Security acts on the requests coming from the client, which involves a set of Filters, each of them with a very specific goal.
 
+> Note: This is not a tutorial, this is just some notes of what I understand (as of today) about Spring Security.
+
 ## Introduction
 
 The most complete explanation I could find regarding how the Security Filter Chain is built in the entire architecture is in the official documentation in here: https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture
 
-It doesn't make sense to copy and paste the whole thing from there, so I will try to illustrate some concepts by doing some testing and debugging (being this the way I can see this in action and the way I learn).
+I'll write down what I interpret from what I already interacted with the module in combination with what the documentation is trying to explain.
 
 ## Main Components
 
@@ -22,32 +24,81 @@ First of all, "Filters" (in the Servlet's world) came from the `Java Specificati
 - Ref: https://jcp.org/en/jsr/detail?id=53
 - Direct link to the PDF (See Page #43): https://download.oracle.com/otn-pub/jcp/7840-servlet-2.3-spec-oth-JSpec/servlet-2_3-fcs-spec.pdf?AuthParam=1593651764_bd0a8306800ffcc92df386c00a6c89f0
 
-Filters are a sequence of instructions that do something before or after a Request is processed by a Servlet. By configuring a filter into a web application, the container where the application is deployed (e.g. a Tomcat) will know that a Request, in order to access a Servlet, it needs first to pass through one or more filters before (or after, depending on the configurations).
+Filters are some pieces of code that do something before or after a Request gets processed by a Servlet. The web container (e.g. Tomcat) will know that.
 
 Filters have multiple purposes, it is not only restricted to be for Security mechanisms. They are meant to read or write (any logic in general) with the Request. For example: one filter can print some audit logs, another one can add some headers to the request, and so on.
 
-In the Spring Security's world, we have a set of Filters strategically ordered to prevent subsequent filters or the controller itself being called if they find the request not matching with the security configuration. The most straightforward example may be, imagine a user entering a wrong password, there is one filter dedicated to verify whether the password is correct or not. If not, then the at some point of the Filter Chain, one of the Filters will reject the request to access a resource (that can be a controller or any other thing in the server) by responding with a 401 status code to the client, being all these the work of one Filter only in the whole Filter Chain.
+In the Spring Security's world, we have a set of Filters strategically ordered to prevent subsequent filters or the controller itself being called if they find the request not matching with the security configuration.
+
+The most straightforward example may be, imagine a user entering a wrong password, there is one filter dedicated to verify whether the password is correct or not. If not, then the at some point of the Filter Chain, one of the Filters will reject the request and respond with a 401 status code to the client.
 
 ### DelegatingFilterProxy
 
-From here, it's time to see some classes and code to get a deeper understanding of how the Filter Chain is built.
+`DelegatingFilterProxy` is a class registered as Standard Filter in the Container, but the container doesn't know anything about Spring Beans at this point. `DelegatingFilterProxy` is the support to establish communication between the Standard Filters and the Spring Application Context.
+
+Notice that I didn't mention anything about Spring Security yet, that's because `DelegatingFilterProxy` is a class located in Spring Web and not Spring Security. Which is interesting because from there I interpret that this proxy can be used by something else not necessarily related to Spring Security.
 
 ### FilterChainProxy
 
+`FilterChainProxy` is a filter located in Spring Security module.
+
+It takes a list of filters and creates something called `VirtualFilterChain` (a private class within `FilterChainProxy`), which is going to take the list of the Security Filters and _start_ the chain.
+
+I want to point this out that seems to be pretty useful, quoting Spring Security docs:
+
+> First, it provides a starting point for all of Spring Security’s Servlet support. For that reason, if you are attempting to troubleshoot Spring Security’s Servlet support, adding a debug point in FilterChainProxy is a great place to start.
+
 ### SecurityFilterChain
+
+`SecurityFilterChain` contains the list of all the filters involved in Spring Security. This interface expose a method `List<Filter> getFilters()` that returns all the filters such as the `UsernamePasswordAuthenticationFilter` or `LogoutFilter`.
+
+In Spring Security, one or more `SecurityFilterChain`s can be registered in the `FilterChainProxy`.
+
+In the following picture (all credits to [Spring Security's Official Docs](https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-securityfilterchain)), illustrate all the components I tried to explain so far:
+
+![](images/0.png)
 
 ### Security Filters
 
-> First, it provides a starting point for all of Spring Security’s Servlet support. For that reason, if you are attempting to troubleshoot Spring Security’s Servlet support, adding a debug point in `FilterChainProxy` is a great place to start.
+Finally, at the end of all this hierarchy (Standard Filter > DelegatingFilterProxy > FilterChainProxy > SecurityFilterChain), there is list of possible security filters that we can configure in our applications. I'll just mention the ones that I kind of interated so far:
 
-- When the filter chain is initialized
-- Disable a filter?
-- Main filters
-- Debug filters
-- Add filters
+- LogoutFilter
+- UsernamePasswordAuthenticationFilter
+- DefaultLoginPageGeneratingFilter
+- BasicAuthenticationFilter
+- SessionManagementFilter
 
-https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-authentication
+In fact, everytime your Spring Boot application starts up, the list of filters are printed in the logs by default (in their corresponding order of execution). Example:
 
-https://www.youtube.com/watch?v=8rnOsF3RVQc
+```
+2020-07-02 21:34:55.896  INFO 51095 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7fe82967, org.springframework.security.web.context.SecurityContextPersistenceFilter@9596ce8, org.springframework.security.web.header.HeaderWriterFilter@26f46fa6, org.springframework.security.web.csrf.CsrfFilter@558756be, org.springframework.security.web.authentication.logout.LogoutFilter@80bfdc6, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6edcad64, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@75ae4a1f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@476fe690, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@50850539, org.springframework.security.web.session.SessionManagementFilter@227a47, org.springframework.security.web.access.ExceptionTranslationFilter@3968bc60, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2924f1d8]
 
-https://www.youtube.com/watch?v=k32KqrckLEE
+// find them below in a more readable way:
+
+[
+    1. org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5fa23c
+    2. org.springframework.security.web.context.SecurityContextPersistenceFilter@73c9e8e8
+    3. org.springframework.security.web.header.HeaderWriterFilter@59f93db8
+    4. org.springframework.security.web.csrf.CsrfFilter@13d9261f
+    5. org.springframework.security.web.authentication.logout.LogoutFilter@b606cb6
+    6. org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@2a3194c6
+    7. org.springframework.security.web.savedrequest.RequestCacheAwareFilter@de8039f
+    8. org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4b790d86
+    9. org.springframework.security.web.authentication.AnonymousAuthenticationFilter@558756be
+    10. org.springframework.security.web.session.SessionManagementFilter@1aabf50d
+    11. org.springframework.security.web.access.ExceptionTranslationFilter@2e8a1ab4
+    12. org.springframework.security.web.access.intercept.FilterSecurityInterceptor@51c959a4
+]
+```
+
+So, any requests coming from the client will pass through the filter chain and in that order.
+
+## Final thoughts
+
+
+
+## Refs
+
+- https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-authentication
+- https://www.youtube.com/watch?v=8rnOsF3RVQc
+- https://www.youtube.com/watch?v=k32KqrckLEE
