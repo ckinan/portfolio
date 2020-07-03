@@ -6,7 +6,7 @@ slug: spring-security-filter-chain
 
 After playing with few basic configurations of Spring Security, I noticed there is something important to understand before moving to check other features in the framework, which is its **Filter Chain**. This time I'll take a look at how Spring Security acts on the requests coming from the client, which involves a set of Filters, each of them with a very specific goal.
 
-> Note: This is not a tutorial, this is just some notes of what I understand (as of today) about Spring Security.
+> Note: This is not a tutorial, this is just some notes of what I understand (as of today) about Spring Security and its Filter Chain.
 
 ## Introduction
 
@@ -71,9 +71,12 @@ Finally, at the end of all this hierarchy (Standard Filter > DelegatingFilterPro
 In fact, everytime your Spring Boot application starts up, the list of filters are printed in the logs by default (in their corresponding order of execution). Example:
 
 ```
+// Raw logs at startup time
+// List of filters are printed there
+
 2020-07-02 21:34:55.896  INFO 51095 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7fe82967, org.springframework.security.web.context.SecurityContextPersistenceFilter@9596ce8, org.springframework.security.web.header.HeaderWriterFilter@26f46fa6, org.springframework.security.web.csrf.CsrfFilter@558756be, org.springframework.security.web.authentication.logout.LogoutFilter@80bfdc6, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6edcad64, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@75ae4a1f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@476fe690, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@50850539, org.springframework.security.web.session.SessionManagementFilter@227a47, org.springframework.security.web.access.ExceptionTranslationFilter@3968bc60, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2924f1d8]
 
-// find them below in a more readable way:
+// And this is the list of filters in a more readable way:
 
 [
     1. org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5fa23c
@@ -95,10 +98,12 @@ So, any requests coming from the client will pass through the filter chain and i
 
 ## Final thoughts
 
-
+- I started to write this article thinking of the Filter Chain as something strictily related to Spring Security. BUT, during all my reading I got that this part of the architecture in regards of how Spring Security Filters are added into the actual "standard" filter chain as something that you first need to know other "external" concepts about Filters, Servlets and the interfaces that Spring Web provides. Only then, all the illustrations and explanation in the official docs started to make sense to me.
+- Debugging one of my few [simple examples](https://github.com/ckinan/java-practice/tree/master/spring-security-02) during startup time helped me a lot to understand some pieces, specifically having some breakpoints in `FilterChainProxy` then going all the way down and all the way up in the whole call hierarchy was pretty useful. Still, there are A LOT of areas in the codebase of Spring Security and Spring Web that I don't understand right now..
+- I'm impressed the quality of the docstrings Spring has in its [codebase](https://github.com/spring-projects/spring-security), I found a lot of insights there, like examples, code snippets, explanation in details (more than I could find in the official docs).
 
 ## Refs
 
-- https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-authentication
-- https://www.youtube.com/watch?v=8rnOsF3RVQc
-- https://www.youtube.com/watch?v=k32KqrckLEE
+- This is where most part of this post comes from: https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture
+- Architecture Deep Dive in Spring Security - Joe Grandja @ Spring I/O 2017: https://www.youtube.com/watch?v=8rnOsF3RVQc
+- SpringOne 2GX 2012 - Getting Started with Spring Security 3.1 - Rob Winch: https://www.youtube.com/watch?v=k32KqrckLEE
