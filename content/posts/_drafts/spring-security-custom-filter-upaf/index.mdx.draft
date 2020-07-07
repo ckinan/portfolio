@@ -8,6 +8,21 @@ slug: spring-security-credentials-from-json-request
 
 Skeleton:
 - Create project
+
+http://start.spring.io
+
+![](images/0.png)
+
+```
+$ ./gradlew bootRun
+```
+
+Included 2 endpoints (one protected one public) and a security configuration disabling the form login.
+
+Testing with Postman, it will fail trying to access the `protected-resource`
+
+![](images/1.png)
+
 - Take a look at `UsernamePasswordAuthenticationFilter` filter
 - Extract username and password from the json body of the request
 - Use in-memory username and password to keep it simple
