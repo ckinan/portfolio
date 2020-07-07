@@ -1,0 +1,16 @@
+---
+title: Spring Security - Credentials from JSON request
+date: 2020-07-06
+slug: spring-security-credentials-from-json-request
+---
+
+> In progress
+
+Skeleton:
+- Create project
+- Take a look at `UsernamePasswordAuthenticationFilter` filter
+- Extract username and password from the json body of the request
+- Use in-memory username and password to keep it simple
+- Make all the solution in one class (do not worry about the project structure)
+- Understand the `addFilterBefore` method
+- Is there more than one way to override this behavior of the filter?
