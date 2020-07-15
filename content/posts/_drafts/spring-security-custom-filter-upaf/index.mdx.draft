@@ -23,9 +23,17 @@ Testing with Postman, it will fail trying to access the `protected-resource`
 
 ![](images/1.png)
 
+![](images/2.png)
+
 - Take a look at `UsernamePasswordAuthenticationFilter` filter
 - Extract username and password from the json body of the request
 - Use in-memory username and password to keep it simple
 - Make all the solution in one class (do not worry about the project structure)
 - Understand the `addFilterBefore` method
 - Is there more than one way to override this behavior of the filter?
+
+https://spring.io/guides/topicals/spring-security-architecture :
+
+> Spring Boot provides a default global AuthenticationManager (with just one user) unless you pre-empt it by providing your own bean of type AuthenticationManager. The default is secure enough on its own for you not to have to worry about it much, unless you actively need a custom global AuthenticationManager. If you do any configuration that builds an AuthenticationManager you can often do it locally to the resources that you are protecting and not worry about the global default.
+
+AuthenticationManager -> ProviderManager -> AuthenticationProvider
