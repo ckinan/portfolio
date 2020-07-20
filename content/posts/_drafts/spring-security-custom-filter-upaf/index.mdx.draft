@@ -81,45 +81,6 @@ The controller includes two endpoints (both GET) that basically return some stri
 - `/protected-resource`: This endpoint will be protected by our Spring Security configuration. By "protected", it means clients need to authenticate first to access the resource.
 - `/public-resource`: Authentication is not needed to access this resource.
 
-### SecurityConfiguration
-
-```java
-package com.ckinan;
-
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-@EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("cesar").password("{noop}s3cr3t").roles("USER");
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        CustomFilter mupaf = new CustomFilter();
-        mupaf.setAuthenticationManager(authenticationManager());
-
-        http
-            .csrf().disable()
-            .formLogin().disable()
-            .addFilterAt(
-                    mupaf,
-                    UsernamePasswordAuthenticationFilter.class)
-            .authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/protected-resource").authenticated()
-            .antMatchers(HttpMethod.POST, "/login").permitAll();
-    }
-
-}
-```
-
 ### CustomFilter
 
 ```java
@@ -167,6 +128,60 @@ public class CustomFilter extends AbstractAuthenticationProcessingFilter {
 }
 ```
 
+This filter is the one in charge of reading the credentials from the request in JSON format. It will act as replacement of the `UsernamePasswordAuthenticationFilter`, which we are removing from our spring security configuration in favor of using the `CustomFilter`.
+
+### SecurityConfiguration
+
+```java
+package com.ckinan;
+
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+@EnableWebSecurity
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication().withUser("cesar").password("{noop}s3cr3t").roles("USER");
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        CustomFilter mupaf = new CustomFilter();
+        mupaf.setAuthenticationManager(authenticationManager());
+
+        http
+            .csrf().disable()
+            .formLogin().disable()
+            .addFilterAt(
+                    mupaf,
+                    UsernamePasswordAuthenticationFilter.class)
+            .authorizeRequests()
+            .antMatchers(HttpMethod.GET, "/protected-resource").authenticated()
+            .antMatchers(HttpMethod.POST, "/login").permitAll();
+    }
+
+}
+```
+
+For simplicity, here we are working with only one user loaded from memory:
+
+- Username: `cesar`
+- Password: `s3cr3t`
+
+The `{noop}` means we are going to use the `NoOpPasswordEncoder` password encoder, which simply does not do anything to the password we are providing `s3cr3t` (it won't get encoded). This is not secure obviously, but will work for this example.
+
+Create new instance of the `CustomFilter`, in which we want to provide an `authenticationManager`. Then insert the filter in the same position as the `UsernamePasswordAuthenticationFilter` would have been.
+
+`UsernamePasswordAuthenticationFilter` is being removed from the filter chain because we are explicitely disabling the `formLogin` feature by doing, which works directly with the `UsernamePasswordAuthenticationFilter`.
+
+Then, configure the `antMatchers` for the two resources (one public one protected).
+
 ## Run and test
 
 Run the application with the following instruction in terminal (need to cd to the project directory):
@@ -179,7 +194,20 @@ Testing with Postman, it will fail trying to access the `protected-resource`
 
 ![](images/1.png)
 
+Use the `/login` endpoint to authenticate the user.
 
+![](images/2.png)
+
+Try to access the `protected-resource` once again. This time, the user should be already authenticated.
+
+![](images/3.png)
+
+## Links
+
+- Github repo: https://github.com/ckinan/java-practice/tree/master/spring-security-credentials-from-json-request
+- Spring Security Architecture (gave me more insights about what AuthenticationManager, ProviderManager and AuthenticationProvider are): https://spring.io/guides/topicals/spring-security-architecture
+
+## Notes
 
 - Take a look at `UsernamePasswordAuthenticationFilter` filter
 - Extract username and password from the json body of the request
