@@ -35,15 +35,7 @@ export default ({ data }) => {
           {post.frontmatter.title}
         </h1>
         <div className="border-b mt-1 mb-5 text-xs text-gray-600 font-light">
-          <span>{post.frontmatter.date}</span>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            className="ml-2"
-            href={`https://github.com/ckinan/ckinan.com/tree/master/content/posts/${post.frontmatter.slug}`}
-          >
-            [<span className="hover:underline mx-1">Edit</span>]
-          </a>
+          {post.frontmatter.date}
         </div>
         <div className="markdown">
           <MDXProvider components={components}>
@@ -71,7 +63,6 @@ export const query = graphql`
       frontmatter {
         title
         date(formatString: "dddd DD MMMM YYYY")
-        slug
       }
     }
   }
