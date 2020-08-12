@@ -1,0 +1,48 @@
+---
+title: Git Diff Stats
+date: 2020-08-11
+slug: git-diff-stats
+---
+
+```python
+import subprocess
+import re
+
+
+__FILES_CHANGED_REGEX = r'(\d+) files? changed'
+__INSERTIONS_REGEX = r'(\d+) insertions?'
+__DELETIONS_REGEX = r'(\d+) deletions?'
+
+current = 'origin/master'
+parent = 'origin/2020-08-10-tmp'
+
+
+def run():
+    # Read the raw result from the "git diff --shortstat" command between two commits or branches
+    # Result example: '346 files changed, 2942 insertions(+), 25698 deletions(-)'
+    raw_stats = subprocess.check_output(
+        f'git diff --shortstat {parent}..{current}',
+        shell=True
+    ).decode('utf-8')
+
+    # Read stats values using regex
+    files_changed = __get_stat_by_key(raw_stats, __FILES_CHANGED_REGEX)
+    insertions = __get_stat_by_key(raw_stats, __INSERTIONS_REGEX)
+    deletions = __get_stat_by_key(raw_stats, __DELETIONS_REGEX)
+
+    print(f'Files changed: {files_changed}')
+    print(f'Insertions: {insertions}')
+    print(f'Deletions: {deletions}')
+
+
+def __get_stat_by_key(raw_stats: str, regex: str) -> int:
+    # Read a given stat (specified in the regex) from the raw_stats. If it doesn't exist, return zero as default value
+    regex_grouped_stats = re.search(regex, raw_stats)
+    return int(regex_grouped_stats.group(1)) if regex_grouped_stats else 0
+
+
+if __name__ == '__main__':
+    run()
+
+```
+
