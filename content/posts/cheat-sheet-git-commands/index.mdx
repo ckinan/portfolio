@@ -1,0 +1,22 @@
+---
+title: Cheat Sheet - Git Commands
+date: 2020-08-13
+slug: cheat-sheet-git-commands
+---
+
+My Cheat Sheet for: Git Commands
+
+Git log with some styling (colors and specific order I like to see)
+```bash
+$ git log --pretty=format:"%C(Green)%h %C(Red)[.%D.] %C(Blue)[%an] %C(Yellow)[%s] %C(Magenta)[%ad (%ar)]"
+```
+![](./images/0.png)
+
+Get number of files changed, lines inserted and lines removed between two branches or commits
+```bash
+$ git diff --shortstat master..develop
+ 13 files changed, 90 insertions(+), 410 deletions(-)
+
+$ git diff --shortstat 499a153..8059ee2
+ 3 files changed, 69 insertions(+), 1 deletion(-)
+```
