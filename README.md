@@ -13,3 +13,5 @@ Local address and port should be displayed in logs:
   Local:            http://localhost:8000/
   On Your Network:  http://x.x.x.x:8000/
 ```
+
+:)
