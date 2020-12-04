@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 import Footer from "./footer"
 
-export const HomeLayout = ({ children }) => {
+export const BlogLayout = ({ children }) => {
   return (
     <div className="flex flex-col justify-between min-h-screen">
       <div>
@@ -11,32 +11,32 @@ export const HomeLayout = ({ children }) => {
             className="inline mx-2 border-solid border-b-2 border-gray-900"
             to="/"
           >
-            Home
-          </Link>
-          <Link className="inline mx-2 font-thin" to="/blog">
             Blog
           </Link>
+          <Link className="inline mx-2 font-thin" to="/about">
+            About
+          </Link>
         </div>
+        <div>{children}</div>
       </div>
-      <div>{children}</div>
       <Footer />
     </div>
   )
 }
 
-export const BlogLayout = ({ children }) => {
+export const AboutLayout = ({ children }) => {
   return (
     <div className="flex flex-col justify-between min-h-screen">
       <div>
         <div className="z-40 fixed w-full p-4 text-center shadow-md bg-white">
           <Link className="inline mx-2 font-thin" to="/">
-            Home
+            Blog
           </Link>
           <Link
             className="inline mx-2 border-solid border-b-2 border-gray-900"
-            to="/blog"
+            to="/about"
           >
-            Blog
+            About
           </Link>
         </div>
         <div>{children}</div>

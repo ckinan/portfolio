@@ -1,10 +1,10 @@
 import React from "react"
 import { Link } from "gatsby"
-import { HomeLayout } from "../components/layout"
+import { BlogLayout } from "../components/layout"
 
 export default () => {
   return (
-    <HomeLayout>
+    <BlogLayout>
       <div className="flex flex-col items-center">
         <p>
           Oops! Page not found. Go
@@ -17,6 +17,6 @@ export default () => {
           :)
         </p>
       </div>
-    </HomeLayout>
+    </BlogLayout>
   )
 }
