@@ -29,6 +29,30 @@ export default () => {
         <div className="font-light">
             Cesar Kina, Software Engineer, Lima - Perú
         </div>
+        <div className="font-light mt-2">
+          <ul className="list-disc ml-5">
+            <li>
+              <a
+                href="https://github.com/ckinan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline mx-2"
+              >
+                Github
+              </a>
+            </li>
+            <li>
+            <a
+              href="https://www.linkedin.com/in/ckinan"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 underline mx-2"
+            >
+              Linkedin
+            </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </AboutLayout>
   )

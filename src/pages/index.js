@@ -72,7 +72,7 @@ export default () => {
           Posts
         </h1>
         <div className="border-b mt-1 mb-5 text-xs text-gray-600 font-light">
-          All posts here
+          All posts
         </div>
         <div>{getPosts()}</div>
       </div>
