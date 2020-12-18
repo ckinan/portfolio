@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { graphql } from "gatsby"
 import { BlogLayout } from "../components/layout"
 import { Helmet } from "react-helmet"
@@ -11,19 +11,6 @@ const components = {
 }
 
 export default ({ data }) => {
-  useEffect(() => {
-    let script = document.createElement("script")
-    let anchor = document.getElementById("comments")
-    script.setAttribute("src", "https://utteranc.es/client.js")
-    script.setAttribute("repo", "ckinan/ckinan.com")
-    script.setAttribute("issue-term", "pathname")
-    script.setAttribute("label", "comments")
-    script.setAttribute("theme", "github-light")
-    script.setAttribute("crossorigin", "anonymous")
-    script.setAttribute("async", true)
-    anchor.appendChild(script)
-  }, [])
-
   const post = data.mdx
   return (
     <BlogLayout>
@@ -41,10 +28,6 @@ export default ({ data }) => {
           <MDXProvider components={components}>
             <MDXRenderer>{post.body}</MDXRenderer>
           </MDXProvider>
-        </div>
-        <div className="border-t mt-16">
-          <div className="mt-4 text-2xl">Comments</div>
-          <div id="comments"></div>
         </div>
       </div>
     </BlogLayout>
