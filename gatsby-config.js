@@ -34,5 +34,13 @@ module.exports = {
         extensions: [".mdx", ".md"],
       },
     },
+    {
+      resolve: `gatsby-plugin-plausible`,
+      options: {
+        domain: `ckinan.com`,
+        // https://github.com/pixelplicity/gatsby-plugin-plausible/issues/49
+        customDomain: `plausible.ckinan.com/js/plausible.js?original=`,
+      },
+    },
   ],
 }
