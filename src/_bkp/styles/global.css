@@ -11,6 +11,6 @@ a {
 
 /* Add custom component classes before your utilities */
 
-@import "./markdown.css";
+@import "markdown.css";
 
 @tailwind utilities;
