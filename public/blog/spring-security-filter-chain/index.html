@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ckinan.com: Spring Security - Filter Chain</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>Spring Security - Filter Chain</h1>
+    <section>
+        <p>
+    Date: 2020-07-03
+</p>
+<p>After playing with few basic configurations of Spring Security, I noticed there is something important to understand before moving to check other features in the framework, which is its <strong>Filter Chain</strong>. This time I'll take a look at how Spring Security acts on the requests coming from the client, which involves a set of Filters, each of them with a very specific goal.</p>
+<blockquote>
+<p>Note: This is not a tutorial, this is just some notes of what I understand (as of today) about Spring Security and its Filter Chain.</p>
+</blockquote>
+<h2>Introduction</h2>
+<p>The most complete explanation I could find regarding how the Security Filter Chain is built in the entire architecture is in the official documentation in here: https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture</p>
+<p>I'll write down what I interpret from what I already interacted with the module in combination with what the documentation is trying to explain.</p>
+<h2>Main Components</h2>
+<p>There are five pieces (in the documentation I pointed out in the previous section) that I want to visit here. They are:</p>
+<h3>Filters</h3>
+<p>First of all, &quot;Filters&quot; (in the Servlet's world) came from the <code>Java Specification Requests (JSR) #53</code>. Look at this:</p>
+<ul>
+<li>Ref: https://jcp.org/en/jsr/detail?id=53</li>
+<li>Direct link to the PDF (See Page #43): https://download.oracle.com/otn-pub/jcp/7840-servlet-2.3-spec-oth-JSpec/servlet-2_3-fcs-spec.pdf?AuthParam=1593651764_bd0a8306800ffcc92df386c00a6c89f0</li>
+</ul>
+<p>Filters are some pieces of code that do something before or after a Request gets processed by a Servlet. The web container (e.g. Tomcat) will know that.</p>
+<p>Filters have multiple purposes, it is not only restricted to be for Security mechanisms. They are meant to read or write (any logic in general) with the Request. For example: one filter can print some audit logs, another one can add some headers to the request, and so on.</p>
+<p>In the Spring Security's world, we have a set of Filters strategically ordered to prevent subsequent filters or the controller itself being called if they find the request not matching with the security configuration.</p>
+<p>The most straightforward example may be, imagine a user entering a wrong password, there is one filter dedicated to verify whether the password is correct or not. If not, then the at some point of the Filter Chain, one of the Filters will reject the request and respond with a 401 status code to the client.</p>
+<h3>DelegatingFilterProxy</h3>
+<p><code>DelegatingFilterProxy</code> is a class registered as Standard Filter in the Container, but the container doesn't know anything about Spring Beans at this point. <code>DelegatingFilterProxy</code> is the support to establish communication between the Standard Filters and the Spring Application Context.</p>
+<p>Notice that I didn't mention anything about Spring Security yet, that's because <code>DelegatingFilterProxy</code> is a class located in Spring Web and not Spring Security. Which is interesting because from there I interpret that this proxy can be used by something else not necessarily related to Spring Security.</p>
+<h3>FilterChainProxy</h3>
+<p><code>FilterChainProxy</code> is a filter located in Spring Security module.</p>
+<p>It takes a list of filters and creates something called <code>VirtualFilterChain</code> (a private class within <code>FilterChainProxy</code>), which is going to take the list of the Security Filters and <em>start</em> the chain.</p>
+<p>I want to point this out that seems to be pretty useful, quoting Spring Security docs:</p>
+<blockquote>
+<p>First, it provides a starting point for all of Spring Security’s Servlet support. For that reason, if you are attempting to troubleshoot Spring Security’s Servlet support, adding a debug point in FilterChainProxy is a great place to start.</p>
+</blockquote>
+<h3>SecurityFilterChain</h3>
+<p><code>SecurityFilterChain</code> contains the list of all the filters involved in Spring Security. This interface expose a method <code>List&lt;Filter&gt; getFilters()</code> that returns all the filters such as the <code>UsernamePasswordAuthenticationFilter</code> or <code>LogoutFilter</code>.</p>
+<p>In Spring Security, one or more <code>SecurityFilterChain</code>s can be registered in the <code>FilterChainProxy</code>.</p>
+<p>The following picture illustrates all the components I tried to explain so far:</p>
+<p><img src="images/0.png" alt="" /></p>
+<p className="text-sm text-center">SecurityFilterChain, by <a href="https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-securityfilterchain" target="_blank" rel="noopener noreferrer">Spring Security Docs</a></p>
+<h3>Security Filters</h3>
+<p>Finally, at the end of all this hierarchy (Standard Filter &gt; DelegatingFilterProxy &gt; FilterChainProxy &gt; SecurityFilterChain), there is list of possible security filters that we can configure in our applications. I'll just mention the ones that I kind of interated so far:</p>
+<ul>
+<li>LogoutFilter</li>
+<li>UsernamePasswordAuthenticationFilter</li>
+<li>DefaultLoginPageGeneratingFilter</li>
+<li>BasicAuthenticationFilter</li>
+<li>SessionManagementFilter</li>
+</ul>
+<p>In fact, everytime your Spring Boot application starts up, the list of filters are printed in the logs by default (in their corresponding order of execution). Example:</p>
+<pre><code>// Raw logs at startup time
+// List of filters are printed there
+
+2020-07-02 21:34:55.896  INFO 51095 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7fe82967, org.springframework.security.web.context.SecurityContextPersistenceFilter@9596ce8, org.springframework.security.web.header.HeaderWriterFilter@26f46fa6, org.springframework.security.web.csrf.CsrfFilter@558756be, org.springframework.security.web.authentication.logout.LogoutFilter@80bfdc6, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6edcad64, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@75ae4a1f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@476fe690, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@50850539, org.springframework.security.web.session.SessionManagementFilter@227a47, org.springframework.security.web.access.ExceptionTranslationFilter@3968bc60, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2924f1d8]
+
+// And this is the list of filters in a more readable way:
+
+[
+    1. org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5fa23c
+    2. org.springframework.security.web.context.SecurityContextPersistenceFilter@73c9e8e8
+    3. org.springframework.security.web.header.HeaderWriterFilter@59f93db8
+    4. org.springframework.security.web.csrf.CsrfFilter@13d9261f
+    5. org.springframework.security.web.authentication.logout.LogoutFilter@b606cb6
+    6. org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@2a3194c6
+    7. org.springframework.security.web.savedrequest.RequestCacheAwareFilter@de8039f
+    8. org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4b790d86
+    9. org.springframework.security.web.authentication.AnonymousAuthenticationFilter@558756be
+    10. org.springframework.security.web.session.SessionManagementFilter@1aabf50d
+    11. org.springframework.security.web.access.ExceptionTranslationFilter@2e8a1ab4
+    12. org.springframework.security.web.access.intercept.FilterSecurityInterceptor@51c959a4
+]
+</code></pre>
+<p>So, any requests coming from the client will pass through the filter chain and in that order.</p>
+<h2>Final thoughts</h2>
+<ul>
+<li>I started to write this article thinking of the Filter Chain as something strictily related to Spring Security. BUT, during all my reading I got that this part of the architecture in regards of how Spring Security Filters are added into the actual &quot;standard&quot; filter chain as something that you first need to know other &quot;external&quot; concepts about Filters, Servlets and the interfaces that Spring Web provides. Only then, all the illustrations and explanation in the official docs started to make sense to me.</li>
+<li>Debugging one of my few <a href="https://github.com/ckinan/java-practice/tree/master/spring-security-02">simple examples</a> during startup time helped me a lot to understand some pieces, specifically having some breakpoints in <code>FilterChainProxy</code> then going all the way down and all the way up in the whole call hierarchy was pretty useful. Still, there are A LOT of areas in the codebase of Spring Security and Spring Web that I don't understand right now..</li>
+<li>I'm impressed the quality of the docstrings Spring has in its <a href="https://github.com/spring-projects/spring-security">codebase</a>, I found a lot of insights there, like examples, code snippets, explanation in details (more than I could find in the official docs).</li>
+</ul>
+<h2>Refs</h2>
+<ul>
+<li>This is where most part of this post comes from: https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture</li>
+<li>Architecture Deep Dive in Spring Security - Joe Grandja @ Spring I/O 2017: https://www.youtube.com/watch?v=8rnOsF3RVQc</li>
+<li>SpringOne 2GX 2012 - Getting Started with Spring Security 3.1 - Rob Winch: https://www.youtube.com/watch?v=k32KqrckLEE</li>
+</ul>
+
+    </section>
+</body>
+</html>

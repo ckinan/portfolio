@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ckinan.com: Github API - OAuth tokens for apps</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>Github API - OAuth tokens for apps</h1>
+    <section>
+        <p>
+    Date: 2020-03-13
+</p>
+<p>How to use OAuth tokens for apps with Github API to authorize the access of certain data on behalf of the logged in user.</p>
+<h2>Github Web flow</h2>
+<p>Quoting Github docs:</p>
+<blockquote>
+<p>Tokens should be created via a <a href="https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/">web flow</a>. An application sends users to GitHub to log in. GitHub then presents a dialog indicating the name of the app, as well as the level of access the app has once it's authorized by the user. After a user authorizes access, GitHub redirects the user back to the application.</p>
+</blockquote>
+<p>Note: I am going to use what they call &quot;web flow&quot; because seems to be the recommended method and some other methods will be deprecated by the end of this year: https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/</p>
+<h2>Example (Step by step)</h2>
+<p>In this example, I will write a simple web application that displays the list of all public repos and all their pull request of a user by following three steps.</p>
+<p>Summary:</p>
+<ol>
+<li>Authenticate Github API via <a href="https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/">web flow</a></li>
+<li>Get repos of the authenticated user</li>
+<li>Get pull requests per each repo</li>
+</ol>
+<p><img src="./images/0.png" alt="" /></p>
+<p>Details:</p>
+<ol>
+<li>Authenticate Github API via <a href="https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/">web flow</a></li>
+</ol>
+<p>Follow these steps to create an oauth app: https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/
+More information about oauth apps: https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/</p>
+<p>In this example, this is the information I have:</p>
+<ul>
+<li>Application name: OAuth App Local</li>
+<li>Homepage URL: http://localhost:8888</li>
+<li>Application description: Just left in blank</li>
+<li>Authorization callback URL: http://localhost:8888</li>
+</ul>
+<p>Then I created a simple <code>index.html</code> file with a single link that points to <code>https://github.com/login/oauth/authorize?scope=user:email,read:org&amp;client_id=&lt;CLIENT_ID&gt;</code> . Notice <code>&lt;CLIENT_ID&gt;</code> in the URL is the client id that Github gives you when you create your OAuth App. This can be in your public code. However, later in this article we will use also the <code>Client Secret</code>, this SHOULD BE totally hidden from public access, meaning: it MUST BE in your backend layer.</p>
+<blockquote>
+<p>Note: We are asking for the following &quot;permissions&quot;: <code>user:email</code> and <code>read:org</code>. Ref: https://developer.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/</p>
+</blockquote>
+<p>Once the user is authenticated through Github Login Page, Github will redirect to the &quot;callback URL&quot; including a <code>code</code> as query param like: <code>http://localhost:8888?code=xxxxxx</code>. This <code>code</code> will be used to make another call to get the access code.</p>
+<p>The public site makes a call to the Netlify Function located in the same project under the path <code>/.netlify/functions/github-client?code=&lt;CODE&gt;</code>. Where <code>&lt;CODE&gt;</code> is what Github had sent to the callback url in the previous step.</p>
+<p>The Netlify Function will make a call to <code>https://github.com/login/oauth/access_token</code> sending:</p>
+<ul>
+<li>Client Secret (Environment Variable)</li>
+<li>Client ID (Environment Variable)</li>
+<li>Code (Query Param)</li>
+</ul>
+<blockquote>
+<p>Note: For more information about Netlify Functions, read this: https://ckinan.com/blog/2020/03/07/netlify-functions</p>
+</blockquote>
+<p>Once you get the token from the endpoint above, then you will be able to make calls to any Github API that your token has access, in this case, we asked for the following scopes: <code>user:email</code> and <code>read:org</code> and all public scopes that don't need to be specified for authorization.</p>
+<ol start="2">
+<li>Get repos of the authenticated user through <code>GET /user/repos</code> endpoint . Ref: https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-user</li>
+</ol>
+<p>Now that we have available the access token, we can make calls from the Front End to the Github API.</p>
+<pre><code class="language-js">const showRepos = async () =&gt; {
+  fetch(&quot;https://api.github.com/user/repos&quot;, {
+    method: &quot;GET&quot;,
+    headers: {
+      Authorization: &quot;Bearer &quot; + localStorage.getItem(GH_ACCESS_TOKEN_KEY),
+    },
+  })
+    .then(function (response) {
+      return response.json()
+    })
+    .then(function (data) {
+      document.getElementById(&quot;result&quot;).innerHTML += &quot;&lt;br/&gt;&lt;br/&gt;Repos&quot;
+      data.forEach(function (repo, index) {
+        showReview(repo)
+      })
+    })
+}
+</code></pre>
+<ol start="3">
+<li>Get pull requests per each repo retrieved from previous step through <code>GET /repos/:owner/:repo/pulls</code> endpoint. Ref: https://developer.github.com/v3/pulls/#list-pull-requests</li>
+</ol>
+<pre><code class="language-js">const showReview = async repo =&gt; {
+  fetch(&quot;https://api.github.com/repos/&quot; + repo.full_name + &quot;/pulls?state=all&quot;, {
+    method: &quot;GET&quot;,
+    headers: {
+      Authorization: &quot;Bearer &quot; + localStorage.getItem(GH_ACCESS_TOKEN_KEY),
+    },
+  })
+    .then(function (response) {
+      return response.json()
+    })
+    .then(function (data) {
+      document.getElementById(&quot;result&quot;).innerHTML +=
+        '&lt;br/&gt;&lt;a href=&quot;' +
+        repo.html_url +
+        '&quot; target=&quot;_blank&quot;&gt;' +
+        repo.full_name +
+        &quot;&lt;/a&gt;&quot;
+      data.forEach(function (pr, index) {
+        document.getElementById(&quot;result&quot;).innerHTML +=
+          '&lt;br/&gt;&lt;a href=&quot;' +
+          pr.html_url +
+          '&quot; target=&quot;_blank&quot;&gt;---- #' +
+          pr.number +
+          &quot;: &quot; +
+          pr.title +
+          &quot; (&quot; +
+          pr.state +
+          &quot;)&quot; +
+          &quot;&lt;/a&gt;&quot;
+      })
+    })
+}
+</code></pre>
+<h2>Test</h2>
+<p>Login through web flow:</p>
+<p><img src="./images/1.png" alt="" /></p>
+<p>Redirected to Github Login Page:</p>
+<p><img src="./images/2.png" alt="" /></p>
+<p>You need to authorize this app:</p>
+<p><img src="./images/3.png" alt="" /></p>
+<p>Final result:</p>
+<p><img src="./images/4.png" alt="" /></p>
+<h2>Final thoughts</h2>
+<p>I can see Github OAuth App web flow as standard way to authorize an app to read/write information on behalf of an authenticated user using an access tokens. Speaking particularly about Github, the only thing I am kind of dissapointed is the fact I can't read Organization's data without the permission of the owner, which make totally sense, but originally I thought it could be possible since I was able to access that kind of information via Personal Access Token, but seems like scope are pretty different and I should have read carefully the docs in the first place.</p>
+<p>I would like to create a more elaborated app that can show more information about repos, pull requests and stats using what I've learned here.</p>
+<p>Github repo: https://github.com/ckinan/ckn-github-oauth-app</p>
+<h2>Refs</h2>
+<ul>
+<li>https://developer.github.com/v3/guides/getting-started/#using-oauth-tokens-for-apps</li>
+<li>https://developer.github.com/v3/guides/basics-of-authentication/</li>
+<li>https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/</li>
+<li>https://developer.github.com/v3/repos/</li>
+<li>https://developer.github.com/v3/pulls/</li>
+</ul>
+
+    </section>
+</body>
+</html>

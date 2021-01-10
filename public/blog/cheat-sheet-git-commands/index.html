@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ckinan.com: Cheat Sheet - Git Commands</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>Cheat Sheet - Git Commands</h1>
+    <section>
+        <p>
+    Date: 2020-08-13
+</p>
+<p>My Cheat Sheet for: Git Commands (it's supposed to (slowly) grow)</p>
+<p>Git log with some styling (colors and specific order I like to see)</p>
+<pre><code class="language-bash">$ git log --pretty=format:&quot;%C(Green)%h %C(Red)[.%D.] %C(Blue)[%an] %C(Yellow)[%s] %C(Magenta)[%ad (%ar)]&quot;
+</code></pre>
+<p><img src="./images/0.png" alt="" /></p>
+<p>Get number of files changed, lines inserted and lines removed between two branches or commits</p>
+<pre><code class="language-bash">$ git diff --shortstat master..develop
+ 13 files changed, 90 insertions(+), 410 deletions(-)
+
+$ git diff --shortstat 499a153..8059ee2
+ 3 files changed, 69 insertions(+), 1 deletion(-)
+</code></pre>
+
+    </section>
+</body>
+</html>

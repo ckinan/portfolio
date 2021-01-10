@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ckinan.com: Github API - First Steps</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>Github API - First Steps</h1>
+    <section>
+        <p>
+    Date: 2020-02-07
+</p>
+<p>First steps with Github API, looking at the official docs, executing some APIs and discovering what I can do with that.</p>
+<h2>Motivation</h2>
+<p>Currently, the company I am working with uses Github as git repository/platform. Code reviews, documentation, merges and other stuff going through there. It's going great.</p>
+<p>I am curious about what else we can do using Github API, what pieces of the whole development process we can automate. So, this article is about Github API, what I know, what I learned, what I find useful.</p>
+<p>I may use the outcome of this (quick) research not only for this company, but anything else that may help other problems/opportunities that, right now, I can't even imagine.</p>
+<h2>Steps</h2>
+<p>This is the list of things this article/research will cover:</p>
+<ul>
+<li>Step #1: Take a look at their docs (overview)</li>
+<li>Step #2: Understand their authentication processes</li>
+<li>Step #3: Endpoints</li>
+</ul>
+<h2>Basics</h2>
+<p>Docs! Lets see how they explain their API in their documentation and see how easy (or complex) is to understand what we can achieve with it.</p>
+<p>Link: https://developer.github.com/v3/guides/getting-started/</p>
+<p>This guide has very clear examples of how to call the API, like this one that doesn't require any auth information and reads all public data from any github user using cURL:</p>
+<pre><code class="language-bash">$ curl https://api.github.com/users/ckinan
+{
+  &quot;login&quot;: &quot;ckinan&quot;,
+  &quot;id&quot;: 7999613,
+  &quot;node_id&quot;: &quot;MDQ6VXNlcjc5OTk2MTM=&quot;,
+  &quot;avatar_url&quot;: &quot;https://avatars1.githubusercontent.com/u/7999613?v=4&quot;,
+  &quot;gravatar_id&quot;: &quot;&quot;,
+  &quot;url&quot;: &quot;https://api.github.com/users/ckinan&quot;,
+  &quot;html_url&quot;: &quot;https://github.com/ckinan&quot;,
+  &quot;followers_url&quot;: &quot;https://api.github.com/users/ckinan/followers&quot;,
+  &quot;following_url&quot;: &quot;https://api.github.com/users/ckinan/following{/other_user}&quot;,
+  &quot;gists_url&quot;: &quot;https://api.github.com/users/ckinan/gists{/gist_id}&quot;,
+  &quot;starred_url&quot;: &quot;https://api.github.com/users/ckinan/starred{/owner}{/repo}&quot;,
+  &quot;subscriptions_url&quot;: &quot;https://api.github.com/users/ckinan/subscriptions&quot;,
+  &quot;organizations_url&quot;: &quot;https://api.github.com/users/ckinan/orgs&quot;,
+  &quot;repos_url&quot;: &quot;https://api.github.com/users/ckinan/repos&quot;,
+  &quot;events_url&quot;: &quot;https://api.github.com/users/ckinan/events{/privacy}&quot;,
+  &quot;received_events_url&quot;: &quot;https://api.github.com/users/ckinan/received_events&quot;,
+  &quot;type&quot;: &quot;User&quot;,
+  &quot;site_admin&quot;: false,
+  &quot;name&quot;: &quot;Cesar Kina&quot;,
+  &quot;company&quot;: null,
+  &quot;blog&quot;: &quot;https://ckinan.com/&quot;,
+  &quot;location&quot;: &quot;Lima, Peru&quot;,
+  &quot;email&quot;: null,
+  &quot;hireable&quot;: null,
+  &quot;bio&quot;: &quot;software developer&quot;,
+  &quot;public_repos&quot;: 22,
+  &quot;public_gists&quot;: 1,
+  &quot;followers&quot;: 3,
+  &quot;following&quot;: 7,
+  &quot;created_at&quot;: &quot;2014-06-26T20:18:31Z&quot;,
+  &quot;updated_at&quot;: &quot;2020-02-08T00:08:38Z&quot;
+}
+</code></pre>
+<p>However, like any other API, it has a limited number of requests that any client can make to the API without being authenticated. Quoting:</p>
+<blockquote>
+<p>Unauthenticated clients can make 60 requests per hour. To get more requests per hour, we'll need to authenticate. In fact, doing anything interesting with the GitHub API requires authentication.</p>
+</blockquote>
+<h2>Authentication types</h2>
+<p>Basically, 2 options:</p>
+<p><strong>Option #1</strong>: Using personal access tokens: https://developer.github.com/v3/guides/getting-started/#using-personal-access-tokens</p>
+<blockquote>
+<p>The easiest and best way to authenticate with the GitHub API is by using Basic Authentication via OAuth tokens. OAuth tokens include personal access tokens.</p>
+</blockquote>
+<p>Examples:</p>
+<pre><code class="language-bash">curl -i -u &lt;your_username&gt;:&lt;your_access_token&gt; https://api.github.com/user/repos
+</code></pre>
+<p>Provide privileges to your token to read your repos.</p>
+<p><strong>Option #2</strong>: Using OAuth tokens for apps : https://developer.github.com/v3/guides/getting-started/#using-oauth-tokens-for-apps</p>
+<blockquote>
+<p>Apps that need to read or write private information using the API on behalf of another user should use OAuth.</p>
+</blockquote>
+<h2>Endpoints</h2>
+<p>All the endpoints of the API in their documentation have examples of the calls, details of the input parameters and show how the return payload should look like, which is pretty good.</p>
+<p>Ref (overview of the API): https://developer.github.com/v3/</p>
+<p>Docs give the endpoints paths like this (not the full url).</p>
+<p>Example of user repos: <code>GET /user/repos</code></p>
+<p>These are just 3 of the endpoints I tried out using a personal access token I've created:</p>
+<ul>
+<li>Get repos</li>
+<li>Get pull request</li>
+<li>List reviews of a pull request</li>
+</ul>
+<p>Here more details about each of them:</p>
+<h3>Get repos</h3>
+<p>Endpoint: <code>GET /user/repos</code></p>
+<p>Ref: https://developer.github.com/v3/repos/#list-your-repositories</p>
+<p>Example:</p>
+<pre><code class="language-bash">$ curl -i -u &lt;your_username&gt;:&lt;your_access_token&gt; https://api.github.com/user/repos
+</code></pre>
+<h3>Get pull requests</h3>
+<p>Endpoint: <code>GET /repos/:owner/:repo/pulls</code></p>
+<p>Ref: https://developer.github.com/v3/pulls/#list-pull-requests</p>
+<pre><code class="language-bash">$ curl -i -u &lt;your_username&gt;:&lt;your_access_token&gt; https://api.github.com/repos/ckinan/ckinan.com/pulls?state=all
+</code></pre>
+<blockquote>
+<p>Parameters are also available, like <code>state</code> in the example above to list &quot;Either open, closed, or all to filter by state. Default: open&quot;</p>
+</blockquote>
+<h3>List reviews of a pull request</h3>
+<p>Endpoint: <code>GET /repos/:owner/:repo/pulls/:pull_number/reviews</code></p>
+<p>Ref: https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request</p>
+<pre><code class="language-bash">$ curl -i -u &lt;your_username&gt;:&lt;your_access_token&gt; https://api.github.com/repos/ckinan/ckinan.com/pulls/9/reviews
+</code></pre>
+<p>This is interesting, because you can see who submitted the review, whether this review refers to a comment only, request changes or approval.</p>
+<h2>Final thoughts</h2>
+<p>Github has a great documentation, at least for a person who is obviously just trying to get used to the API (like me).</p>
+<p>For sure, using personal access token is easier to get used to the API. You just need to create one by going to your Settings and include your token in your calls. But, depending on the use case, it may be annoying to ask all users to create another token to make the application working, in that case, OAuth tokens for apps seems to be a better option, so that application can get authorization on behalf of the user who is logging in without explicitly creating a personal access token.</p>
+<p>I will have another space to continue this investigation, where I'd like to see more about OAuth tokens for apps, and play with the endpoint to read pull requests.</p>
+
+    </section>
+</body>
+</html>

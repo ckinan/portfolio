@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ckinan.com: Project Github Pull Request Viewer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>Project Github Pull Request Viewer</h1>
+    <section>
+        <p>
+    Date: 2020-04-24
+</p>
+<p>How I built a pull request viewer using Github API. What I learned and what I failed.</p>
+<h2>Introduction</h2>
+<p>I am maintaining a software that its repo is in Github. That means, I had to get familiar with the tools this platform provides. Code Reviews with Pull Request, which is one of the features Github has, where you can interact with who owns the code changes before merging a branch into master.</p>
+<p>As a reviewer, I have to open pull requests regularly to do my review. Meaning, more than likely I have to visit https://github.com/pulls frequently to see whichh PRs I have in my queue.</p>
+<p>After some time seeing my list of PRs, I noticed there are cases where I would like to see more information in that list before clicking on one of those. Like for example, the number of approvals each PR already have, or if there is already activity such comments, requested changes, and who did which action, so with all these information in that same list I can have a clearer idea what's going on there. Yeah, I know it's only one click away from seeing all of that, but as I was about to study the Github API, I decided to give it a try.</p>
+<p>Before going to the details, I want to start showing two images that somewhat explains what is this all about.</p>
+<p>Official Github Pull Requests View looks like this:</p>
+<p><img src="./images/0.png" alt="" /></p>
+<p>My clone looks like this:</p>
+<p><img src="./images/1.png" alt="" /></p>
+<h2>Expectations</h2>
+<h3>The need</h3>
+<p>A different way to see the list of pull requests that could give me a better visibility of which code reviews I have in my queue and need my attention.</p>
+<h3>The approach</h3>
+<p>Make use of Github API to read my pull requests based on my username and show valuable information within a web application.</p>
+<h3>The (minimum) value</h3>
+<p>At least, I wanted to have:</p>
+<ol>
+<li>Last updated date-time</li>
+<li>Counts for current reviewer who: approved, requested changes, commented, awaiting within each pull request</li>
+<li>Events in a timeline</li>
+</ol>
+<p>There are some more &quot;features&quot; I included in this project for different reasons, like Authentication (for obvious reasons), a search form, and some basic filtering functionality.</p>
+<h2>The Jorney</h2>
+<h3>The Stack</h3>
+<p>It was the time to choose the stack and tools to develop this web application. Here is the summary of what I got and why:</p>
+<p>| The Stack                                                                     | The Why                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a href="https://reactjs.org/">ReactJS</a>                                               | I am not a frontend guy, but I had some little projects (mostly TODO apps) that I had built previously and this time I wanted to create something &quot;more elaborated&quot; and get a better understanding of the basics.                                                                                                                                                                                                                                                                                                                             |
+| <a href="https://developer.github.com/v3">Github API</a>                                 | A must if I wanted to read data from Github                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| <a href="https://www.netlify.com/products/functions/">Netlify Functions</a> (Javascript) | I needed a backend service to hide the Secret Key to make calls to Github API. I was not sure which service and programming language to choose. My first option was to create a Java or NodeJS service and deploy it on Heroku, but I didn't want to pay for this to be &quot;live&quot; forever (no sleep time). I wanted this to be totally free. That is why I decided to go with Netlify Functions, which doesn't have that kind of restrictions and it's free, at least for this small project that won't have too much calls, I said &quot;it's good&quot;. |
+| <a href="https://primer.style/css/">Primer CSS</a>                                       | I didn't want to spend time styling this web application. I literally just googled &quot;github css styles&quot; and found this cool thing that saved me a lot of time.                                                                                                                                                                                                                                                                                                                                                                                 |</p>
+<h3>The process</h3>
+<h4>1. Github API (Preliminary Research)</h4>
+<p>First of all, I had to do some research about how to consume Github API, there are some previous articles I posted about it:</p>
+<ul>
+<li><a href="https://www.ckinan.com/2020/2/7/github-api">Github API First glance</a></li>
+<li><a href="https://www.ckinan.com/2020/3/13/github-api-oauth-app">Github API OAuth tokens for apps</a></li>
+</ul>
+<p>By doing that, I was able to confirm if what I wanted to do was possible. Meaning: Reading Pull Requests from the API was viable.</p>
+<h4>2. Create the frontend</h4>
+<p>I was surprised how easy is to create a brand new web application and get it running. The <code>create-react-app</code> CLI was my guy and made me forget all my setup problems I had some time ago while following some tutorials that are well explained but I guess I am not that smart.</p>
+<h4>3. Create the backend</h4>
+<p>I had some reads about how use Netlify Functions to accomplish specific goals:</p>
+<ul>
+<li>Goal #1: How to use Environment Variables. This is actually the most important one, because I wanted to have the Github Secret Key hidden in one of these Variables.</li>
+<li>Goal #2: How to use its &quot;develop mode&quot;. Ref: https://www.netlify.com/products/dev/</li>
+<li>Goal #3: How to handle cookies (my limited knowledge about secury led me to simply pass tokens using a cookie).</li>
+</ul>
+<h4>4. Connect the front with the back</h4>
+<p>It was the most interesting part. From here I learned few things:</p>
+<p><strong>A) GraphQL</strong></p>
+<p>This is the best thing I've discovered within this project. The first version of this project was to use the Github API v3, whis expose the endpoints with REST.</p>
+<p>The only one thing that made me switch to v4 (GraphQL) was the number of requests I had to make to get Pull Requests information. Why is that? Because every time I wanted the list of pull requests and their details I had to make a Request to the endpoint to fetch the users, then the repos, then the pull requests, then the reviews, and so on. Nested loops everywhere, without mentioning that the JSON responses had data that I didn't even need.</p>
+<p>With GraphQL, I only had to be worried about one single endpoint and try my queries I previously tested within the <a href="https://developer.github.com/v4/guides/using-the-explorer/">GraphQL Explorer</a>.</p>
+<p>After switching to GraphQL I finally got the idea of using it, and I am pretty sure there are pros and cons about it, but at least for this project, it was a must.</p>
+<p><strong>B) I do know nothing about security</strong></p>
+<p>While developing the interface of my Netlify Functions, I was thinking how to prevent users from executing my APIs without any permissions. There were a lot of techniques and approaches I was not able to understand. I had to apply maybe one of the easiest ways to avoid being attacked by something from the client side. My method was basically the use of cookies to store the token after being authenticated.</p>
+<p>I also developed two ways to be &quot;authenticated&quot; and consume the API:</p>
+<ul>
+<li>Method #1: Authorizing OAuth Apps. Ref: https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/</li>
+<li>Method #2: Store a Personal Access Token as Environment Variable. (Only meant to be used locally)</li>
+</ul>
+<p>~~I believe this is the main reason I can't get this project deployed in the cloud, because I can't figure this thing out yet...~~ . UPDATE: Deployed on Netlify: https://gh-pr-viewer.netlify.app/</p>
+<h4>5. Test</h4>
+<p>After having the minimum things already developed, I forced myself to move from the official Github PRs view to my start using my application. It was a good move, I mean, things were going well, I had the information I originally said I need, few bugs but working.</p>
+<p>During this stage, I had to refactor several parts of the code. Here I learned a little more about React Hooks, React Router, TypeScript and got used to this ecosystem more than I initially expected. I know I am not in the position to say I am now a &quot;React&quot; guy, but good enough to connect pieces and understand what's going on with the components and data state flows. However, I can't say &quot;I know React&quot;, because I am pretty sure the code of this app has a lot of &quot;spaghetti&quot; and it's not using React in the right way.</p>
+<h2>Reality</h2>
+<p>So far so good. I have a web application, running in my local machine, reading pull requests information directly from the API. I actually use this daily to see what I have in my queue to do code review.</p>
+<p>However, I don't think I accomplished my original need: &quot;Better visibility of my code reviews&quot;. I have a web application that just show me things in a &quot;different way&quot;, but doesn't make any difference in comparison with the official view from Github.</p>
+<h2>Final thoughts</h2>
+<p>In terms of &quot;learnings&quot;, I gained a lot from this project, because I was able to get some ReactJS skills, discovered one of the advantages of using GraphQL, and made some things with Serverless Functions (Netlify). But in terms of &quot;solving my needs&quot;, I think I failed, because it is irrelevant which view use (the Github one or mine), this app doesn't make any difference at least in the current state.</p>
+<p>Using something you are creating in your daily basis speeds up the development, because you realize what are the things you need to do immmediately or features you want to have or the bugs you need to fix, it's like you are your own client, which keeps you motivated.</p>
+<p>Moving forward, I'll be still making more updates to this project, but for now, I don't think this is going to be as regular as it was the past weeks.</p>
+<h2>Links</h2>
+<ul>
+<li>Repo: https://github.com/ckinan/gh-pr-viewer</li>
+<li>Netlify instance: https://gh-pr-viewer.netlify.app/</li>
+</ul>
+
+    </section>
+</body>
+</html>

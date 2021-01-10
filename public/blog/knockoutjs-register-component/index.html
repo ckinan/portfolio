@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ckinan.com: KnockoutJS - Register Component</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>KnockoutJS - Register Component</h1>
+    <section>
+        <p>
+    Date: 2020-06-17
+</p>
+<p>One more time, I convinced myself how important is sometimes get away from my codebase and isolate my tests to understand foundations. This time, got something with KnockoutJS and how components are registered.</p>
+<h2>Motivation</h2>
+<p>Recently I wanted to understand how a KnockoutJS components can be created. So, I went into the official docs and found good explanations about it:</p>
+<ul>
+<li>https://knockoutjs.com/documentation/component-overview.html</li>
+</ul>
+<p>Instead of trying things directly to the codebase I wanted to introduce new components, I first wanted to create really simple examples in an isolated way.</p>
+<p>I created a codepen for this excercise, which helped me a lot to quickly make changes and play with the things I was learning during this.</p>
+<ul>
+<li>https://codepen.io/ckinan/pen/eYJBjYR</li>
+</ul>
+<h2>Playground</h2>
+<p>The following component called <code>my-component</code> configures a <code>viewModel</code> that creates a new object that handles the states of the values in the form. Also, tells the components to be synchronously loaded and finally declares the template to be rendered in the DOM.</p>
+<pre><code class="language-js">var MyViewModel = function(first, last) {
+    this.firstName = ko.observable('Cesar');
+    this.lastName = ko.observable('K');
+ 
+    this.fullName = ko.pureComputed(function() {
+        return this.firstName() + &quot; &quot; + this.lastName();
+    }, this);
+};
+
+ko.components.register('my-component', {
+  viewModel: {
+    createViewModel: function(params) {
+      return new MyViewModel(params);
+    },
+  },
+  synchronous: true,
+  template: `
+    &lt;div&gt;
+      &lt;p&gt;First name: &lt;input data-bind=&quot;textInput: firstName&quot; /&gt;&lt;/p&gt;
+      &lt;p&gt;Last name: &lt;input data-bind=&quot;textInput: lastName&quot; /&gt;&lt;/p&gt;
+      &lt;strong&gt;Hello, &lt;span data-bind=&quot;text: fullName&quot;&gt; &lt;/span&gt;!&lt;/strong&gt;
+    &lt;/div&gt;
+  `
+});
+</code></pre>
+<p>I got 4 ways to use components (probably there are more variations). For now, this is what I got.</p>
+<h2>Approach #1</h2>
+<p>Bind the component by specifying its name directly.</p>
+<pre><code class="language-html">&lt;div data-bind='component: &quot;my-component&quot;'&gt;&lt;/div&gt;
+</code></pre>
+<h2>Approach #2</h2>
+<p>Bind the component by specifying an object with the name of it.</p>
+<pre><code class="language-html">&lt;div data-bind='component: { name: &quot;my-component&quot; }'&gt;&lt;/div&gt;
+</code></pre>
+<p>Note: In that object, you can also pass the params to the component if there is any. This example only passes the name.</p>
+<blockquote>
+<p>So far, approaches #1 and #2 are taken from here https://knockoutjs.com/documentation/component-binding.html</p>
+</blockquote>
+<h2>Approach #3</h2>
+<p>Using component as &quot;Custom elements&quot;. Ref: https://knockoutjs.com/documentation/component-custom-elements.html</p>
+<pre><code class="language-html">&lt;my-component&gt;&lt;/my-component&gt;
+</code></pre>
+<h2>Approach #4</h2>
+<p>Just like in Approach #2, but in Javascript having one component to inject into another component.</p>
+<p>New component for this example is a divider. (Only a template, no view models this time)</p>
+<pre><code class="language-js">ko.components.register('my-divider-component', {
+  template: `
+    &lt;div style=&quot;border-top: 3px solid #bbb;&quot;&gt;&lt;/div&gt;
+  `
+});
+</code></pre>
+<p>Then, create an object that will provide the information about the component (the name and optionally the params).</p>
+<pre><code class="language-js">const MyDividerComponent = function() {
+  const self = this;
+  self.component = () =&gt; {
+    return {
+      name: 'my-divider-component'
+    }
+  };
+};
+
+const myDividerComponent = new MyDividerComponent();
+</code></pre>
+<p>Finally, inject this component into another component while creating the template. (I'll use <code>my-component</code> example but will add one more line in the template)</p>
+<pre><code class="language-js">ko.components.register('my-component', {
+  viewModel: {
+    createViewModel: function(params) {
+      return new MyViewModel(params);
+    },
+  },
+  synchronous: true,
+  template: `
+    &lt;div&gt;
+      &lt;p&gt;First name: &lt;input data-bind=&quot;textInput: firstName&quot; /&gt;&lt;/p&gt;
+      &lt;p&gt;Last name: &lt;input data-bind=&quot;textInput: lastName&quot; /&gt;&lt;/p&gt;
+      &lt;strong&gt;Hello, &lt;span data-bind=&quot;text: fullName&quot;&gt; &lt;/span&gt;!&lt;/strong&gt;
+      &lt;div data-bind=&quot;component: myDividerComponent.component()&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  `
+});
+</code></pre>
+<p>That way, <code>myDividerComponent.component()</code> will actually return this object:</p>
+<pre><code class="language-json">{
+    name: 'my-divider-component'
+}
+</code></pre>
+<p>With that object, the template will inject the component just like I explained in approach #2.</p>
+<h2>Final thoughts</h2>
+<p>With this simple examples, I just want to point out two main things:</p>
+<ol>
+<li>KnockoutJS has multiple ways to use a component. I'm just aware of the four ones in this article, which is good for now to understand some things that kind of overwhelmed me before doing these excercises.</li>
+<li>I am finding it super useful when I create this &quot;playground&quot; things to understand something without all the distractions that a big codebase can have (not complaining, just my way to learn... maybe). Easy to share, easy to remember, easy to extend or copy.</li>
+</ol>
+
+    </section>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ckinan.com: Remote Debug Spring Boot App in a Docker Container using IntelliJ IDEA</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>Remote Debug Spring Boot App in a Docker Container using IntelliJ IDEA</h1>
+    <section>
+        <p>
+    Date: 2020-08-22
+</p>
+<p>I had to setup a local environment for a Spring Boot application running in a Docker container. Naturally, I needed to find a way to debug my app, which is the step I want to explain here.</p>
+<h2>Prerequisites</h2>
+<ul>
+<li>IntelliJ IDEA</li>
+<li>Docker</li>
+</ul>
+<h2>Scope</h2>
+<ul>
+<li>We will have only one (GET) endpoint that receives a &quot;value&quot; as string parameter and return that back to the client.</li>
+<li>We want to put a breakpoint in the controller to demonstrate the debug configuration is working properly.</li>
+<li>We don't want more logic in our code as the goal is to get our debug config ready in this local/docker/springboot environment.</li>
+</ul>
+<h2>Create the project</h2>
+<p>Generate and <a href="https://start.spring.io/#%21type=maven-project&amp;language=java&amp;platformVersion=2.3.3.RELEASE&amp;packaging=jar&amp;jvmVersion=14&amp;groupId=com.ckinan&amp;artifactId=demo&amp;name=demo&amp;description=Demo%20project%20for%20Spring%20Boot&amp;packageName=com.ckinan.demo&amp;dependencies=web">Download</a> a Spring Boot project with only &quot;Spring Web&quot; as a dependency.</p>
+<p>Open the project in IntelliJ.</p>
+<h2>Create the resource controller</h2>
+<p>Open the <code>DemoApplication</code> class and create a resource controller, in this example mapped with alias <code>/echo</code>, that is simply going to return the value from the request.</p>
+<pre><code class="language-java">package com.ckinan.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@SpringBootApplication
+public class DemoApplication {
+
+	@GetMapping(&quot;/echo&quot;)
+	public String resource(@RequestParam(value = &quot;value&quot;, defaultValue = &quot;insert a 'value' query param&quot;) String value) {
+		return &quot;echo: &quot; + value;
+	}
+
+	public static void main(String[] args) {
+		SpringApplication.run(DemoApplication.class, args);
+	}
+
+}
+</code></pre>
+<h2>Package your app</h2>
+<p>Execute the following command manually to get the <code>jar</code> file of your project generated using maven.</p>
+<pre><code>./mvnw package
+</code></pre>
+<p>You should have the <code>jar</code> file created in the <code>./target</code> folder. In this example, it should be under the name <code>./target/demo-0.0.1-SNAPSHOT.jar</code></p>
+<h2>Create the Dockerfile</h2>
+<p>Create a <code>Dockerfile</code> in the root of the project.</p>
+<pre><code>FROM openjdk:14-jdk-alpine
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT [&quot;java&quot;,&quot;-jar&quot;,&quot;/app.jar&quot;]
+</code></pre>
+<p>We are giving the instruction to Docker to build an image from <code>openjdk:14-jdk-alpine</code> and copy our recently created <code>jar</code> file that will be used in our container.</p>
+<h2>Build the image</h2>
+<p>Run the <code>docker build</code> command to create the Docker Image.</p>
+<pre><code>docker build -t ckina/demo-spring-boot-docker-debug .
+</code></pre>
+<p>The image will be created with the repository name <code>ckina/demo-spring-boot-docker-debug</code>, change that if you want.</p>
+<h2>Remote debug your container</h2>
+<p>Choose one of the following ways to run your docker container: with <code>docker run</code> or <code>docker-compose</code>.</p>
+<h3>With docker run</h3>
+<p>Execute the <code>docker run</code> command using the Docker Image we've just created.</p>
+<pre><code>docker run --name demo-spring-boot-docker-debug -e &quot;JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005&quot; -p 8080:8080 -p 5005:5005 ckina/demo-spring-boot-docker-debug
+</code></pre>
+<h3>With docker-compose</h3>
+<p>Create a <code>docker-compose.yml</code> file and execute <code>docker-compose</code>.</p>
+<pre><code class="language-yml">version: '3.3'
+
+services:
+  spring-boot:
+    container_name: demo-spring-boot-docker-debug
+    build: .
+    ports:
+      - '8080:8080'
+      - '5005:5005'
+    environment:
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+</code></pre>
+<p>Options:</p>
+<ul>
+<li><code>--name</code>: We are naming our container as <code>demo-spring-boot-docker-debug</code>, which can be changed as needed.</li>
+<li><code>-p 8080:8080</code>: Expose our Spring Boot application outside the docker container</li>
+<li><code>-p 5005:5005</code>: Expose the port that will be used to connect our IDE with the application to do the remote debug</li>
+<li><code>-e</code>: Set environment variables, in this case, we want to use the <code>-agentlib:jdwp</code> option for debugging. (We will see more details of it later)</li>
+</ul>
+<p>Run:</p>
+<pre><code>docker-compose up --build
+</code></pre>
+<p>Verify your endpoint is working by opening this in a browser: <a href="http://localhost:8080/echo?value=foo">http://localhost:8080/echo?value=foo</a></p>
+<p>It should give you <code>echo: foo</code> in the response of the call.</p>
+<h2>Create the remote debug configuration in IntelliJ and attach the debugger</h2>
+<p>Go to <code>Edit Configurations</code> and create a <code>Remote</code> config:</p>
+<p><img src="./images/0.png" alt="" /></p>
+<p>Note: It's important to have the command line arguments matching with our configuration we introduced into our docker container. In this case this is what should match:</p>
+<pre><code>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+</code></pre>
+<p>Go back to your IDE and do the following:</p>
+<p><img src="./images/1.png" alt="" /></p>
+<ol>
+<li>Set a breakpoint in your controller, right in the line where the string value is returned</li>
+<li>Click on the debug button</li>
+<li>You should have your IDE connected as the debugger of your Spring Boot application</li>
+</ol>
+<p>Now execute one more time <a href="http://localhost:8080/echo?value=foo">http://localhost:8080/echo?value=foo</a></p>
+<p>The breakpoint in the IDE should be activated. We are done.</p>
+<p><img src="./images/2.png" alt="" /></p>
+<h2>Details on the command line argument for the Remote Debug</h2>
+<p>Here we have the details about the <code>-agentlib:jdwp</code> option we introduced in the environment variables of our docker container:</p>
+<ul>
+<li>Format: <code>-agentlib:jdwp=&lt;name1&gt;[=&lt;value1&gt;],&lt;name2&gt;[=&lt;value2&gt;]...</code></li>
+<li><code>transport=dt_socket</code>: The way you want to connect the debug. It can be done through Socket Transport or Shared Memory Transport. In this example we're using the Socket Transport.</li>
+<li><code>server=y</code>: We want to have our application listening to the debugger to be attached, in this case the debugger will be the IDE.</li>
+<li><code>suspend=n</code>: We don't want to wait until the debugger is attacher to completely start the Spring Boot application.</li>
+<li><code>address=*:5005</code>: Listen for a socket connection on port 5005, which is the port number we want to configure in our IDE.</li>
+</ul>
+<p>More details about the <code>-agentlib:jdwp</code> option: https://docs.oracle.com/en/java/javase/14/docs/specs/jpda/conninv.html</p>
+<h2>Links</h2>
+<ul>
+<li>Repo: https://github.com/ckinan/java-practice/tree/master/spring-boot-docker-debug</li>
+<li>Spring Boot example (some pieces of this example is based on what Spring Boot has in its docs): https://spring.io/guides/gs/spring-boot-docker/</li>
+<li>Docs for the <code>-agentlib:jdwp</code> option: https://docs.oracle.com/en/java/javase/14/docs/specs/jpda/conninv.html</li>
+</ul>
+
+    </section>
+</body>
+</html>
