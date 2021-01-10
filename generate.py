@@ -95,6 +95,11 @@ write_file('public/about/index.html', about_page)
 for post in all_posts:
     path = f'public/blog/{post.get("slug")}'
     os.makedirs(path)
+
+    images_dir = f'blog/{post.get("directory")}/images'
+    if os.path.isdir(images_dir):
+        shutil.copytree(images_dir, f'public/blog/{post.get("slug")}/images')
+
     html = commonmark.commonmark(post.get('content'))
 
     post_content = render_template(

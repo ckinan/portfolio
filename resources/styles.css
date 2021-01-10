@@ -6,3 +6,16 @@ nav ul {
 nav ul li {
     display: inline;
 }
+
+pre {
+    background: lightgray;
+    overflow: scroll;
+}
+
+body {
+    overflow-wrap: break-word;
+}
+
+img {
+    max-width: 100%;
+}
