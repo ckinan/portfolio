@@ -9,6 +9,8 @@
     - Generate blog posts
         - Markdown support
 """
+print('generate.py: Start generating static site')
+
 from jinja2 import Template
 import frontmatter
 import commonmark
@@ -58,7 +60,12 @@ def write_file(absolute_path: str, content: str):
     f.write(content)
     f.close()
 
+
+print('generate.py: Reading blog directory')
+
 all_posts = read_posts('blog')
+
+print('generate.py: Rendering templates')
 
 index_content = render_template(
     read_file("resources/index.html"),
@@ -83,6 +90,8 @@ about_page = render_template(
     }
 )
 
+print('generate.py: Generating public resources')
+
 shutil.rmtree('public')
 os.makedirs('public')
 os.makedirs('public/about')
@@ -93,6 +102,8 @@ write_file('public/index.html', index_page)
 write_file('public/about/index.html', about_page)
 
 for post in all_posts:
+    print(f'generate.py: Processing post: {post.get("slug")}')
+
     path = f'public/blog/{post.get("slug")}'
     os.makedirs(path)
 
@@ -120,3 +131,5 @@ for post in all_posts:
     )
 
     write_file(f'{path}/index.html', post_page)
+
+print('generate.py: Done generating static site')
