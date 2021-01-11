@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ckinan.com: Spring Security - Getting Started</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <script async defer data-domain="ckinan.com" src="https://plausible.ckinan.com/js/plausible.js?original=/js/index.js"></script>
+</head>
+<body>
+    <header>
+        <nav style="text-align: center;">
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/">Home</a></li>
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/about/">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section>
+        <article>
+    <h1 style="margin-bottom: 0.25rem;">Spring Security - Getting Started</h1>
+    <p style="margin-top: 0px; border-bottom: 1px solid black;">
+        Date: 2020-06-01
+    </p>
+    <p>Getting started with Spring Security by doing a simple example to understand the basics.</p>
+<h2>Pre-requisites</h2>
+<ul>
+<li>Java 8 or higher</li>
+<li>IDE of your preference (Intellij Idea, Eclipse, etc)</li>
+</ul>
+<h2>Create project</h2>
+<p>Go to <a href="https://start.spring.io/">https://start.spring.io/</a> and add the following dependencies:</p>
+<ul>
+<li>Spring Web</li>
+<li>Spring Security</li>
+</ul>
+<p><img src="./images/0.png" alt="" /></p>
+<p>Click on the <code>GENERATE</code> button. A zip file should be downloaded. Unzip it and we are ready to start.</p>
+<h2>Run the application</h2>
+<p><code>cd</code> to the project directory, and execute the following:</p>
+<pre><code class="language-bash">$ ./mvnw spring-boot:run
+</code></pre>
+<p>Logs should look like:</p>
+<p><img src="./images/1.png" alt="" /></p>
+<ol>
+<li>Spring Security provides you a default password (for a default user) out of the box just by adding the Spring Security dependency. In the above screenshot, the password is <code>c916dd57-3b15-49e8-906e-163c7aadf1b5</code> for the user <code>user</code>.</li>
+<li>The filter chain created for your requests. There are 15 filters in the chain added for you and in the order they are printed in the logs within the array. If you open a text editor and put all them in one line each, you should see something like:</li>
+</ol>
+<pre><code>org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@f951a7f
+org.springframework.security.web.context.SecurityContextPersistenceFilter@360bc645
+org.springframework.security.web.header.HeaderWriterFilter@6cd5122d
+org.springframework.security.web.csrf.CsrfFilter@3fe46690
+org.springframework.security.web.authentication.logout.LogoutFilter@79fd6f95
+org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6726cc69
+org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@2241f05b
+org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@20cece0b
+org.springframework.security.web.authentication.www.BasicAuthenticationFilter@5300cac
+org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5d51e129
+org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@109a2025
+org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4c777e7b
+org.springframework.security.web.session.SessionManagementFilter@10c07b8d
+org.springframework.security.web.access.ExceptionTranslationFilter@b16e202
+org.springframework.security.web.access.intercept.FilterSecurityInterceptor@fd9ebde
+</code></pre>
+<p>Each of these have a purpose, and they make the whole flow of the security layer possible. Remember, they are filters chained that will take actions in that order whenever a new request comes.</p>
+<ol start="3">
+<li>The port that your application is running. In this case, it's in 8080.</li>
+</ol>
+<ul>
+<li>Create a rest controller</li>
+<li>Secure a REST API</li>
+</ul>
+<h2>Open the application</h2>
+<p>Open <a href="http://localhost:8080">http://localhost:8080</a> in your browser, a login page should be displayed:</p>
+<p><img src="./images/2.png" alt="" /></p>
+<p>By default and by just adding the Spring Security dependency to the project, it generates a login page that sends the credentials to a generated endpoint <code>/login</code> that is in charge of verify whether the username and password are valid for the application and give access to the protected resources.</p>
+<p>Let's enter the credentials printed in logs into the form and click on the <code>Sign in</code> button (or just press enter).</p>
+<ul>
+<li>Username: <code>user</code></li>
+<li>Password: <code>c916dd57-3b15-49e8-906e-163c7aadf1b5</code></li>
+</ul>
+<p>An error page is displayed:</p>
+<p><img src="./images/3.png" alt="" /></p>
+<p>This is expected. In order to understand what happened, let's go to the Network Tab in the Dev Tools.</p>
+<p><img src="./images/4.png" alt="" /></p>
+<ol>
+<li>The credentials were sent to the endpoint <code>login</code>. Spring Security created that for us for free and the request will be processed by the filter chain we saw in the logs earlier.</li>
+<li>Information are sent from the pre-generated form. Notice the keys are already pre-defined <code>username</code>, <code>password</code> and a third one <code>_csrf</code>, which is meant to tackle the CSRF vulnerabilities. All them will be interpreted by the <code>login</code> endpoint.</li>
+</ol>
+<p>So, why we get an error page if I utilized the correct credentials? Let's see the second record in the Network Tab.</p>
+<p><img src="./images/5.png" alt="" /></p>
+<ol>
+<li>The resource that was asked was: <code>http://localhost:8080/</code>. Think of it as it requested the <code>/</code> resource from <code>http://localhost:8080</code>.</li>
+<li>404 (not found). It means, the resource <code>/</code> doesn't exist.</li>
+<li>The referer or who had initiated that request was <code>http://localhost:8080/login</code> which is the location where the credentials were sent through the form.</li>
+</ol>
+<p>The error message refers to a resource that was not found. And that is because Spring Security only provides us the security stuff for the resources we want to protect. But, as we didn't touch anything in the codebase, actually we didn't even open the project in the IDE, then there is nothing to protect (yet) and the resource <code>/</code> (I suspect) is the default path right after a successful login is attempted.</p>
+<p>One more thing to notice, in Application Tab there in the Dev Tools, there is a new Cookie created under the name <code>JSESSION</code>.</p>
+<p><img src="./images/6.png" alt="" /></p>
+<p>That is what keeps the already-logged-in user in session in the Spring Security context.</p>
+<p>Finally, there are still more particulars working behind the scenes, in the following link there is a list what is happening to Spring Boot once the Spring Security dependency is included into the project.</p>
+<p>Link: <a href="https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-hello-auto-configuration">https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-hello-auto-configuration</a></p>
+<p>A lot of things have happened by just adding the Spring Security dependency into the project. I didn't write any single line of code to get all the above stuff with Spring Security out of the box.</p>
+<p>Now, let's go to the codebase and some documentation to understand where all these came from.</p>
+<h2>The content of the project</h2>
+<p><img src="./images/7.png" alt="" /></p>
+<p>The above is all what the project has. Actually, in <a href="https://start.spring.io/">https://start.spring.io/</a> , there is a button <code>EXPLORE</code> that you can see the content of the zip before downloading it. Well, as I didn't touch a thing, that project tree should be exactly the same as I downloaded (except for the auto-generated stuff of my IDE).</p>
+<p>There are 3 key files that I'd like to mention so far:</p>
+<ol>
+<li><code>SpringSecurity01Application</code> is the class that initiates the application. In fact, this is not a Spring Security thing but from Spring Boot.</li>
+<li><code>mvnw</code>, this is the script that we utilized to run our application with the command <code>./mvnw spring-boot:run</code>. This is only one way to start the application, you can also run this by executing the generated <code>jar</code> after packaging the component with maven, maybe other techniques. For now, I'll keep continue using this method.</li>
+<li><code>pom.xml</code> registered two important dependencies:</li>
+</ol>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>The most relevant one is <code>spring-boot-starter-security</code>, which is giving us all the security features that we saw so far in this example. The other one <code>spring-boot-starter-web</code> is will enable the RESTful endpoints that are utilized in this example.</p>
+<p>From here, there are a lot of features to incorporate into the project, and there are several ways to do the same thing. For now I'll do a simple exercise that will allow me to explain couple of more things.</p>
+<h2>Securing a REST API</h2>
+<p>I'll write a very simple REST API that will just return a string value and have Spring Security protecting the endpoint.</p>
+<h3>Create the Controller Class</h3>
+<p>Let's create two endpoints. One protected and one public.</p>
+<pre><code class="language-java">// ./Controller.java
+package com.ckinan;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class Controller {
+
+    @RequestMapping(&quot;/protected-resource&quot;)
+    public String protectedResource() {
+        return &quot;The Protected Resource&quot;;
+    }
+
+    @RequestMapping(&quot;/public-resource&quot;)
+    public String publicResource() {
+        return &quot;The Public Resource&quot;;
+    }
+
+}
+</code></pre>
+<p>In this controller, there is no evidence of security for any of these endpoints. The controller doesn't even know they will be protected. They could, but we will have that in a separate class. For now, it's important to know the following:</p>
+<ul>
+<li>The endpoint <code>/protected-resource</code> will be protected by Spring Security with some basic instructions we will set later in a separate class.</li>
+<li>The endpoint <code>/public-resource</code> will be publicly available. Meaning, no authentication will be required.</li>
+</ul>
+<h3>Create the Security Configuration Class</h3>
+<p>All the configuration will live in a separate class in this step.</p>
+<pre><code class="language-java">// ./SecurityConfiguration.java
+package com.ckinan;
+
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+@EnableWebSecurity
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .formLogin()
+                .and()
+                .authorizeRequests()
+                    .antMatchers(HttpMethod.GET, &quot;/protected-resource&quot;).authenticated()
+                    .antMatchers(HttpMethod.GET, &quot;/public-resource&quot;).permitAll();
+    }
+
+}
+</code></pre>
+<p>In this configuration class we define the security features we want to add to our endpoints. Let's see some key points:</p>
+<ul>
+<li><code>@EnableWebSecurity</code>: This annotation will set effectively the Spring Security configuration we define in the class. It works together with the class we are extending: <code>WebSecurityConfigurerAdapter</code>.</li>
+<li><code>WebSecurityConfigurerAdapter</code>: When we extends this class, we are definiting a new instance of the <code>WebSecurityConfigurer</code> interface. We are overriding one of its methods <code>configure(HttpSecurity http)</code> to have our custom version of how we want to protect our endpoints.</li>
+<li><code>configure(HttpSecurity http)</code>: This is the method we want to override to tell Spring Security that we only want to protect one of our two endpoints and not both, which would be the default behavior if we don't do this.</li>
+<li><code>HttpSecurity http</code>: The input parameter of the method is the one containing all the configuration that Spring Security will consider during the execution of all the Filter Chain to any requests coming to the application.</li>
+<li><code>formLogin()</code>: Enables the Login (default) screen for any request to our protected endpoint</li>
+<li><code>authorizeRequests()</code>: The restrictions to the requests</li>
+<li><code>antMatchers</code>: Indicates the method and the endpoints (patterns) for each restrictions we want to give</li>
+<li><code>authenticated() and permitAll()</code>: I think they are self-explainatory. But basically, we specify which antMatcher we want to retrict to only be accessed if it's authenticated user or not</li>
+</ul>
+<h3>Run the application</h3>
+<p>Let's run the <code>mvnw</code> script once again and test the two endpoints in the browser to see how they behave with the given configuration.</p>
+<pre><code class="language-bash">$ ./mvnw spring-boot:run
+# Note: The autogenerated password changes every time you run this command. This time I got:
+Using generated security password: 5e57b493-6181-4682-bc21-81ec40222298
+</code></pre>
+<p>Try to open the public endpoint: <a href="http://localhost:8080/public-resource">http://localhost:8080/public-resource</a></p>
+<p><img src="./images/8.png" alt="" /></p>
+<p>The public resource doesn't require any authentication process, which is expected since we are telling Spring Security to allow ALL requests to access it with this matcher: <code>.antMatchers(HttpMethod.GET, &quot;/public-resource&quot;).permitAll()</code>.</p>
+<p>Now let's try with the protected endpoint: <a href="http://localhost:8080/protected-resource">http://localhost:8080/protected-resource</a></p>
+<p><img src="./images/9.png" alt="" /></p>
+<p>This time, right after we hit the URL in the browser, a login page is displayed. The login page was intentionally configured by giving the <code>formLogin()</code> to the <code>http</code> variable within the <code>configure(...)</code> method in our <code>SecurityConfiguration</code> class.</p>
+<p>Now lets use the username by default and the password printed in the logs when we started the application.</p>
+<p><img src="./images/10.png" alt="" /></p>
+<p>By entering the correct credentials, the application will allow the user to access the protected resource. If we give incorrect credential, then the login page will let us know, like so:</p>
+<p><img src="./images/11.png" alt="" /></p>
+<h2>Final thoughs</h2>
+<p>There are a lot of security concepts that I still need to study. Somewhat during this process of learning Spring Security I am exposed to understand some of those security definitions to apply the configurations accordingly.</p>
+<p>I first tried to read all the official docs at once from Spring Security, but it was quite overwhelming, and I then preferred to create a project, and do things that later forced me to investigate more specific topics by the time I was facing some issues with the setup.</p>
+<p>For now, I feel I learned few concepts that will allow me to expand later, perhaps in future articles.</p>
+<h2>Refs:</h2>
+<ul>
+<li>Github Repo: <a href="https://github.com/ckinan/java-practice/tree/master/spring-security-01">https://github.com/ckinan/java-practice/tree/master/spring-security-01</a></li>
+<li>Spring Security Reference Docs: <a href="https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/">https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/</a></li>
+<li>Spring Security - Its 15 minutes tutorial: <a href="https://spring.io/guides/gs/securing-web/">https://spring.io/guides/gs/securing-web/</a></li>
+<li>I strongly recommend to read this article, which helped me a lot to understand some foundations of Spring Security: <a href="https://www.marcobehler.com/guides/spring-security">https://www.marcobehler.com/guides/spring-security</a></li>
+<li>Also, I found the Spring One videos on Youtube very informative: <a href="https://www.youtube.com/watch?v=8rnOsF3RVQc&amp;t">https://www.youtube.com/watch?v=8rnOsF3RVQc&amp;t</a> and <a href="https://www.youtube.com/watch?v=WbnuwpSBXPs">https://www.youtube.com/watch?v=WbnuwpSBXPs</a></li>
+</ul>
+
+</article>
+    </section>
+</body>
+</html>

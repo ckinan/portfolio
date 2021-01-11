@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ckinan.com: Spring Security - Credentials from JSON request</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <script async defer data-domain="ckinan.com" src="https://plausible.ckinan.com/js/plausible.js?original=/js/index.js"></script>
+</head>
+<body>
+    <header>
+        <nav style="text-align: center;">
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/">Home</a></li>
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/about/">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section>
+        <article>
+    <h1 style="margin-bottom: 0.25rem;">Spring Security - Credentials from JSON request</h1>
+    <p style="margin-top: 0px; border-bottom: 1px solid black;">
+        Date: 2020-07-20
+    </p>
+    <p>One more example of how flexible Spring Security is. This time, we will take a look at how we can override the default behavior to read credentials from any requests to start working with JSON format and authenticate users based on that.</p>
+<h2>Introduction</h2>
+<p>Once you include the Spring Security dependency into your project, it gives you a lot of features out of the box. A pre-defined login form is one of them, for any protected resource without an authenticated user, the application would automatically redirect you to a Login Page (a form). Any form submission is sent to the endpoint <code>/login</code> (method POST) and the filter chain of Spring Security takes action. It extracts the username and password parameters from the request and use them to perform the authentication process.</p>
+<p>That is the default behavior coming from Spring Security. In the class <code>UsernamePasswordAuthenticationFilter</code>, it has a method called <code>attemptAuthentication</code>, which receives two parameters: a request and a response (<code>HttpServletRequest</code> and <code>HttpServletResponse</code>). This class is part of the filter chain (by default), and if there is a login form submission, then the request will pass through there.</p>
+<p>But what if we don't want to send the credentials in a form submission, and our use case requires an endpoint that allows clients to authenticate users by sending their credentials within a JSON body. In that case, the default filter won't support that format. The filter will look at the request-parameters and will try to find the <code>username</code> and the <code>password</code> params names. In fact, it is very explicit in the docstrings of the <code>UsernamePasswordAuthenticationFilter</code> class:</p>
+<blockquote>
+<p>Login forms must present two parameters to this filter: a username and password.</p>
+</blockquote>
+<p>Here I will explain one way to get credentials from a JSON request and continue with the rest of the security filter chain.</p>
+<h2>Scope</h2>
+<ul>
+<li>Create a custom filter to read the credentials from the request in a JSON format and include it in the security filter chain in replacement of the <code>UsernamePasswordAuthenticationFilter</code></li>
+<li>No UI. Everything will be tested via Postman</li>
+<li>Set users details in memory</li>
+</ul>
+<h2>Pre-requisites</h2>
+<ul>
+<li>Java 8 or higher</li>
+<li>IDE of your preference (Intellij Idea, Eclipse, etc)</li>
+</ul>
+<h2>Create project</h2>
+<p>Go to <a href="http://start.spring.io">http://start.spring.io</a> and generate a new project. These are the key pieces for this code example:</p>
+<ul>
+<li>Project: Gradle</li>
+<li>Language: Java</li>
+<li>Dependencies: Spring Web, Spring Security</li>
+</ul>
+<p>You can use this direct link with all the configuration already set: <a href="https://start.spring.io/#%21type=gradle-project&amp;language=java&amp;platformVersion=2.3.1.RELEASE&amp;packaging=jar&amp;jvmVersion=14&amp;groupId=com.ckinan&amp;artifactId=spring-security-credentials-from-json-request&amp;name=spring-security-credentials-from-json-request&amp;description=Spring%20Security%20-%20Credentials%20from%20JSON%20request&amp;packageName=com.ckinan&amp;dependencies=web,security">link</a></p>
+<h2>Create the components</h2>
+<p>In the project we've just downloaded, let's create the following classes under the main package (<code>com.ckinan</code> in my case):</p>
+<ul>
+<li><code>Application</code>: It comes from the zip file we've just downloaded. It will start the Spring Boot application for us. No changes required here</li>
+<li><code>Controller</code>: Two &quot;resources&quot; will be exposed in this controller: A protected resource and a public resource (names are self-explanatory)</li>
+<li><code>SecurityConfiguration</code>: Contains our security configuration and we will provide the in-memory user to the <code>AuthenticationManager</code> by using its configurer</li>
+<li><code>CustomFilter</code>: Replacement of <code>UsernamePasswordAuthenticationFilter</code> in the filter chain. It will read the credentials from the JSON payload coming within the <code>HttpServletRequest</code></li>
+</ul>
+<h3>Project Structure</h3>
+<p><img src="images/0.png" alt="" /></p>
+<h2>Review the components</h2>
+<h3>Controller</h3>
+<pre><code class="language-java">package com.ckinan;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class Controller {
+
+    @RequestMapping(&quot;/protected-resource&quot;)
+    public String protectedResource() {
+        return &quot;The Protected Resource&quot;;
+    }
+
+    @RequestMapping(&quot;/public-resource&quot;)
+    public String publicResource() {
+        return &quot;The Public Resource&quot;;
+    }
+
+}
+</code></pre>
+<p>Includes two endpoints (both <code>GET</code> method) that basically return some string values:</p>
+<ul>
+<li><code>/protected-resource</code>: This endpoint will be protected by our Spring Security configuration. By &quot;protected&quot;, it means clients need to authenticate first to access the resource.</li>
+<li><code>/public-resource</code>: Authentication is not needed to access this resource.</li>
+</ul>
+<blockquote>
+<p>Note: Later we will define the security restrictions for both endpoints in <code>SecurityConfiguration</code> class.</p>
+</blockquote>
+<h3>CustomFilter</h3>
+<pre><code class="language-java">package com.ckinan;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Map;
+
+public class CustomFilter extends AbstractAuthenticationProcessingFilter {
+
+    protected CustomFilter() {
+        super(new AntPathRequestMatcher(&quot;/login&quot;, &quot;POST&quot;));
+    }
+
+    @Override
+    public Authentication attemptAuthentication(
+            HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+
+        String username, password;
+
+        try {
+            Map&lt;String, String&gt; requestMap = new ObjectMapper().readValue(request.getInputStream(), Map.class);
+            username = requestMap.get(&quot;username&quot;);
+            password = requestMap.get(&quot;password&quot;);
+        } catch (IOException e) {
+            throw new AuthenticationServiceException(e.getMessage(), e);
+        }
+
+        UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
+                username, password);
+
+        return this.getAuthenticationManager().authenticate(authRequest);
+    }
+
+}
+</code></pre>
+<p>This filter is the one in charge of reading the credentials from the request in JSON format. It will act as replacement of the <code>UsernamePasswordAuthenticationFilter</code>, which we are removing from our spring security configuration in favor of the new <code>CustomFilter</code>.</p>
+<p>The constructor is passing an <code>AntPathRequestMatcher</code> object with two params:</p>
+<ul>
+<li><code>pattern</code>: Any request coming from the <code>/login</code> path will be considered by this filter to perform the authentication process. It could be anything that matches your needs as API pattern or path, for example: <code>/api/login</code> or <code>/sign-in</code> or whatever</li>
+<li><code>httpMethod</code>: We want to process any request as <code>POST</code> method</li>
+</ul>
+<p>We are also overriding the method <code>attemptAuthentication</code>, which is going to extract the <code>username</code> and <code>password</code> from the request JSON payload. There are certainly multiple ways to extract the JSON values and assign them into java objects, but for now, I'm using <code>ObjectMapper</code> and assigning the values to a <code>Map</code>. Later they will be assigned to their corresponding <code>String</code> variables.</p>
+<p>Once we get the credentials, we need to perform the <code>authenticate</code> process, which is provided by the <code>AuthenticationManager</code>. Quoting from the docs <a href="https://spring.io/guides/topicals/spring-security-architecture">https://spring.io/guides/topicals/spring-security-architecture</a> :</p>
+<blockquote>
+<p>Spring Boot provides a default global AuthenticationManager (with just one user) unless you pre-empt it by providing your own bean of type AuthenticationManager. The default is secure enough on its own for you not to have to worry about it much, unless you actively need a custom global AuthenticationManager. If you do any configuration that builds an AuthenticationManager you can often do it locally to the resources that you are protecting and not worry about the global default.</p>
+</blockquote>
+<p>In this example, we are configuring our in-memory user (see later in our <code>SecurityConfiguration</code> class) into the <code>AuthenticationManager</code>. So any <code>username</code> and <code>password</code> from a JSON payload will be verified against the in-memory user we have there. I think this is the <em>meat</em> of this example.</p>
+<p>For that to happen, the method <code>authenticate</code> of the <code>AuthenticationManager</code> receives a token, which in this case we are initializing a <code>UsernamePasswordAuthenticationToken</code> with the credetials coming from the request.</p>
+<p>One important note on this, if you visit the <code>UsernamePasswordAuthenticationFilter</code> class (from the codebase of Spring Security), you will notice that I'm trying to mimic the logic in its <code>attemptAuthentication</code> method, which by default it gets the credentials coming as form parameters (<a href="https://github.com/spring-projects/spring-security/blob/97ccbe5df20c1f9999784d2d0d84d159965bdaca/web/src/main/java/org/springframework/security/web/authentication/UsernamePasswordAuthenticationFilter.java#L76-L103">link</a>)</p>
+<h3>SecurityConfiguration</h3>
+<pre><code class="language-java">package com.ckinan;
+
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+@EnableWebSecurity
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication().withUser(&quot;cesar&quot;).password(&quot;{noop}s3cr3t&quot;).roles(&quot;USER&quot;);
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        CustomFilter mupaf = new CustomFilter();
+        mupaf.setAuthenticationManager(authenticationManager());
+
+        http
+            .csrf().disable()
+            .addFilterAt(
+                    mupaf,
+                    UsernamePasswordAuthenticationFilter.class)
+            .authorizeRequests()
+            .antMatchers(HttpMethod.GET, &quot;/protected-resource&quot;).authenticated()
+            .antMatchers(HttpMethod.POST, &quot;/login&quot;).permitAll();
+    }
+
+}
+</code></pre>
+<p>For simplicity, here we are working with only one user loaded from memory:</p>
+<ul>
+<li>Username: <code>cesar</code></li>
+<li>Password: <code>s3cr3t</code></li>
+</ul>
+<p>The <code>{noop}</code> means we are going to use the <code>NoOpPasswordEncoder</code> password encoder, which simply does not do anything to the password we are providing <code>s3cr3t</code> (it won't get encoded). This is not secure obviously, but will work for this example.</p>
+<p>The <code>AuthenticationManagerBuilder</code> will allow us to configure the above in-memory user into the <code>AuthenticationManager</code>. So that any request that passes through the <code>CustomFilter</code>, will try to &quot;authenticate&quot; the incoming credentials against this user details manager.</p>
+<p>Creates new instance of the <code>CustomFilter</code>, in which we want to provide the <code>authenticationManager</code> we should already have configured at this point. Then insert the filter in the same position as the <code>UsernamePasswordAuthenticationFilter</code> would have been.</p>
+<p>Then, configure the <code>antMatchers</code> for the two resources (one public one protected).</p>
+<blockquote>
+<p>Note: I need another space to explore the <code>csrf</code> configuration. For now, we need to disable the feature, otherwise requests won't get until the <code>CustomFilter</code> within the filter chain</p>
+</blockquote>
+<h2>Run and test</h2>
+<p>Run the application with the following instruction in terminal (need to cd to the project directory):</p>
+<pre><code>$ ./gradlew bootRun
+</code></pre>
+<p>Testing with Postman, it will fail trying to access the <code>protected-resource</code> because the user is not authenticated (yet)</p>
+<p><img src="images/1.png" alt="" /></p>
+<p>Use the <code>/login</code> endpoint to authenticate the user. The <code>Not Found</code> error from the response refers to the <code>/</code> resource which we simply don't have in our controller. Remember we only have set two endpoints: <code>protected-resource</code> and <code>public-resource</code>.</p>
+<p><img src="images/2.png" alt="" /></p>
+<p>Now, try to access the <code>protected-resource</code> once again. This time, the user should be already authenticated.</p>
+<p><img src="images/3.png" alt="" /></p>
+<p>At any point of time, with or without a successful authentication, the <code>public-resource</code> should be accessible.</p>
+<p><img src="images/4.png" alt="" /></p>
+<h2>Final thoughts</h2>
+<ul>
+<li>During this example, I noticed there is another area to explore: how AuthenticationManager, ProviderManager and AuthenticationProvider are connected all together to allow the application setup a custom authentication process.</li>
+<li>Nothing prevents us to customize the way we extract credentials from the requests. And one more time, it proves the flexibility of Spring Security to do some work like that. All I did was to mimic what <code>UsernamePasswordAuthenticationFilter</code> does to capture the username and password from a <code>HttpServletRequest</code> object.</li>
+<li>It's pretty important to be aware of the filters that Spring Security provides. There is a comprehensive list of filters in this <a href="https://docs.spring.io/spring-security/site/docs/current/reference/html5/#servlet-security-filters">link</a>. So if there is another behavior we want to customize in regards of what is happening in the filter chain, then we need to know where exactly (and how) that should happen. A breakpoint in <code>FilterChainProxy</code> is a good point to start.</li>
+</ul>
+<h2>Links</h2>
+<ul>
+<li>Github repo: <a href="https://github.com/ckinan/java-practice/tree/master/spring-security-credentials-from-json-request">https://github.com/ckinan/java-practice/tree/master/spring-security-credentials-from-json-request</a></li>
+<li>Spring Security Architecture (gave me more insights about what AuthenticationManager, ProviderManager and AuthenticationProvider are): <a href="https://spring.io/guides/topicals/spring-security-architecture">https://spring.io/guides/topicals/spring-security-architecture</a></li>
+</ul>
+
+</article>
+    </section>
+</body>
+</html>

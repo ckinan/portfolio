@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ckinan.com: Tailwind CSS - First Steps</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <script async defer data-domain="ckinan.com" src="https://plausible.ckinan.com/js/plausible.js?original=/js/index.js"></script>
+</head>
+<body>
+    <header>
+        <nav style="text-align: center;">
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/">Home</a></li>
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/about/">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section>
+        <article>
+    <h1 style="margin-bottom: 0.25rem;">Tailwind CSS - First Steps</h1>
+    <p style="margin-top: 0px; border-bottom: 1px solid black;">
+        Date: 2020-05-17
+    </p>
+    <p>In my whole career, even when I was in college, every time I had to build an application that involves UI or styles, I always struggled with the design. After some years now, I still have the same problem. Colors, text size, layouts, etc are simply a nightmare to me. This is one of the things I usually try to avoid in web development when there is some CSS file I have to (inevitable) make some changes, I just say &quot;oh God, please help me&quot;.</p>
+<h2>Introduction</h2>
+<p>Ultimately, I've been hearing a lot about Tailwind CSS, a utility-first framework that comes with a bunch of amazing stuff for your design process, like for example predefined attributes to create a nice green button with rounded corners and a hover effect, but Tailwind doesn't give you the whole class for the button, instead it brings with the necessary little pieces that you have to combine nicely to build the design for that button.</p>
+<p>This is an example of how a green button using Tailwind CSS would look like:</p>
+<pre><code class="language-html">&lt;button
+  type=&quot;button&quot;
+  class=&quot;rounded bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border-solid border-2 border-green-600 m-5&quot;&gt;
+  Login
+&lt;/button&gt;
+</code></pre>
+<p><img src="./images/0.png" alt="" /></p>
+<p>Someone might say, &quot;why would I need that if there are other tools or frameworks that provide the whole button component styles out of the box&quot;. Well, that was me. But, after giving it a try, I noticed that you can get exactly what the other frameworks can give you, but now you know exactly what you are including in your styles. Meaning, you get full control of how things are presented in your UI.</p>
+<h2>Motivation</h2>
+<p>There are a couple of things I really like about Tailwind CSS:</p>
+<ul>
+<li>Documentation: Nice examples, well explained and I go there every time I need to do an isolated thing before doing it in my project.</li>
+<li>Easy to get started: When I want to try something new, one of the first things I look for is the &quot;Get Started&quot; section. Well, here it is <a href="https://tailwindcss.com/docs/installation/">Get Started</a>. I went to the &quot;Using CDN&quot; section because I just wanted to get a quick demo to explore.</li>
+<li>Community: I see more and more people using it and sharing their projects or knowledge about it. One thing that convinced me to take a look at it was one guy replicating a whole application using Tailwind CSS. I was like &quot;what? is that possible?&quot;, so cool.</li>
+</ul>
+<p>Another thing I got from there, and this might be something more &quot;personal&quot;, is that after I started using it I got myself more interested in to know more properties I can use in CSS, because, Tailwind can give you the utilities you need, but in order to use them, you have to know how you would accomplish that with plain CSS, then go to Tailwind docs and look for it without creating a single CSS line, you have everything you need available to use in your HTML.</p>
+<p>It's like my development process, in terms of design, changed quite a bit. I now feel I have more control of how I build my UI. Now, my steps to accomplish some styling are (example):</p>
+<ol>
+<li>
+<p>What do I need? I need a green button for my login page. Specs: Green background, white text, border and rounded corners.</p>
+</li>
+<li>
+<p>How is this in plain CSS? Example for the green background: <code>background-color: #48bb78;</code> . I think this is the most difficult step at least in my case, there are a lot of things in CSS that are unknown to me.</p>
+</li>
+<li>
+<p>Go to Tailwind CSS docs and search for the CSS property. Link: <a href="https://tailwindcss.com/docs/background-color">https://tailwindcss.com/docs/background-color</a> . For the Green Background, the Tailwind CSS &quot;equivalent class&quot; should be <code>class=&quot;bg-green-500&quot;</code></p>
+</li>
+<li>
+<p>Isolate the code and test. You can also test directly in your project, but I strongly recommend to test any style in a separate environment, so if something fails, you are not confused by the question &quot;is it because of something in my project or is it with Tailwind or is it me doing something wrong?&quot; (you know what I mean...) Example:</p>
+</li>
+</ol>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link
+      rel=&quot;stylesheet&quot;
+      type=&quot;text/css&quot;
+      href=&quot;https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.4.6/tailwind.min.css&quot;
+    /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;button
+      type=&quot;button&quot;
+      class=&quot;rounded bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border-solid border-2 border-green-600 m-5&quot;
+    &gt;
+      Login
+    &lt;/button&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<ol start="5">
+<li>Incorporate this in your project. You should make the changes according to your project needs once you get the desired results in your isolated tests.</li>
+</ol>
+<p>Example in codepen: <a href="https://codepen.io/ckinan/pen/JjYePyW">https://codepen.io/ckinan/pen/JjYePyW</a></p>
+<h2>Final thoughts</h2>
+<p>Tailwind CSS is a different way to see design in my development process. It didn't magically solve all my problems with the design, and I don't see it as something that I needed to do my styles looking better, but it kind of helped me to do more things directly in the HTML files, instead of doing it in CSS files just to make my design unique. Finally, the feeling of having control of every single detail in how my components look like without having to write any much CSS, keeps me motivated to continue utilizing Tailwind.</p>
+<h2>Links</h2>
+<ul>
+<li>Tailwind CSS: <a href="https://tailwindcss.com/">https://tailwindcss.com/</a></li>
+</ul>
+
+</article>
+    </section>
+</body>
+</html>

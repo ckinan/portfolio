@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ckinan.com: Auth0 - Simple Example with Vanilla JS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <script async defer data-domain="ckinan.com" src="https://plausible.ckinan.com/js/plausible.js?original=/js/index.js"></script>
+</head>
+<body>
+    <header>
+        <nav style="text-align: center;">
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/">Home</a></li>
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/about/">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section>
+        <article>
+    <h1 style="margin-bottom: 0.25rem;">Auth0 - Simple Example with Vanilla JS</h1>
+    <p style="margin-top: 0px; border-bottom: 1px solid black;">
+        Date: 2020-01-05
+    </p>
+    <p>First steps with Auth0 following their tutorial to create a simple login page with Vanilla JS.</p>
+<h2>Intro</h2>
+<p>Auth0 is a complete platfom that helps you to handle authentication and authorization services in your application. It provides SDKs to connect to their solution for many technologies such as Angular, Javascript, React Vue for SPA applications, not to mention Node, PHP, Python, Java (and others) for backend and others for mobile apps.</p>
+<p>This post is intended to get started with Auth0 by following the steps of the tutorial they have in their website using Vanilla JS (which is great and very detailed). However, after I completed all the steps, I decided to remove some parts of the code from the code, because all I wanted to have there was the most minimal version of this login page just to avoid being distracted by other things that are not directly related to the Auth0 SDK. During my research, I found this post which inspired me to do this work: <a href="https://protoout.studio/posts/auth0-github-pages/">https://protoout.studio/posts/auth0-github-pages/</a> . So, thanks Protoout for this :)</p>
+<p>Quoting the goal of this tutorial:</p>
+<blockquote>
+<p>This tutorial demonstrates how to add user login to a Javascript application using Auth0.</p>
+</blockquote>
+<p>You can find the tutorial here: <a href="https://auth0.com/docs/quickstart/spa/vanillajs">https://auth0.com/docs/quickstart/spa/vanillajs</a></p>
+<p>After executing all the steps in there I got this configuration in my first application I called <code>auth0-javascript-tutorial</code>.</p>
+<h2>Steps</h2>
+<h3>Auth0 Settings</h3>
+<p>Domain and Client ID, you will need them later in your JS app.</p>
+<p><img src="./images/0.png" alt="" /></p>
+<p>Configure the following:</p>
+<ul>
+<li>Allowed Callback URLs</li>
+<li>Allowed Web Origins</li>
+<li>Allowed Logout URLs</li>
+</ul>
+<blockquote>
+<p>One Auth0-Application supports many Allowed Callback URLs, Web Origins and Logout URLs, so I have set only one application to accomplish multiple environments (local and github.io in my case).</p>
+</blockquote>
+<p><img src="./images/1.png" alt="" /></p>
+<h3>index.html</h3>
+<p>Simple html file to show login/logout buttons and the <code>gated-content</code> section where the logged user profile information should be displayed. No need to change anything here, keep it as the tutorial suggests it to be.</p>
+<blockquote>
+<p>You can load the <code>auth0-spa-js</code> from CDN.</p>
+</blockquote>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+    &lt;title&gt;SPA SDK Sample&lt;/title&gt;
+
+    &lt;style&gt;
+      .hidden {
+        display: none;
+      }
+      label {
+        margin-bottom: 10px;
+        display: block;
+      }
+    &lt;/style&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;h2&gt;SPA Authentication Sample&lt;/h2&gt;
+    &lt;p&gt;Welcome to our page!&lt;/p&gt;
+    &lt;button id=&quot;btn-login&quot; disabled=&quot;true&quot; onclick=&quot;login()&quot;&gt;Log in&lt;/button&gt;
+    &lt;button id=&quot;btn-logout&quot; disabled=&quot;true&quot; onclick=&quot;logout()&quot;&gt;Log out&lt;/button&gt;
+
+    &lt;div class=&quot;hidden&quot; id=&quot;gated-content&quot;&gt;
+      &lt;p&gt;
+        You're seeing this content because you're currently
+        &lt;strong&gt;logged in&lt;/strong&gt;.
+      &lt;/p&gt;
+      &lt;label&gt;
+        Access token:
+        &lt;pre id=&quot;ipt-access-token&quot;&gt;&lt;/pre&gt;
+      &lt;/label&gt;
+      &lt;label&gt;
+        User profile:
+        &lt;pre id=&quot;ipt-user-profile&quot;&gt;&lt;/pre&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
+
+    &lt;script src=&quot;https://cdn.auth0.com/js/auth0-spa-js/1.2/auth0-spa-js.production.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3>app.js</h3>
+<p>This is how my minimal version of the <code>app.js</code> looks like:</p>
+<ul>
+<li>I am not serving the Domain and Client ID from any backend service (as the tutorial does serving them using Express).</li>
+<li>Just including them in the client as I don't care about them being exposed publicly for now.</li>
+<li>Then I organized the <code>onload()</code> function just in three steps: Configure the Client, Process the Login State and Update the UI.</li>
+<li>I made sure I didn't miss any Auth0 function from the SDK that was originally used in the tutorial, so that I can check them out later.</li>
+</ul>
+<pre><code class="language-js">let auth0 = null
+
+window.onload = async () =&gt; {
+  await configureClient()
+  await processLoginState()
+  updateUI()
+}
+
+const configureClient = async () =&gt; {
+  auth0 = await createAuth0Client({
+    domain: &quot;dev-scp6vo-0.auth0.com&quot;,
+    client_id: &quot;7uwc6i4z1Xxn9JpWaz2NU1bc9uq4oBPw&quot;,
+  })
+}
+
+const processLoginState = async () =&gt; {
+  // Check code and state parameters
+  const query = window.location.search
+  if (query.includes(&quot;code=&quot;) &amp;&amp; query.includes(&quot;state=&quot;)) {
+    // Process the login state
+    await auth0.handleRedirectCallback()
+    // Use replaceState to redirect the user away and remove the querystring parameters
+    window.history.replaceState({}, document.title, window.location.pathname)
+  }
+}
+
+const updateUI = async () =&gt; {
+  const isAuthenticated = await auth0.isAuthenticated()
+  document.getElementById(&quot;btn-logout&quot;).disabled = !isAuthenticated
+  document.getElementById(&quot;btn-login&quot;).disabled = isAuthenticated
+  // NEW - add logic to show/hide gated content after authentication
+  if (isAuthenticated) {
+    document.getElementById(&quot;gated-content&quot;).classList.remove(&quot;hidden&quot;)
+    document.getElementById(
+      &quot;ipt-access-token&quot;
+    ).innerHTML = await auth0.getTokenSilently()
+    document.getElementById(&quot;ipt-user-profile&quot;).innerHTML = JSON.stringify(
+      await auth0.getUser()
+    )
+  } else {
+    document.getElementById(&quot;gated-content&quot;).classList.add(&quot;hidden&quot;)
+  }
+}
+
+const login = async () =&gt; {
+  await auth0.loginWithRedirect({
+    redirect_uri: window.location.href,
+  })
+}
+
+const logout = () =&gt; {
+  auth0.logout({
+    returnTo: window.location.href,
+  })
+}
+</code></pre>
+<p>The above code snippet is a minified version of what Auth0 has prepared in their documentation. Basically, it establishes connection with the Application I created in their platform, then do some checks with the state of the authentication process to show or hide information about the user who is (or not) logged in. Below is the list of classes &amp; methods that stricly come from the Auth0 SDK:</p>
+<ul>
+<li>createAuth0Client</li>
+<li>handleRedirectCallback</li>
+<li>isAuthenticated</li>
+<li>getTokenSilently</li>
+<li>getUser</li>
+<li>loginWithRedirect</li>
+<li>logout</li>
+</ul>
+<p>This exercise helped me to have a better understanding what actually this simple login page is doing through the SDK. Also, the SDK documentation has good content about each class/function/property involved here: <a href="https://auth0.github.io/auth0-spa-js/">https://auth0.github.io/auth0-spa-js/</a></p>
+<p>One key point in <code>app.js</code> is this line:</p>
+<pre><code class="language-js">await auth0.handleRedirectCallback()
+</code></pre>
+<p>According to the SDK documentation:</p>
+<blockquote>
+<p>After the browser redirects back to the callback page, call handleRedirectCallback to handle success and error responses from Auth0. If the response is successful, results will be valid according to their expiration times.</p>
+</blockquote>
+<p>Whatever happens with the authentication process won't be effectively readable in your application until the call to <code>auth0.handleRedirectCallback();</code>, you won't be even able to get the actual state of the login process result. For example: <code>auth0.isAuthenticated();</code> would not get <code>true</code> after a successful login if it was not handled previously by the <code>auth0.handleRedirectCallback();</code> function.</p>
+<h2>Test</h2>
+<p>Open <a href="https://ckinan.github.io/auth0-javascript-tutorial/">https://ckinan.github.io/auth0-javascript-tutorial/</a> and click on the &quot;Login in&quot; button.</p>
+<p><img src="./images/2.png" alt="" /></p>
+<p>You will be redirected to Auth0 Authentication page where you can login to this app using your Google or Github account. By the way, the free plan allows you to set up to two social connections.</p>
+<p><img src="./images/3.png" alt="" /></p>
+<p>After login success, it will redirect to your page and the user information will be displayed.</p>
+<p><img src="./images/4.png" alt="" /></p>
+<h2>Conclusions</h2>
+<p>Auth0 is a great option to handle Authentication and Authorization processes. Their tutorial is very detailed and easy to follow (didn't have much problems). However, in order to focus on what really matters to me in their SDK, I had to remove/debug/reinsert some lines of code. I am excited about building a more real use case using Auth0 and see more features of it.</p>
+<h2>Links</h2>
+<ul>
+<li>Auth0 Vanilla JS Tutorial: <a href="https://auth0.com/docs/quickstart/spa/vanillajs">https://auth0.com/docs/quickstart/spa/vanillajs</a></li>
+<li>Auth0 SDK for Single Page Applications: <a href="https://auth0.github.io/auth0-spa-js/">https://auth0.github.io/auth0-spa-js/</a></li>
+<li>Test: <a href="https://ckinan.github.io/auth0-javascript-tutorial/">https://ckinan.github.io/auth0-javascript-tutorial/</a></li>
+<li>Repo: <a href="https://github.com/ckinan/auth0-javascript-tutorial">https://github.com/ckinan/auth0-javascript-tutorial</a></li>
+<li>Great tutorial post: <a href="https://protoout.studio/posts/auth0-github-pages/">https://protoout.studio/posts/auth0-github-pages/</a></li>
+</ul>
+
+</article>
+    </section>
+</body>
+</html>

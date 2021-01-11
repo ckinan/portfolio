@@ -1,0 +1,147 @@
+---
+title: KnockoutJS - Register Component
+date: 2020-06-17
+slug: knockoutjs-register-component
+---
+
+One more time, I convinced myself how important is sometimes get away from my codebase and isolate my tests to understand foundations. This time, got something with KnockoutJS and how components are registered.
+
+## Motivation
+
+Recently I wanted to understand how a KnockoutJS components can be created. So, I went into the official docs and found good explanations about it:
+
+- [https://knockoutjs.com/documentation/component-overview.html](https://knockoutjs.com/documentation/component-overview.html)
+
+Instead of trying things directly to the codebase I wanted to introduce new components, I first wanted to create really simple examples in an isolated way.
+
+I created a codepen for this excercise, which helped me a lot to quickly make changes and play with the things I was learning during this.
+
+- [https://codepen.io/ckinan/pen/eYJBjYR](https://codepen.io/ckinan/pen/eYJBjYR)
+
+## Playground
+
+The following component called `my-component` configures a `viewModel` that creates a new object that handles the states of the values in the form. Also, tells the components to be synchronously loaded and finally declares the template to be rendered in the DOM.
+
+```js
+var MyViewModel = function(first, last) {
+    this.firstName = ko.observable('Cesar');
+    this.lastName = ko.observable('K');
+ 
+    this.fullName = ko.pureComputed(function() {
+        return this.firstName() + " " + this.lastName();
+    }, this);
+};
+
+ko.components.register('my-component', {
+  viewModel: {
+    createViewModel: function(params) {
+      return new MyViewModel(params);
+    },
+  },
+  synchronous: true,
+  template: `
+    <div>
+      <p>First name: <input data-bind="textInput: firstName" /></p>
+      <p>Last name: <input data-bind="textInput: lastName" /></p>
+      <strong>Hello, <span data-bind="text: fullName"> </span>!</strong>
+    </div>
+  `
+});
+```
+
+I got 4 ways to use components (probably there are more variations). For now, this is what I got.
+
+## Approach #1
+
+Bind the component by specifying its name directly.
+
+```html
+<div data-bind='component: "my-component"'></div>
+```
+
+## Approach #2
+
+Bind the component by specifying an object with the name of it.
+
+```html
+<div data-bind='component: { name: "my-component" }'></div>
+```
+
+Note: In that object, you can also pass the params to the component if there is any. This example only passes the name.
+
+> So far, approaches #1 and #2 are taken from here [https://knockoutjs.com/documentation/component-binding.html](https://knockoutjs.com/documentation/component-binding.html)
+
+## Approach #3
+
+Using component as "Custom elements". Ref: [https://knockoutjs.com/documentation/component-custom-elements.html](https://knockoutjs.com/documentation/component-custom-elements.html)
+
+```html
+<my-component></my-component>
+```
+
+## Approach #4
+
+Just like in Approach #2, but in Javascript having one component to inject into another component.
+
+New component for this example is a divider. (Only a template, no view models this time)
+
+```js
+ko.components.register('my-divider-component', {
+  template: `
+    <div style="border-top: 3px solid #bbb;"></div>
+  `
+});
+```
+
+Then, create an object that will provide the information about the component (the name and optionally the params).
+
+```js
+const MyDividerComponent = function() {
+  const self = this;
+  self.component = () => {
+    return {
+      name: 'my-divider-component'
+    }
+  };
+};
+
+const myDividerComponent = new MyDividerComponent();
+```
+
+Finally, inject this component into another component while creating the template. (I'll use `my-component` example but will add one more line in the template)
+
+```js
+ko.components.register('my-component', {
+  viewModel: {
+    createViewModel: function(params) {
+      return new MyViewModel(params);
+    },
+  },
+  synchronous: true,
+  template: `
+    <div>
+      <p>First name: <input data-bind="textInput: firstName" /></p>
+      <p>Last name: <input data-bind="textInput: lastName" /></p>
+      <strong>Hello, <span data-bind="text: fullName"> </span>!</strong>
+      <div data-bind="component: myDividerComponent.component()"></div>
+    </div>
+  `
+});
+```
+
+That way, `myDividerComponent.component()` will actually return this object:
+
+```json
+{
+    name: 'my-divider-component'
+}
+```
+
+With that object, the template will inject the component just like I explained in approach #2.
+
+## Final thoughts
+
+With this simple examples, I just want to point out two main things:
+
+1. KnockoutJS has multiple ways to use a component. I'm just aware of the four ones in this article, which is good for now to understand some things that kind of overwhelmed me before doing these excercises.
+2. I am finding it super useful when I create this "playground" things to understand something without all the distractions that a big codebase can have (not complaining, just my way to learn... maybe). Easy to share, easy to remember, easy to extend or copy.

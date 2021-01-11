@@ -1,0 +1,9 @@
+<h1>Home</h1>
+<p>
+    My Blog Posts
+</p>
+<ul style="list-style: none; padding-left: 0;">
+    {% for post in posts %}
+        <li>{{post.date}}: <a href="/blog/{{ post.slug }}/">{{ post.title }}</a></li>
+    {% endfor %}
+</ul>

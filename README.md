@@ -1,17 +1,9 @@
 # ckinan.com
 
-My own personal website powered by Gatsby, Github and Netlify.
-
-```bash
-$ npm install
-$ npm run develop
-```
-
-Local address and port should be displayed in logs:
+My own personal website powered by Github and Netlify.
 
 ```
-  Local:            http://localhost:8000/
-  On Your Network:  http://x.x.x.x:8000/
+pip3 freeze > requirements.txt
+pip install -r requirements.txt
+python3 generate.py
 ```
-
-:)
