@@ -9,7 +9,9 @@ nav ul li {
 
 pre {
     background: lightgray;
-    overflow: scroll;
+    overflow-x: auto;
+    overflow-wrap: normal;
+    word-break: normal;
 }
 
 body {
