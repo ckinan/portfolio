@@ -16,13 +16,13 @@
             </ul>
         </nav>
     </header>
-    <h1>Spring Security - Credentials from JSON request</h1>
     <section>
-        <p>
-    Date: 2020-07-20
-</p>
-<article>
-<p>One more example of how flexible Spring Security is. This time, we will take a look at how we can override the default behavior to read credentials from any requests to start working with JSON format and authenticate users based on that.</p>
+        <article>
+    <h1 style="margin-bottom: 0.25rem;">Spring Security - Credentials from JSON request</h1>
+    <p style="margin-top: 0px; border-bottom: 1px solid black;">
+        Date: 2020-07-20
+    </p>
+    <p>One more example of how flexible Spring Security is. This time, we will take a look at how we can override the default behavior to read credentials from any requests to start working with JSON format and authenticate users based on that.</p>
 <h2>Introduction</h2>
 <p>Once you include the Spring Security dependency into your project, it gives you a lot of features out of the box. A pre-defined login form is one of them, for any protected resource without an authenticated user, the application would automatically redirect you to a Login Page (a form). Any form submission is sent to the endpoint <code>/login</code> (method POST) and the filter chain of Spring Security takes action. It extracts the username and password parameters from the request and use them to perform the authentication process.</p>
 <p>That is the default behavior coming from Spring Security. In the class <code>UsernamePasswordAuthenticationFilter</code>, it has a method called <code>attemptAuthentication</code>, which receives two parameters: a request and a response (<code>HttpServletRequest</code> and <code>HttpServletResponse</code>). This class is part of the filter chain (by default), and if there is a login form submission, then the request will pass through there.</p>

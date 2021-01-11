@@ -105,6 +105,7 @@ for post in all_posts:
     post_content = render_template(
         read_file("resources/post.html"),
         {
+            "title": post.get("title"),
             "date": post.get("date"),
             "content": html
         }
