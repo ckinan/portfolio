@@ -31,7 +31,7 @@ Here I will explain one way to get credentials from a JSON request and continue 
 
 ## Create project
 
-Go to http://start.spring.io and generate a new project. These are the key pieces for this code example:
+Go to [http://start.spring.io](http://start.spring.io) and generate a new project. These are the key pieces for this code example:
 
 - Project: Gradle
 - Language: Java
@@ -141,7 +141,7 @@ The constructor is passing an `AntPathRequestMatcher` object with two params:
 
 We are also overriding the method `attemptAuthentication`, which is going to extract the `username` and `password` from the request JSON payload. There are certainly multiple ways to extract the JSON values and assign them into java objects, but for now, I'm using `ObjectMapper` and assigning the values to a `Map`. Later they will be assigned to their corresponding `String` variables.
 
-Once we get the credentials, we need to perform the `authenticate` process, which is provided by the `AuthenticationManager`. Quoting from the docs https://spring.io/guides/topicals/spring-security-architecture :
+Once we get the credentials, we need to perform the `authenticate` process, which is provided by the `AuthenticationManager`. Quoting from the docs [https://spring.io/guides/topicals/spring-security-architecture](https://spring.io/guides/topicals/spring-security-architecture) :
 
 > Spring Boot provides a default global AuthenticationManager (with just one user) unless you pre-empt it by providing your own bean of type AuthenticationManager. The default is secure enough on its own for you not to have to worry about it much, unless you actively need a custom global AuthenticationManager. If you do any configuration that builds an AuthenticationManager you can often do it locally to the resources that you are protecting and not worry about the global default.
 
@@ -236,5 +236,5 @@ At any point of time, with or without a successful authentication, the `public-r
 
 ## Links
 
-- Github repo: https://github.com/ckinan/java-practice/tree/master/spring-security-credentials-from-json-request
-- Spring Security Architecture (gave me more insights about what AuthenticationManager, ProviderManager and AuthenticationProvider are): https://spring.io/guides/topicals/spring-security-architecture
+- Github repo: [https://github.com/ckinan/java-practice/tree/master/spring-security-credentials-from-json-request](https://github.com/ckinan/java-practice/tree/master/spring-security-credentials-from-json-request)
+- Spring Security Architecture (gave me more insights about what AuthenticationManager, ProviderManager and AuthenticationProvider are): [https://spring.io/guides/topicals/spring-security-architecture](https://spring.io/guides/topicals/spring-security-architecture)

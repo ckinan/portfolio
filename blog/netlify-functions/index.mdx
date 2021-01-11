@@ -37,7 +37,7 @@ Lets check some few details about them.
 
 This file contains the configurations of your functions project. For this (very) small example, I am just specifying where the built functions are located ("dist" folder).
 
-Ref: https://docs.netlify.com/configure-builds/file-based-configuration/
+Ref: [https://docs.netlify.com/configure-builds/file-based-configuration/](https://docs.netlify.com/configure-builds/file-based-configuration/)
 
 Example:
 
@@ -48,7 +48,7 @@ Example:
 
 ### Structure of a function
 
-From a "hello world" example found here: https://functions-playground.netlify.com/
+From a "hello world" example found here: [https://functions-playground.netlify.com/](https://functions-playground.netlify.com/)
 
 ```js
 exports.handler = function (event, context, callback) {
@@ -135,7 +135,7 @@ You will see your port where your local function is exposed:
 Lambda server is listening on 9000
 ```
 
-Open in a browser: http://localhost:9000/.netlify/functions/hello-world
+Open in a browser: [http://localhost:9000/.netlify/functions/hello-world](http://localhost:9000/.netlify/functions/hello-world)
 
 > Note: The path of the URL is: http://{host}:{port}/.netlify/functions/{your-function-name}) . UPDATE: I tried to change the `.netlify/functions` path thing, but it was not possible. But, it is possible to redirect requests asking for your functions to whatever alias you want to have like `/api` for instance. See: [Netlify Routing Redirects](https://docs.netlify.com/routing/redirects/#syntax-for-the-netlify-configuration-file).
 
@@ -153,11 +153,11 @@ Click on any of your functions, you will see the URL to invoke it. Example
 
 ![](./images/3.png)
 
-> Note: There are really good examples provided by Netlify Team of what you can do within a single function. I actually used them for this article. Link: https://functions-playground.netlify.com/
+> Note: There are really good examples provided by Netlify Team of what you can do within a single function. I actually used them for this article. Link: [https://functions-playground.netlify.com/](https://functions-playground.netlify.com/)
 
 ## Logging
 
-Quoting docs: https://docs.netlify.com/functions/logs/
+Quoting docs: [https://docs.netlify.com/functions/logs/](https://docs.netlify.com/functions/logs/)
 
 > Netlify displays a running log for the last hour of activity, including:
 >
@@ -166,7 +166,7 @@ Quoting docs: https://docs.netlify.com/functions/logs/
 
 ## Environment variables
 
-Following another example from https://functions-playground.netlify.com/ to get environment variables, create `env.js` under `src` folder.
+Following another example from [https://functions-playground.netlify.com/](https://functions-playground.netlify.com/) to get environment variables, create `env.js` under `src` folder.
 
 ```js
 const GREETING = process.env.GREETING
@@ -183,7 +183,7 @@ Here, `GREETING` is your environment variable. This is how you "hide" certain va
 
 In the above example, if you are running:
 
-- Locally: Follow instructions in this link https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346
+- Locally: Follow instructions in this link [https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346](https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346)
 - On Netlify: Just create an environment variable under `Project > Settings > Build & Deploy > Environment` option.
 
 ![](./images/4.png)
@@ -194,14 +194,14 @@ Netlify Functions is definitely a great choice to get started with serverless fu
 
 I am pretty sure there a lot more features Netlify provides within Functions behind the scenes happening that I am not aware of right now. But, I am happy with what I've just explored and learned about it, most importantly, Netlify is clear in their documentations and has a great community out there with super easy tutorials for beginners (like myself).
 
-Github repo: https://github.com/ckinan/ckn-netlify-functions
+Github repo: [https://github.com/ckinan/ckn-netlify-functions](https://github.com/ckinan/ckn-netlify-functions)
 
-EDIT: Here is another example using Netlify Functions and this free API to get the weather: https://weatherstack.com/ . Repo: https://github.com/ckinan/ckn-netlify-weather
+EDIT: Here is another example using Netlify Functions and this free API to get the weather: [https://weatherstack.com/](https://weatherstack.com/) . Repo: [https://github.com/ckinan/ckn-netlify-weather](https://github.com/ckinan/ckn-netlify-weather)
 
 ## References
 
-- Official docs: https://docs.netlify.com/functions/overview/
-- `netlify-lambda`: https://github.com/netlify/netlify-lambda
-- Local environment variables https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346
-- Great article to get started: https://kentcdodds.com/blog/super-simple-start-to-serverless
-- Another great article: https://flaviocopes.com/netlify-functions/
+- Official docs: [https://docs.netlify.com/functions/overview/](https://docs.netlify.com/functions/overview/)
+- `netlify-lambda`: [https://github.com/netlify/netlify-lambda](https://github.com/netlify/netlify-lambda)
+- Local environment variables [https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346](https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346)
+- Great article to get started: [https://kentcdodds.com/blog/super-simple-start-to-serverless](https://kentcdodds.com/blog/super-simple-start-to-serverless)
+- Another great article: [https://flaviocopes.com/netlify-functions/](https://flaviocopes.com/netlify-functions/)

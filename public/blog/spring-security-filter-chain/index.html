@@ -9,10 +9,10 @@
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about/">About</a></li>
+        <nav style="text-align: center;">
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/">Home</a></li>
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/about/">About</a></li>
             </ul>
         </nav>
     </header>
@@ -27,15 +27,15 @@
 <p>Note: This is not a tutorial, this is just some notes of what I understand (as of today) about Spring Security and its Filter Chain.</p>
 </blockquote>
 <h2>Introduction</h2>
-<p>The most complete explanation I could find regarding how the Security Filter Chain is built in the entire architecture is in the official documentation in here: https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture</p>
+<p>The most complete explanation I could find regarding how the Security Filter Chain is built in the entire architecture is in the official documentation in here: <a href="https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture">https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture</a></p>
 <p>I'll write down what I interpret from what I already interacted with the module in combination with what the documentation is trying to explain.</p>
 <h2>Main Components</h2>
 <p>There are five pieces (in the documentation I pointed out in the previous section) that I want to visit here. They are:</p>
 <h3>Filters</h3>
 <p>First of all, &quot;Filters&quot; (in the Servlet's world) came from the <code>Java Specification Requests (JSR) #53</code>. Look at this:</p>
 <ul>
-<li>Ref: https://jcp.org/en/jsr/detail?id=53</li>
-<li>Direct link to the PDF (See Page #43): https://download.oracle.com/otn-pub/jcp/7840-servlet-2.3-spec-oth-JSpec/servlet-2_3-fcs-spec.pdf?AuthParam=1593651764_bd0a8306800ffcc92df386c00a6c89f0</li>
+<li>Ref: <a href="https://jcp.org/en/jsr/detail?id=53">https://jcp.org/en/jsr/detail?id=53</a></li>
+<li>Direct link to the PDF (See Page #43): <a href="https://download.oracle.com/otn-pub/jcp/7840-servlet-2.3-spec-oth-JSpec/servlet-2_3-fcs-spec.pdf?AuthParam=1593651764_bd0a8306800ffcc92df386c00a6c89f0">https://download.oracle.com/otn-pub/jcp/7840-servlet-2.3-spec-oth-JSpec/servlet-2_3-fcs-spec.pdf?AuthParam=1593651764_bd0a8306800ffcc92df386c00a6c89f0</a></li>
 </ul>
 <p>Filters are some pieces of code that do something before or after a Request gets processed by a Servlet. The web container (e.g. Tomcat) will know that.</p>
 <p>Filters have multiple purposes, it is not only restricted to be for Security mechanisms. They are meant to read or write (any logic in general) with the Request. For example: one filter can print some audit logs, another one can add some headers to the request, and so on.</p>
@@ -98,9 +98,9 @@
 </ul>
 <h2>Refs</h2>
 <ul>
-<li>This is where most part of this post comes from: https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture</li>
-<li>Architecture Deep Dive in Spring Security - Joe Grandja @ Spring I/O 2017: https://www.youtube.com/watch?v=8rnOsF3RVQc</li>
-<li>SpringOne 2GX 2012 - Getting Started with Spring Security 3.1 - Rob Winch: https://www.youtube.com/watch?v=k32KqrckLEE</li>
+<li>This is where most part of this post comes from: <a href="https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture">https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture</a></li>
+<li>Architecture Deep Dive in Spring Security - Joe Grandja @ Spring I/O 2017: <a href="https://www.youtube.com/watch?v=8rnOsF3RVQc">https://www.youtube.com/watch?v=8rnOsF3RVQc</a></li>
+<li>SpringOne 2GX 2012 - Getting Started with Spring Security 3.1 - Rob Winch: <a href="https://www.youtube.com/watch?v=k32KqrckLEE">https://www.youtube.com/watch?v=k32KqrckLEE</a></li>
 </ul>
 
 </article>

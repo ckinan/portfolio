@@ -26,7 +26,7 @@ This is the list of things this article/research will cover:
 
 Docs! Lets see how they explain their API in their documentation and see how easy (or complex) is to understand what we can achieve with it.
 
-Link: https://developer.github.com/v3/guides/getting-started/
+Link: [https://developer.github.com/v3/guides/getting-started/](https://developer.github.com/v3/guides/getting-started/)
 
 This guide has very clear examples of how to call the API, like this one that doesn't require any auth information and reads all public data from any github user using cURL:
 
@@ -75,7 +75,7 @@ However, like any other API, it has a limited number of requests that any client
 
 Basically, 2 options:
 
-**Option #1**: Using personal access tokens: https://developer.github.com/v3/guides/getting-started/#using-personal-access-tokens
+**Option #1**: Using personal access tokens: [https://developer.github.com/v3/guides/getting-started/#using-personal-access-tokens](https://developer.github.com/v3/guides/getting-started/#using-personal-access-tokens)
 
 > The easiest and best way to authenticate with the GitHub API is by using Basic Authentication via OAuth tokens. OAuth tokens include personal access tokens.
 
@@ -87,7 +87,7 @@ curl -i -u <your_username>:<your_access_token> https://api.github.com/user/repos
 
 Provide privileges to your token to read your repos.
 
-**Option #2**: Using OAuth tokens for apps : https://developer.github.com/v3/guides/getting-started/#using-oauth-tokens-for-apps
+**Option #2**: Using OAuth tokens for apps : [https://developer.github.com/v3/guides/getting-started/#using-oauth-tokens-for-apps](https://developer.github.com/v3/guides/getting-started/#using-oauth-tokens-for-apps)
 
 > Apps that need to read or write private information using the API on behalf of another user should use OAuth.
 
@@ -95,7 +95,7 @@ Provide privileges to your token to read your repos.
 
 All the endpoints of the API in their documentation have examples of the calls, details of the input parameters and show how the return payload should look like, which is pretty good.
 
-Ref (overview of the API): https://developer.github.com/v3/
+Ref (overview of the API): [https://developer.github.com/v3/](https://developer.github.com/v3/)
 
 Docs give the endpoints paths like this (not the full url).
 
@@ -113,7 +113,7 @@ Here more details about each of them:
 
 Endpoint: `GET /user/repos`
 
-Ref: https://developer.github.com/v3/repos/#list-your-repositories
+Ref: [https://developer.github.com/v3/repos/#list-your-repositories](https://developer.github.com/v3/repos/#list-your-repositories)
 
 Example:
 
@@ -125,7 +125,7 @@ $ curl -i -u <your_username>:<your_access_token> https://api.github.com/user/rep
 
 Endpoint: `GET /repos/:owner/:repo/pulls`
 
-Ref: https://developer.github.com/v3/pulls/#list-pull-requests
+Ref: [https://developer.github.com/v3/pulls/#list-pull-requests](https://developer.github.com/v3/pulls/#list-pull-requests)
 
 ```bash
 $ curl -i -u <your_username>:<your_access_token> https://api.github.com/repos/ckinan/ckinan.com/pulls?state=all
@@ -137,7 +137,7 @@ $ curl -i -u <your_username>:<your_access_token> https://api.github.com/repos/ck
 
 Endpoint: `GET /repos/:owner/:repo/pulls/:pull_number/reviews`
 
-Ref: https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request
+Ref: [https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request](https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request)
 
 ```bash
 $ curl -i -u <your_username>:<your_access_token> https://api.github.com/repos/ckinan/ckinan.com/pulls/9/reviews

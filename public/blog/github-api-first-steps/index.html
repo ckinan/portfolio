@@ -9,10 +9,10 @@
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about/">About</a></li>
+        <nav style="text-align: center;">
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/">Home</a></li>
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/about/">About</a></li>
             </ul>
         </nav>
     </header>
@@ -36,7 +36,7 @@
 </ul>
 <h2>Basics</h2>
 <p>Docs! Lets see how they explain their API in their documentation and see how easy (or complex) is to understand what we can achieve with it.</p>
-<p>Link: https://developer.github.com/v3/guides/getting-started/</p>
+<p>Link: <a href="https://developer.github.com/v3/guides/getting-started/">https://developer.github.com/v3/guides/getting-started/</a></p>
 <p>This guide has very clear examples of how to call the API, like this one that doesn't require any auth information and reads all public data from any github user using cURL:</p>
 <pre><code class="language-bash">$ curl https://api.github.com/users/ckinan
 {
@@ -79,7 +79,7 @@
 </blockquote>
 <h2>Authentication types</h2>
 <p>Basically, 2 options:</p>
-<p><strong>Option #1</strong>: Using personal access tokens: https://developer.github.com/v3/guides/getting-started/#using-personal-access-tokens</p>
+<p><strong>Option #1</strong>: Using personal access tokens: <a href="https://developer.github.com/v3/guides/getting-started/#using-personal-access-tokens">https://developer.github.com/v3/guides/getting-started/#using-personal-access-tokens</a></p>
 <blockquote>
 <p>The easiest and best way to authenticate with the GitHub API is by using Basic Authentication via OAuth tokens. OAuth tokens include personal access tokens.</p>
 </blockquote>
@@ -87,13 +87,13 @@
 <pre><code class="language-bash">curl -i -u &lt;your_username&gt;:&lt;your_access_token&gt; https://api.github.com/user/repos
 </code></pre>
 <p>Provide privileges to your token to read your repos.</p>
-<p><strong>Option #2</strong>: Using OAuth tokens for apps : https://developer.github.com/v3/guides/getting-started/#using-oauth-tokens-for-apps</p>
+<p><strong>Option #2</strong>: Using OAuth tokens for apps : <a href="https://developer.github.com/v3/guides/getting-started/#using-oauth-tokens-for-apps">https://developer.github.com/v3/guides/getting-started/#using-oauth-tokens-for-apps</a></p>
 <blockquote>
 <p>Apps that need to read or write private information using the API on behalf of another user should use OAuth.</p>
 </blockquote>
 <h2>Endpoints</h2>
 <p>All the endpoints of the API in their documentation have examples of the calls, details of the input parameters and show how the return payload should look like, which is pretty good.</p>
-<p>Ref (overview of the API): https://developer.github.com/v3/</p>
+<p>Ref (overview of the API): <a href="https://developer.github.com/v3/">https://developer.github.com/v3/</a></p>
 <p>Docs give the endpoints paths like this (not the full url).</p>
 <p>Example of user repos: <code>GET /user/repos</code></p>
 <p>These are just 3 of the endpoints I tried out using a personal access token I've created:</p>
@@ -105,13 +105,13 @@
 <p>Here more details about each of them:</p>
 <h3>Get repos</h3>
 <p>Endpoint: <code>GET /user/repos</code></p>
-<p>Ref: https://developer.github.com/v3/repos/#list-your-repositories</p>
+<p>Ref: <a href="https://developer.github.com/v3/repos/#list-your-repositories">https://developer.github.com/v3/repos/#list-your-repositories</a></p>
 <p>Example:</p>
 <pre><code class="language-bash">$ curl -i -u &lt;your_username&gt;:&lt;your_access_token&gt; https://api.github.com/user/repos
 </code></pre>
 <h3>Get pull requests</h3>
 <p>Endpoint: <code>GET /repos/:owner/:repo/pulls</code></p>
-<p>Ref: https://developer.github.com/v3/pulls/#list-pull-requests</p>
+<p>Ref: <a href="https://developer.github.com/v3/pulls/#list-pull-requests">https://developer.github.com/v3/pulls/#list-pull-requests</a></p>
 <pre><code class="language-bash">$ curl -i -u &lt;your_username&gt;:&lt;your_access_token&gt; https://api.github.com/repos/ckinan/ckinan.com/pulls?state=all
 </code></pre>
 <blockquote>
@@ -119,7 +119,7 @@
 </blockquote>
 <h3>List reviews of a pull request</h3>
 <p>Endpoint: <code>GET /repos/:owner/:repo/pulls/:pull_number/reviews</code></p>
-<p>Ref: https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request</p>
+<p>Ref: <a href="https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request">https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request</a></p>
 <pre><code class="language-bash">$ curl -i -u &lt;your_username&gt;:&lt;your_access_token&gt; https://api.github.com/repos/ckinan/ckinan.com/pulls/9/reviews
 </code></pre>
 <p>This is interesting, because you can see who submitted the review, whether this review refers to a comment only, request changes or approval.</p>

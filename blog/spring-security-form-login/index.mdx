@@ -26,7 +26,7 @@ I am still in the process of learning more about Spring Security. This time I cr
 
 ## Create project
 
-Go to https://start.spring.io/ and add the following dependencies:
+Go to [https://start.spring.io/](https://start.spring.io/) and add the following dependencies:
 
 - Spring Web
 - Spring Security
@@ -167,7 +167,7 @@ In this template:
 
 > If CSRF protection is enabled (default), then the request must also be a POST. This means that by default POST "/logout" is required to trigger a log out. If CSRF protection is disabled, then any HTTP method is allowed.
 
-In our example, we didn't disabled the CSRF protection, so we want to do `POST`. More about CSRF: https://en.wikipedia.org/wiki/Cross-site_request_forgery
+In our example, we didn't disabled the CSRF protection, so we want to do `POST`. More about CSRF: [https://en.wikipedia.org/wiki/Cross-site_request_forgery](https://en.wikipedia.org/wiki/Cross-site_request_forgery)
 
 - `/`: Serve the `public-resource.html` view:
 
@@ -205,7 +205,7 @@ $ ./gradlew bootRun
 Using generated security password: 0c6fc7f8-34b1-4c04-a0f6-dbaa8eb8c21f
 ```
 
-3. Open http://localhost:8080 in a browser
+3. Open [http://localhost:8080](http://localhost:8080) in a browser
 
 ![](./images/3.png)
 
@@ -223,7 +223,7 @@ This is the public resource (no need to authenticate so far)
 
 ![](./images/6.png)
 
-7. If user is not authenticated and tries to access `protected-resource` through the browser via http://localhost:8080/protected-resource , then the login page should be displayed. We didn't do anything but just telling Spring Security that resource needs authentication, then Spring Security is responsible of redirect the request to the Login Page
+7. If user is not authenticated and tries to access `protected-resource` through the browser via [http://localhost:8080/protected-resource](http://localhost:8080/protected-resource) , then the login page should be displayed. We didn't do anything but just telling Spring Security that resource needs authentication, then Spring Security is responsible of redirect the request to the Login Page
 
 ## Final Thoughts
 
@@ -232,7 +232,7 @@ From this example, I learned the following:
 - The more I read about Spring Security, the more flexibility I find in there, which is awesome. The problem is that I (personally) learn by doing small things in the most isolated way. That is why I approached this post to only elaborate on Login and Logout very specific configurations. There are more features in those configurers that I didn't take, but at least this example helped me to know what to see, what to expect and where to look for help, which is something for the next point.
 - Some pieces of code in this example where just copied from the Spring Security docstrings. For example:
 
-https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/annotation/web/configurers/FormLoginConfigurer.html#loginPage-java.lang.String-
+[https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/annotation/web/configurers/FormLoginConfigurer.html#loginPage-java.lang.String-](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/annotation/web/configurers/FormLoginConfigurer.html#loginPage-java.lang.String-)
 
 In the above link, I found a `Example login.jsp`, which gave me a clear idea of what I have to have in `login.html`. I think Spring Security team makes a great job documenting their code.
 
@@ -241,6 +241,6 @@ In the above link, I found a `Example login.jsp`, which gave me a clear idea of 
 
 ## Refs
 
-- Github Repo: https://github.com/ckinan/java-practice/tree/master/spring-security-02
-- Spring Security - Docs: https://docs.spring.io/spring-security/site/docs/current/api/overview-summary.html
-- Thymeleaf - Access data: https://www.thymeleaf.org/doc/articles/springmvcaccessdata.html
+- Github Repo: [https://github.com/ckinan/java-practice/tree/master/spring-security-02](https://github.com/ckinan/java-practice/tree/master/spring-security-02)
+- Spring Security - Docs: [https://docs.spring.io/spring-security/site/docs/current/api/overview-summary.html](https://docs.spring.io/spring-security/site/docs/current/api/overview-summary.html)
+- Thymeleaf - Access data: [https://www.thymeleaf.org/doc/articles/springmvcaccessdata.html](https://www.thymeleaf.org/doc/articles/springmvcaccessdata.html)

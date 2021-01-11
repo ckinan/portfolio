@@ -10,7 +10,7 @@ How I built a pull request viewer using Github API. What I learned and what I fa
 
 I am maintaining a software that its repo is in Github. That means, I had to get familiar with the tools this platform provides. Code Reviews with Pull Request, which is one of the features Github has, where you can interact with who owns the code changes before merging a branch into master.
 
-As a reviewer, I have to open pull requests regularly to do my review. Meaning, more than likely I have to visit https://github.com/pulls frequently to see whichh PRs I have in my queue.
+As a reviewer, I have to open pull requests regularly to do my review. Meaning, more than likely I have to visit [https://github.com/pulls](https://github.com/pulls) frequently to see whichh PRs I have in my queue.
 
 After some time seeing my list of PRs, I noticed there are cases where I would like to see more information in that list before clicking on one of those. Like for example, the number of approvals each PR already have, or if there is already activity such comments, requested changes, and who did which action, so with all these information in that same list I can have a clearer idea what's going on there. Yeah, I know it's only one click away from seeing all of that, but as I was about to study the Github API, I decided to give it a try.
 
@@ -77,7 +77,7 @@ I was surprised how easy is to create a brand new web application and get it run
 I had some reads about how use Netlify Functions to accomplish specific goals:
 
 - Goal #1: How to use Environment Variables. This is actually the most important one, because I wanted to have the Github Secret Key hidden in one of these Variables.
-- Goal #2: How to use its "develop mode". Ref: https://www.netlify.com/products/dev/
+- Goal #2: How to use its "develop mode". Ref: [https://www.netlify.com/products/dev/](https://www.netlify.com/products/dev/)
 - Goal #3: How to handle cookies (my limited knowledge about secury led me to simply pass tokens using a cookie).
 
 #### 4. Connect the front with the back
@@ -100,10 +100,10 @@ While developing the interface of my Netlify Functions, I was thinking how to pr
 
 I also developed two ways to be "authenticated" and consume the API:
 
-- Method #1: Authorizing OAuth Apps. Ref: https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/
+- Method #1: Authorizing OAuth Apps. Ref: [https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/](https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/)
 - Method #2: Store a Personal Access Token as Environment Variable. (Only meant to be used locally)
 
-~~I believe this is the main reason I can't get this project deployed in the cloud, because I can't figure this thing out yet...~~ . UPDATE: Deployed on Netlify: https://gh-pr-viewer.netlify.app/
+~~I believe this is the main reason I can't get this project deployed in the cloud, because I can't figure this thing out yet...~~ . UPDATE: Deployed on Netlify: [https://gh-pr-viewer.netlify.app/](https://gh-pr-viewer.netlify.app/)
 
 #### 5. Test
 
@@ -127,5 +127,5 @@ Moving forward, I'll be still making more updates to this project, but for now, 
 
 ## Links
 
-- Repo: https://github.com/ckinan/gh-pr-viewer
-- Netlify instance: https://gh-pr-viewer.netlify.app/
+- Repo: [https://github.com/ckinan/gh-pr-viewer](https://github.com/ckinan/gh-pr-viewer)
+- Netlify instance: [https://gh-pr-viewer.netlify.app/](https://gh-pr-viewer.netlify.app/)

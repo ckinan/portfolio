@@ -13,7 +13,7 @@ Getting started with Spring Security by doing a simple example to understand the
 
 ## Create project
 
-Go to https://start.spring.io/ and add the following dependencies:
+Go to [https://start.spring.io/](https://start.spring.io/) and add the following dependencies:
 
 - Spring Web
 - Spring Security
@@ -64,7 +64,7 @@ Each of these have a purpose, and they make the whole flow of the security layer
 
 ## Open the application
 
-Open http://localhost:8080 in your browser, a login page should be displayed:
+Open [http://localhost:8080](http://localhost:8080) in your browser, a login page should be displayed:
 
 ![](./images/2.png)
 
@@ -104,7 +104,7 @@ That is what keeps the already-logged-in user in session in the Spring Security 
 
 Finally, there are still more particulars working behind the scenes, in the following link there is a list what is happening to Spring Boot once the Spring Security dependency is included into the project.
 
-Link: https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-hello-auto-configuration
+Link: [https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-hello-auto-configuration](https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-hello-auto-configuration)
 
 A lot of things have happened by just adding the Spring Security dependency into the project. I didn't write any single line of code to get all the above stuff with Spring Security out of the box.
 
@@ -114,7 +114,7 @@ Now, let's go to the codebase and some documentation to understand where all the
 
 ![](./images/7.png)
 
-The above is all what the project has. Actually, in https://start.spring.io/ , there is a button `EXPLORE` that you can see the content of the zip before downloading it. Well, as I didn't touch a thing, that project tree should be exactly the same as I downloaded (except for the auto-generated stuff of my IDE).
+The above is all what the project has. Actually, in [https://start.spring.io/](https://start.spring.io/) , there is a button `EXPLORE` that you can see the content of the zip before downloading it. Well, as I didn't touch a thing, that project tree should be exactly the same as I downloaded (except for the auto-generated stuff of my IDE).
 
 There are 3 key files that I'd like to mention so far:
 
@@ -223,13 +223,13 @@ $ ./mvnw spring-boot:run
 Using generated security password: 5e57b493-6181-4682-bc21-81ec40222298
 ```
 
-Try to open the public endpoint: http://localhost:8080/public-resource
+Try to open the public endpoint: [http://localhost:8080/public-resource](http://localhost:8080/public-resource)
 
 ![](./images/8.png)
 
 The public resource doesn't require any authentication process, which is expected since we are telling Spring Security to allow ALL requests to access it with this matcher: `.antMatchers(HttpMethod.GET, "/public-resource").permitAll()`.
 
-Now let's try with the protected endpoint: http://localhost:8080/protected-resource
+Now let's try with the protected endpoint: [http://localhost:8080/protected-resource](http://localhost:8080/protected-resource)
 
 ![](./images/9.png)
 
@@ -253,8 +253,8 @@ For now, I feel I learned few concepts that will allow me to expand later, perha
 
 ## Refs:
 
-- Github Repo: https://github.com/ckinan/java-practice/tree/master/spring-security-01
-- Spring Security Reference Docs: https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/
-- Spring Security - Its 15 minutes tutorial: https://spring.io/guides/gs/securing-web/
-- I strongly recommend to read this article, which helped me a lot to understand some foundations of Spring Security: https://www.marcobehler.com/guides/spring-security
-- Also, I found the Spring One videos on Youtube very informative: https://www.youtube.com/watch?v=8rnOsF3RVQc&t and https://www.youtube.com/watch?v=WbnuwpSBXPs
+- Github Repo: [https://github.com/ckinan/java-practice/tree/master/spring-security-01](https://github.com/ckinan/java-practice/tree/master/spring-security-01)
+- Spring Security Reference Docs: [https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/](https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/)
+- Spring Security - Its 15 minutes tutorial: [https://spring.io/guides/gs/securing-web/](https://spring.io/guides/gs/securing-web/)
+- I strongly recommend to read this article, which helped me a lot to understand some foundations of Spring Security: [https://www.marcobehler.com/guides/spring-security](https://www.marcobehler.com/guides/spring-security)
+- Also, I found the Spring One videos on Youtube very informative: [https://www.youtube.com/watch?v=8rnOsF3RVQc&t](https://www.youtube.com/watch?v=8rnOsF3RVQc&t) and [https://www.youtube.com/watch?v=WbnuwpSBXPs](https://www.youtube.com/watch?v=WbnuwpSBXPs)

@@ -9,10 +9,10 @@
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about/">About</a></li>
+        <nav style="text-align: center;">
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/">Home</a></li>
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/about/">About</a></li>
             </ul>
         </nav>
     </header>
@@ -43,7 +43,7 @@
 <li>IDE of your preference (Intellij Idea, Eclipse, etc)</li>
 </ul>
 <h2>Create project</h2>
-<p>Go to http://start.spring.io and generate a new project. These are the key pieces for this code example:</p>
+<p>Go to <a href="http://start.spring.io">http://start.spring.io</a> and generate a new project. These are the key pieces for this code example:</p>
 <ul>
 <li>Project: Gradle</li>
 <li>Language: Java</li>
@@ -141,7 +141,7 @@ public class CustomFilter extends AbstractAuthenticationProcessingFilter {
 <li><code>httpMethod</code>: We want to process any request as <code>POST</code> method</li>
 </ul>
 <p>We are also overriding the method <code>attemptAuthentication</code>, which is going to extract the <code>username</code> and <code>password</code> from the request JSON payload. There are certainly multiple ways to extract the JSON values and assign them into java objects, but for now, I'm using <code>ObjectMapper</code> and assigning the values to a <code>Map</code>. Later they will be assigned to their corresponding <code>String</code> variables.</p>
-<p>Once we get the credentials, we need to perform the <code>authenticate</code> process, which is provided by the <code>AuthenticationManager</code>. Quoting from the docs https://spring.io/guides/topicals/spring-security-architecture :</p>
+<p>Once we get the credentials, we need to perform the <code>authenticate</code> process, which is provided by the <code>AuthenticationManager</code>. Quoting from the docs <a href="https://spring.io/guides/topicals/spring-security-architecture">https://spring.io/guides/topicals/spring-security-architecture</a> :</p>
 <blockquote>
 <p>Spring Boot provides a default global AuthenticationManager (with just one user) unless you pre-empt it by providing your own bean of type AuthenticationManager. The default is secure enough on its own for you not to have to worry about it much, unless you actively need a custom global AuthenticationManager. If you do any configuration that builds an AuthenticationManager you can often do it locally to the resources that you are protecting and not worry about the global default.</p>
 </blockquote>
@@ -215,8 +215,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 </ul>
 <h2>Links</h2>
 <ul>
-<li>Github repo: https://github.com/ckinan/java-practice/tree/master/spring-security-credentials-from-json-request</li>
-<li>Spring Security Architecture (gave me more insights about what AuthenticationManager, ProviderManager and AuthenticationProvider are): https://spring.io/guides/topicals/spring-security-architecture</li>
+<li>Github repo: <a href="https://github.com/ckinan/java-practice/tree/master/spring-security-credentials-from-json-request">https://github.com/ckinan/java-practice/tree/master/spring-security-credentials-from-json-request</a></li>
+<li>Spring Security Architecture (gave me more insights about what AuthenticationManager, ProviderManager and AuthenticationProvider are): <a href="https://spring.io/guides/topicals/spring-security-architecture">https://spring.io/guides/topicals/spring-security-architecture</a></li>
 </ul>
 
 </article>

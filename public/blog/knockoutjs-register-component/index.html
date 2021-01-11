@@ -9,10 +9,10 @@
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about/">About</a></li>
+        <nav style="text-align: center;">
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/">Home</a></li>
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/about/">About</a></li>
             </ul>
         </nav>
     </header>
@@ -26,12 +26,12 @@
 <h2>Motivation</h2>
 <p>Recently I wanted to understand how a KnockoutJS components can be created. So, I went into the official docs and found good explanations about it:</p>
 <ul>
-<li>https://knockoutjs.com/documentation/component-overview.html</li>
+<li><a href="https://knockoutjs.com/documentation/component-overview.html">https://knockoutjs.com/documentation/component-overview.html</a></li>
 </ul>
 <p>Instead of trying things directly to the codebase I wanted to introduce new components, I first wanted to create really simple examples in an isolated way.</p>
 <p>I created a codepen for this excercise, which helped me a lot to quickly make changes and play with the things I was learning during this.</p>
 <ul>
-<li>https://codepen.io/ckinan/pen/eYJBjYR</li>
+<li><a href="https://codepen.io/ckinan/pen/eYJBjYR">https://codepen.io/ckinan/pen/eYJBjYR</a></li>
 </ul>
 <h2>Playground</h2>
 <p>The following component called <code>my-component</code> configures a <code>viewModel</code> that creates a new object that handles the states of the values in the form. Also, tells the components to be synchronously loaded and finally declares the template to be rendered in the DOM.</p>
@@ -71,10 +71,10 @@ ko.components.register('my-component', {
 </code></pre>
 <p>Note: In that object, you can also pass the params to the component if there is any. This example only passes the name.</p>
 <blockquote>
-<p>So far, approaches #1 and #2 are taken from here https://knockoutjs.com/documentation/component-binding.html</p>
+<p>So far, approaches #1 and #2 are taken from here <a href="https://knockoutjs.com/documentation/component-binding.html">https://knockoutjs.com/documentation/component-binding.html</a></p>
 </blockquote>
 <h2>Approach #3</h2>
-<p>Using component as &quot;Custom elements&quot;. Ref: https://knockoutjs.com/documentation/component-custom-elements.html</p>
+<p>Using component as &quot;Custom elements&quot;. Ref: <a href="https://knockoutjs.com/documentation/component-custom-elements.html">https://knockoutjs.com/documentation/component-custom-elements.html</a></p>
 <pre><code class="language-html">&lt;my-component&gt;&lt;/my-component&gt;
 </code></pre>
 <h2>Approach #4</h2>

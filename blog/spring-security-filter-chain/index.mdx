@@ -10,7 +10,7 @@ After playing with few basic configurations of Spring Security, I noticed there 
 
 ## Introduction
 
-The most complete explanation I could find regarding how the Security Filter Chain is built in the entire architecture is in the official documentation in here: https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture
+The most complete explanation I could find regarding how the Security Filter Chain is built in the entire architecture is in the official documentation in here: [https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture](https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture)
 
 I'll write down what I interpret from what I already interacted with the module in combination with what the documentation is trying to explain.
 
@@ -21,8 +21,8 @@ There are five pieces (in the documentation I pointed out in the previous sectio
 ### Filters
 
 First of all, "Filters" (in the Servlet's world) came from the `Java Specification Requests (JSR) #53`. Look at this:
-- Ref: https://jcp.org/en/jsr/detail?id=53
-- Direct link to the PDF (See Page #43): https://download.oracle.com/otn-pub/jcp/7840-servlet-2.3-spec-oth-JSpec/servlet-2_3-fcs-spec.pdf?AuthParam=1593651764_bd0a8306800ffcc92df386c00a6c89f0
+- Ref: [https://jcp.org/en/jsr/detail?id=53](https://jcp.org/en/jsr/detail?id=53)
+- Direct link to the PDF (See Page #43): [https://download.oracle.com/otn-pub/jcp/7840-servlet-2.3-spec-oth-JSpec/servlet-2_3-fcs-spec.pdf?AuthParam=1593651764_bd0a8306800ffcc92df386c00a6c89f0](https://download.oracle.com/otn-pub/jcp/7840-servlet-2.3-spec-oth-JSpec/servlet-2_3-fcs-spec.pdf?AuthParam=1593651764_bd0a8306800ffcc92df386c00a6c89f0)
 
 Filters are some pieces of code that do something before or after a Request gets processed by a Servlet. The web container (e.g. Tomcat) will know that.
 
@@ -105,6 +105,6 @@ So, any requests coming from the client will pass through the filter chain and i
 
 ## Refs
 
-- This is where most part of this post comes from: https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture
-- Architecture Deep Dive in Spring Security - Joe Grandja @ Spring I/O 2017: https://www.youtube.com/watch?v=8rnOsF3RVQc
-- SpringOne 2GX 2012 - Getting Started with Spring Security 3.1 - Rob Winch: https://www.youtube.com/watch?v=k32KqrckLEE
+- This is where most part of this post comes from: [https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture](https://docs.spring.io/spring-security/site/docs/5.3.2.RELEASE/reference/html5/#servlet-architecture)
+- Architecture Deep Dive in Spring Security - Joe Grandja @ Spring I/O 2017: [https://www.youtube.com/watch?v=8rnOsF3RVQc](https://www.youtube.com/watch?v=8rnOsF3RVQc)
+- SpringOne 2GX 2012 - Getting Started with Spring Security 3.1 - Rob Winch: [https://www.youtube.com/watch?v=k32KqrckLEE](https://www.youtube.com/watch?v=k32KqrckLEE)

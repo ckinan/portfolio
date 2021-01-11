@@ -9,10 +9,10 @@
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about/">About</a></li>
+        <nav style="text-align: center;">
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/">Home</a></li>
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/about/">About</a></li>
             </ul>
         </nav>
     </header>
@@ -44,13 +44,13 @@
 <p>Lets check some few details about them.</p>
 <h3>netlify.toml</h3>
 <p>This file contains the configurations of your functions project. For this (very) small example, I am just specifying where the built functions are located (&quot;dist&quot; folder).</p>
-<p>Ref: https://docs.netlify.com/configure-builds/file-based-configuration/</p>
+<p>Ref: <a href="https://docs.netlify.com/configure-builds/file-based-configuration/">https://docs.netlify.com/configure-builds/file-based-configuration/</a></p>
 <p>Example:</p>
 <pre><code>[build]
   functions = &quot;dist&quot; # build output will be here
 </code></pre>
 <h3>Structure of a function</h3>
-<p>From a &quot;hello world&quot; example found here: https://functions-playground.netlify.com/</p>
+<p>From a &quot;hello world&quot; example found here: <a href="https://functions-playground.netlify.com/">https://functions-playground.netlify.com/</a></p>
 <pre><code class="language-js">exports.handler = function (event, context, callback) {
   callback(null, {
     statusCode: 200,
@@ -120,7 +120,7 @@
 <pre><code>[0] ./hello-world.js 129 bytes {0} [built]
 Lambda server is listening on 9000
 </code></pre>
-<p>Open in a browser: http://localhost:9000/.netlify/functions/hello-world</p>
+<p>Open in a browser: <a href="http://localhost:9000/.netlify/functions/hello-world">http://localhost:9000/.netlify/functions/hello-world</a></p>
 <blockquote>
 <p>Note: The path of the URL is: http://{host}:{port}/.netlify/functions/{your-function-name}) . UPDATE: I tried to change the <code>.netlify/functions</code> path thing, but it was not possible. But, it is possible to redirect requests asking for your functions to whatever alias you want to have like <code>/api</code> for instance. See: <a href="https://docs.netlify.com/routing/redirects/#syntax-for-the-netlify-configuration-file">Netlify Routing Redirects</a>.</p>
 </blockquote>
@@ -132,10 +132,10 @@ Lambda server is listening on 9000
 <p>Click on any of your functions, you will see the URL to invoke it. Example</p>
 <p><img src="./images/3.png" alt="" /></p>
 <blockquote>
-<p>Note: There are really good examples provided by Netlify Team of what you can do within a single function. I actually used them for this article. Link: https://functions-playground.netlify.com/</p>
+<p>Note: There are really good examples provided by Netlify Team of what you can do within a single function. I actually used them for this article. Link: <a href="https://functions-playground.netlify.com/">https://functions-playground.netlify.com/</a></p>
 </blockquote>
 <h2>Logging</h2>
-<p>Quoting docs: https://docs.netlify.com/functions/logs/</p>
+<p>Quoting docs: <a href="https://docs.netlify.com/functions/logs/">https://docs.netlify.com/functions/logs/</a></p>
 <blockquote>
 <p>Netlify displays a running log for the last hour of activity, including:</p>
 <ul>
@@ -144,7 +144,7 @@ Lambda server is listening on 9000
 </ul>
 </blockquote>
 <h2>Environment variables</h2>
-<p>Following another example from https://functions-playground.netlify.com/ to get environment variables, create <code>env.js</code> under <code>src</code> folder.</p>
+<p>Following another example from <a href="https://functions-playground.netlify.com/">https://functions-playground.netlify.com/</a> to get environment variables, create <code>env.js</code> under <code>src</code> folder.</p>
 <pre><code class="language-js">const GREETING = process.env.GREETING
 
 exports.handler = async (event, context) =&gt; {
@@ -157,22 +157,22 @@ exports.handler = async (event, context) =&gt; {
 <p>Here, <code>GREETING</code> is your environment variable. This is how you &quot;hide&quot; certain values you don't want to share publicly to your clients behind a serverless function like this. Even if your source code is public in Github, you won't need to have secret information in your code, but in environment variables like so.</p>
 <p>In the above example, if you are running:</p>
 <ul>
-<li>Locally: Follow instructions in this link https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346</li>
+<li>Locally: Follow instructions in this link <a href="https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346">https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346</a></li>
 <li>On Netlify: Just create an environment variable under <code>Project &gt; Settings &gt; Build &amp; Deploy &gt; Environment</code> option.</li>
 </ul>
 <p><img src="./images/4.png" alt="" /></p>
 <h2>Final thoughts</h2>
 <p>Netlify Functions is definitely a great choice to get started with serverless functions and it will (for sure) help me to accomplish what I was looking for: to hide api secret keys to invoke third party's APIs (more than likely I'll reuse the &quot;fetch.js&quot; example).</p>
 <p>I am pretty sure there a lot more features Netlify provides within Functions behind the scenes happening that I am not aware of right now. But, I am happy with what I've just explored and learned about it, most importantly, Netlify is clear in their documentations and has a great community out there with super easy tutorials for beginners (like myself).</p>
-<p>Github repo: https://github.com/ckinan/ckn-netlify-functions</p>
-<p>EDIT: Here is another example using Netlify Functions and this free API to get the weather: https://weatherstack.com/ . Repo: https://github.com/ckinan/ckn-netlify-weather</p>
+<p>Github repo: <a href="https://github.com/ckinan/ckn-netlify-functions">https://github.com/ckinan/ckn-netlify-functions</a></p>
+<p>EDIT: Here is another example using Netlify Functions and this free API to get the weather: <a href="https://weatherstack.com/">https://weatherstack.com/</a> . Repo: <a href="https://github.com/ckinan/ckn-netlify-weather">https://github.com/ckinan/ckn-netlify-weather</a></p>
 <h2>References</h2>
 <ul>
-<li>Official docs: https://docs.netlify.com/functions/overview/</li>
-<li><code>netlify-lambda</code>: https://github.com/netlify/netlify-lambda</li>
-<li>Local environment variables https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346</li>
-<li>Great article to get started: https://kentcdodds.com/blog/super-simple-start-to-serverless</li>
-<li>Another great article: https://flaviocopes.com/netlify-functions/</li>
+<li>Official docs: <a href="https://docs.netlify.com/functions/overview/">https://docs.netlify.com/functions/overview/</a></li>
+<li><code>netlify-lambda</code>: <a href="https://github.com/netlify/netlify-lambda">https://github.com/netlify/netlify-lambda</a></li>
+<li>Local environment variables <a href="https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346">https://github.com/netlify/netlify-lambda/issues/118#issuecomment-506973346</a></li>
+<li>Great article to get started: <a href="https://kentcdodds.com/blog/super-simple-start-to-serverless">https://kentcdodds.com/blog/super-simple-start-to-serverless</a></li>
+<li>Another great article: <a href="https://flaviocopes.com/netlify-functions/">https://flaviocopes.com/netlify-functions/</a></li>
 </ul>
 
 </article>

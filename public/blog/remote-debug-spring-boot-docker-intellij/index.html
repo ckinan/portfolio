@@ -9,10 +9,10 @@
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about/">About</a></li>
+        <nav style="text-align: center;">
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/">Home</a></li>
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/about/">About</a></li>
             </ul>
         </nav>
     </header>
@@ -137,12 +137,12 @@ services:
 <li><code>suspend=n</code>: We don't want to wait until the debugger is attacher to completely start the Spring Boot application.</li>
 <li><code>address=*:5005</code>: Listen for a socket connection on port 5005, which is the port number we want to configure in our IDE.</li>
 </ul>
-<p>More details about the <code>-agentlib:jdwp</code> option: https://docs.oracle.com/en/java/javase/14/docs/specs/jpda/conninv.html</p>
+<p>More details about the <code>-agentlib:jdwp</code> option: <a href="https://docs.oracle.com/en/java/javase/14/docs/specs/jpda/conninv.html">https://docs.oracle.com/en/java/javase/14/docs/specs/jpda/conninv.html</a></p>
 <h2>Links</h2>
 <ul>
-<li>Repo: https://github.com/ckinan/java-practice/tree/master/spring-boot-docker-debug</li>
-<li>Spring Boot example (some pieces of this example is based on what Spring Boot has in its docs): https://spring.io/guides/gs/spring-boot-docker/</li>
-<li>Docs for the <code>-agentlib:jdwp</code> option: https://docs.oracle.com/en/java/javase/14/docs/specs/jpda/conninv.html</li>
+<li>Repo: <a href="https://github.com/ckinan/java-practice/tree/master/spring-boot-docker-debug">https://github.com/ckinan/java-practice/tree/master/spring-boot-docker-debug</a></li>
+<li>Spring Boot example (some pieces of this example is based on what Spring Boot has in its docs): <a href="https://spring.io/guides/gs/spring-boot-docker/">https://spring.io/guides/gs/spring-boot-docker/</a></li>
+<li>Docs for the <code>-agentlib:jdwp</code> option: <a href="https://docs.oracle.com/en/java/javase/14/docs/specs/jpda/conninv.html">https://docs.oracle.com/en/java/javase/14/docs/specs/jpda/conninv.html</a></li>
 </ul>
 
 </article>

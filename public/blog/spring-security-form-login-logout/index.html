@@ -9,10 +9,10 @@
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about/">About</a></li>
+        <nav style="text-align: center;">
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/">Home</a></li>
+                <li style="display: inline; margin-left: 0.125rem; margin-right: 0.125rem;"><a href="/about/">About</a></li>
             </ul>
         </nav>
     </header>
@@ -44,7 +44,7 @@
 <li>IDE of your preference (Intellij Idea, Eclipse, etc)</li>
 </ul>
 <h2>Create project</h2>
-<p>Go to https://start.spring.io/ and add the following dependencies:</p>
+<p>Go to <a href="https://start.spring.io/">https://start.spring.io/</a> and add the following dependencies:</p>
 <ul>
 <li>Spring Web</li>
 <li>Spring Security</li>
@@ -172,7 +172,7 @@
 <blockquote>
 <p>If CSRF protection is enabled (default), then the request must also be a POST. This means that by default POST &quot;/logout&quot; is required to trigger a log out. If CSRF protection is disabled, then any HTTP method is allowed.</p>
 </blockquote>
-<p>In our example, we didn't disabled the CSRF protection, so we want to do <code>POST</code>. More about CSRF: https://en.wikipedia.org/wiki/Cross-site_request_forgery</p>
+<p>In our example, we didn't disabled the CSRF protection, so we want to do <code>POST</code>. More about CSRF: <a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery">https://en.wikipedia.org/wiki/Cross-site_request_forgery</a></p>
 <ul>
 <li><code>/</code>: Serve the <code>public-resource.html</code> view:</li>
 </ul>
@@ -205,7 +205,7 @@
 <pre><code>Using generated security password: 0c6fc7f8-34b1-4c04-a0f6-dbaa8eb8c21f
 </code></pre>
 <ol start="3">
-<li>Open http://localhost:8080 in a browser</li>
+<li>Open <a href="http://localhost:8080">http://localhost:8080</a> in a browser</li>
 </ol>
 <p><img src="./images/3.png" alt="" /></p>
 <p>This is the public resource (no need to authenticate so far)</p>
@@ -222,7 +222,7 @@
 </ol>
 <p><img src="./images/6.png" alt="" /></p>
 <ol start="7">
-<li>If user is not authenticated and tries to access <code>protected-resource</code> through the browser via http://localhost:8080/protected-resource , then the login page should be displayed. We didn't do anything but just telling Spring Security that resource needs authentication, then Spring Security is responsible of redirect the request to the Login Page</li>
+<li>If user is not authenticated and tries to access <code>protected-resource</code> through the browser via <a href="http://localhost:8080/protected-resource">http://localhost:8080/protected-resource</a> , then the login page should be displayed. We didn't do anything but just telling Spring Security that resource needs authentication, then Spring Security is responsible of redirect the request to the Login Page</li>
 </ol>
 <h2>Final Thoughts</h2>
 <p>From this example, I learned the following:</p>
@@ -230,7 +230,7 @@
 <li>The more I read about Spring Security, the more flexibility I find in there, which is awesome. The problem is that I (personally) learn by doing small things in the most isolated way. That is why I approached this post to only elaborate on Login and Logout very specific configurations. There are more features in those configurers that I didn't take, but at least this example helped me to know what to see, what to expect and where to look for help, which is something for the next point.</li>
 <li>Some pieces of code in this example where just copied from the Spring Security docstrings. For example:</li>
 </ul>
-<p>https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/annotation/web/configurers/FormLoginConfigurer.html#loginPage-java.lang.String-</p>
+<p><a href="https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/annotation/web/configurers/FormLoginConfigurer.html#loginPage-java.lang.String-">https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/annotation/web/configurers/FormLoginConfigurer.html#loginPage-java.lang.String-</a></p>
 <p>In the above link, I found a <code>Example login.jsp</code>, which gave me a clear idea of what I have to have in <code>login.html</code>. I think Spring Security team makes a great job documenting their code.</p>
 <ul>
 <li>Found really useful navigate Spring Security codebase and check the classes hierarchies, method usages, stuff like that. I downloaded the <a href="https://github.com/spring-projects/spring-security">spring-security repo</a> and do that exercise any time I needed to look further</li>
@@ -238,9 +238,9 @@
 </ul>
 <h2>Refs</h2>
 <ul>
-<li>Github Repo: https://github.com/ckinan/java-practice/tree/master/spring-security-02</li>
-<li>Spring Security - Docs: https://docs.spring.io/spring-security/site/docs/current/api/overview-summary.html</li>
-<li>Thymeleaf - Access data: https://www.thymeleaf.org/doc/articles/springmvcaccessdata.html</li>
+<li>Github Repo: <a href="https://github.com/ckinan/java-practice/tree/master/spring-security-02">https://github.com/ckinan/java-practice/tree/master/spring-security-02</a></li>
+<li>Spring Security - Docs: <a href="https://docs.spring.io/spring-security/site/docs/current/api/overview-summary.html">https://docs.spring.io/spring-security/site/docs/current/api/overview-summary.html</a></li>
+<li>Thymeleaf - Access data: <a href="https://www.thymeleaf.org/doc/articles/springmvcaccessdata.html">https://www.thymeleaf.org/doc/articles/springmvcaccessdata.html</a></li>
 </ul>
 
 </article>
