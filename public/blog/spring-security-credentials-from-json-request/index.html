@@ -21,6 +21,7 @@
         <p>
     Date: 2020-07-20
 </p>
+<article>
 <p>One more example of how flexible Spring Security is. This time, we will take a look at how we can override the default behavior to read credentials from any requests to start working with JSON format and authenticate users based on that.</p>
 <h2>Introduction</h2>
 <p>Once you include the Spring Security dependency into your project, it gives you a lot of features out of the box. A pre-defined login form is one of them, for any protected resource without an authenticated user, the application would automatically redirect you to a Login Page (a form). Any form submission is sent to the endpoint <code>/login</code> (method POST) and the filter chain of Spring Security takes action. It extracts the username and password parameters from the request and use them to perform the authentication process.</p>
@@ -218,6 +219,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 <li>Spring Security Architecture (gave me more insights about what AuthenticationManager, ProviderManager and AuthenticationProvider are): https://spring.io/guides/topicals/spring-security-architecture</li>
 </ul>
 
+</article>
     </section>
 </body>
 </html>
