@@ -90,9 +90,19 @@ about_page = render_template(
     }
 )
 
+not_found_page = render_template(
+    read_file("resources/layout.html"),
+    {
+        "title": "404 Not Found",
+        "content": read_file("resources/404.html")
+    }
+)
+
 print('generate.py: Generating public resources')
 
-shutil.rmtree('public')
+if os.path.isdir('public'):
+    shutil.rmtree('public')
+
 os.makedirs('public')
 os.makedirs('public/about')
 os.makedirs('public/blog')
@@ -100,6 +110,7 @@ shutil.copy('resources/styles.css', 'public/')
 
 write_file('public/index.html', index_page)
 write_file('public/about/index.html', about_page)
+write_file('public/404.html', not_found_page)
 
 for post in all_posts:
     print(f'generate.py: Processing post: {post.get("slug")}')
