@@ -8,10 +8,16 @@ nav ul li {
 }
 
 pre {
-    background: lightgray;
+    --tw-bg-opacity: 1;
+    background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
     overflow-x: auto;
     overflow-wrap: normal;
     word-break: normal;
+}
+
+code {
+    --tw-bg-opacity: 1;
+    background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
 }
 
 body {
