@@ -1,6 +1,6 @@
 # ckinan.com
 
-My own personal website powered by Github and Netlify.
+The source code of my personal website.
 
 ```
 pip3 freeze > requirements.txt
