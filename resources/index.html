@@ -1,6 +1,19 @@
 <h1>Home</h1>
-<ul style="list-style: none; padding-left: 0;">
-    {% for post in posts %}
+<h2 style="margin-bottom: 0px">2021</h2>
+<ul style="list-style: none; padding-left: 0; margin: 0px">
+    {% for post in posts if post.date.year == 2021 %}
+        <li>{{post.date}}: <a href="/blog/{{ post.slug }}/">{{ post.title }}</a></li>
+    {% endfor %}
+</ul>
+<h2 style="margin-bottom: 0px">2020</h2>
+<ul style="list-style: none; padding-left: 0; margin: 0px">
+    {% for post in posts if post.date.year == 2020 %}
+        <li>{{post.date}}: <a href="/blog/{{ post.slug }}/">{{ post.title }}</a></li>
+    {% endfor %}
+</ul>
+<h2 style="margin-bottom: 0px">2019</h2>
+<ul style="list-style: none; padding-left: 0; margin: 0px">
+    {% for post in posts if post.date.year == 2019 %}
         <li>{{post.date}}: <a href="/blog/{{ post.slug }}/">{{ post.title }}</a></li>
     {% endfor %}
 </ul>
