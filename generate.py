@@ -107,6 +107,7 @@ os.makedirs('public')
 os.makedirs('public/about')
 os.makedirs('public/blog')
 shutil.copy('resources/styles.css', 'public/')
+shutil.copy('resources/robots.txt', 'public/')
 
 write_file('public/index.html', index_page)
 write_file('public/about/index.html', about_page)
