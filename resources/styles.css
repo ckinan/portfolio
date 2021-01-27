@@ -24,6 +24,12 @@ p code {
     padding: 0.125rem 0.25rem;
 }
 
+li code {
+    --tw-bg-opacity: 1;
+    background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+    padding: 0.125rem 0.25rem;
+}
+
 body {
     overflow-wrap: break-word;
 }
@@ -35,4 +41,10 @@ img {
 h1, h2, h3, h4 {
     font-size: 1.125rem;
     line-height: 1.75rem;
+}
+
+blockquote p {
+    border-style: solid;
+    border-width: 0px 0px 0px 2px;
+    padding-left: 0.25rem;
 }
