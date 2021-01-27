@@ -10,11 +10,18 @@ pre {
     overflow-x: auto;
     overflow-wrap: normal;
     word-break: normal;
+    padding: 0.5rem;
 }
 
-code {
+pre code {
     --tw-bg-opacity: 1;
     background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+}
+
+p code {
+    --tw-bg-opacity: 1;
+    background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+    padding: 0.125rem 0.25rem;
 }
 
 body {
