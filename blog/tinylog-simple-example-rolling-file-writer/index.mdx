@@ -1,0 +1,195 @@
+---
+title: Tinylog - Simple example with Rolling File Writer
+date: 2021-01-26
+slug: tinylog-simple-example-rolling-file-writer
+---
+
+This is a simple example of how to configure a Rolling File Writer with [Tinylog](https://tinylog.org/v2/).
+
+## Steps
+
+- Create a java application that simply writes a log using Tinylog (our "Hello World")
+- Setup a basic Rolling File Writer
+- Customize our Rolling File Writer
+- Test every significant change during the process so that we can understand each piece
+
+## Requirements
+
+- Java 6 or higher
+- Maven
+- IDE of your preference (I'll use Intellij IDEA)
+
+## Create a java application
+
+Create the `pom.xml` and add the two dependencies required to work with Tinylog.
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ckinan</groupId>
+    <artifactId>tinylog</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.tinylog</groupId>
+            <artifactId>tinylog-api</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.tinylog</groupId>
+            <artifactId>tinylog-impl</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+    </dependencies>
+
+</project>
+```
+
+Create a java class, I'll name it `App.java` with a main method that will just log a `Hello World` (for now).
+
+```
+package com.ckinan;
+
+import org.tinylog.Logger;
+
+public class App {
+
+    public static void main(String[] args) {
+        Logger.info("Hello world");
+    }
+
+}
+```
+
+Run the App class, you should see this in your console:
+
+```
+2021-01-26 17:37:28 [main] com.ckinan.App.main()
+INFO: Hello world
+```
+
+Ok, so far we just wrote almost the same setup from the [Getting Started](https://tinylog.org/v2/getting-started/)
+documentation. Now, let's configure the Rolling File Writer.
+
+## Setup a Rolling File Writer
+
+Create a file `tinylog.properties` in `src/main/resources`:
+
+```
+writer          = rolling file
+writer.file     = log/app_{count}.log
+```
+
+Run the App class, you should see:
+
+1) A new folder created by Tinylog in the root path of your java application `./log`
+2) A log file created by Tinylog located in `./log/app_0.log`
+3) The content of the log file should be our `Hello World`:
+
+```
+2021-01-26 17:59:44 [main] com.ckinan.App.main()
+INFO: Hello world
+```
+
+4) If you run the java application a second time, a new log file will be created, this time with name `./log/app_1.log`.
+That's expected because with our initial configuration in `tinylog.properties` it's taking default values about how new
+log entries will be written in the log files. However, we can customize the way these log files are created, their
+format, and policies. We will do that in a bit.
+
+Ok, so far we created the Rolling File Writer with just the required properties in it. Now, let's customize our writer
+so that we can see a bit more what we can do with it.
+
+## Customize our Rolling File Writer
+
+Let's we have the following needs:
+
+- Only consider logging with level INFO
+- Custom format date like `2021-01-26 20:31:57.729`
+- Class name and line number specifying where exactly the logging came from
+- The actual message log
+- The process ID of the application
+- The thread where the logging came from
+- Each log file (being rotated by Tinylog) should have maximum 50KB of size
+- Rotate to maximum 5 log files
+
+All the above information (and more) can be achieved by the logging configuration that Tinylog provides. For more
+details about this configuration, go to [https://tinylog.org/v2/configuration](https://tinylog.org/v2/configuration).
+
+In order to meet the said criteria, let's update our `tinylog.properties` file:
+
+```
+writer          = rolling file
+writer.level    = info
+writer.format   = {date: yyyy-MM-dd HH:mm:ss.SSS} {pid}/{thread-id} {class}:{line} {level}: {message}
+writer.file     = log/app_{count}.log
+writer.charset  = UTF-8
+writer.policies = size: 50KB
+writer.backups  = 5
+writer.append   = true
+```
+
+Also, let's update our java application to print more entries in the log, so that the log files can be rotated:
+
+```
+package com.ckinan;
+
+import org.tinylog.Logger;
+
+public class App {
+
+    public static void main(String[] args) {
+        for(int i=0; i<6000; i++) {
+            Logger.info(i);
+        }
+    }
+
+}
+```
+
+Run the App class, you should see:
+
+1) Five files with maximum 50KB of size per each. We intentionally forced to create six files so that we can see that
+`app_0.log` and `app_1.log` log files where removed given our configuration to have maximum 5 log files as backup.
+
+```
+$ ls -l ./log
+total 512
+drwxr-xr-x  7 ckinan  staff   224B Jan 26 20:41 .
+drwxr-xr-x  9 ckinan  staff   288B Jan 26 20:41 ..
+-rw-r--r--  1 ckinan  staff    50K Jan 26 20:41 app_2.log
+-rw-r--r--  1 ckinan  staff    50K Jan 26 20:41 app_3.log
+-rw-r--r--  1 ckinan  staff    50K Jan 26 20:41 app_4.log
+-rw-r--r--  1 ckinan  staff    50K Jan 26 20:41 app_5.log
+-rw-r--r--  1 ckinan  staff    45K Jan 26 20:41 app_6.log
+```
+
+2) Log entries should show our custom date format, the process id, thread name, class name and line number. All that
+according to the format we specified in `tinylog.properties` under `writer.format`.
+
+```
+2021-01-26 20:41:45.708 2990/1 com.ckinan.App:9 INFO: 1754
+```
+
+## Final thoughts
+
+When it comes to initial setup, I found Tinylog very easy to follow. Their [Getting Started](https://tinylog.org/v2/getting-started/)
+guide shows all what I needed (dependencies, requirements and the "Hello World"). Later, when I had to setup the log
+files rotation, the documentation was also pretty clear on what I needed. I found this logging framework while working
+on a side project and I feel it was an excellent choice because of its simplicity to cover all my needs regarding what
+I could do with the Rolling File Writer.
+
+## Links
+
+- Just go to Tinylog site: [https://tinylog.org/v2/](https://tinylog.org/v2/)
