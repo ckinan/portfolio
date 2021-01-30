@@ -33,6 +33,7 @@ li code {
 body {
     overflow-wrap: break-word;
     font-family: Optima, sans-serif;
+    margin: 0.75rem;
 }
 
 img {
