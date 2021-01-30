@@ -53,3 +53,11 @@ blockquote p {
     border-width: 0px 0px 0px 2px;
     padding-left: 0.25rem;
 }
+
+@media print
+{
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
