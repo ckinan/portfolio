@@ -1,7 +1,29 @@
+/* General */
 html {
     max-width: 768px;
     margin-left: auto;
     margin-right: auto;
+}
+
+body {
+    overflow-wrap: break-word;
+    font-family: Optima, sans-serif;
+    margin: 0.75rem;
+}
+
+@media print
+{
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
+
+/* Markdown */
+
+h1, h2, h3, h4 {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
 }
 
 pre {
@@ -30,12 +52,6 @@ li code {
     padding: 0.125rem 0.25rem;
 }
 
-body {
-    overflow-wrap: break-word;
-    font-family: Optima, sans-serif;
-    margin: 0.75rem;
-}
-
 img {
     max-width: 100%;
     display: block;
@@ -43,21 +59,8 @@ img {
     margin-right: auto;
 }
 
-h1, h2, h3, h4 {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-}
-
 blockquote p {
     border-style: solid;
     border-width: 0px 0px 0px 2px;
     padding-left: 0.25rem;
-}
-
-@media print
-{
-    .no-print, .no-print *
-    {
-        display: none !important;
-    }
 }
