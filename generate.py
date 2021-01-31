@@ -42,6 +42,25 @@ def read_posts(path: str) -> list:
     )
 
 
+def calculate_posts_by_year(all_posts: list) -> dict:
+    posts_by_year = list()
+    current_year = -1
+
+    for post in all_posts:
+        if post.get('date').year != current_year:
+            current_year = post.get('date').year
+            year = dict()
+            year['value'] = current_year
+            year['posts'] = list()
+            posts_by_year.append(year)
+
+        current_year_object = posts_by_year[-1]
+        posts = current_year_object['posts']
+        posts.append(post)
+
+    return posts_by_year
+
+
 def read_file(path: str) -> str:
     f = open(path, "r")
     return f.read()
@@ -64,13 +83,14 @@ def write_file(absolute_path: str, content: str):
 print('generate.py: Reading blog directory')
 
 all_posts = read_posts('blog')
+all_posts_by_year = calculate_posts_by_year(all_posts)
 
 print('generate.py: Rendering templates')
 
 index_content = render_template(
     read_file("resources/index.html"),
     {
-        "posts": all_posts
+        "posts_by_year": all_posts_by_year
     }
 )
 
