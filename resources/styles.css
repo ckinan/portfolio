@@ -19,12 +19,17 @@ body {
     }
 }
 
+@media screen and (max-device-width: 480px){
+  body{
+    -webkit-text-size-adjust: none;
+  }
+}
+
 /* Markdown */
 
 h1, h2, h3, h4, h5, h6 {
     font-size: 1.125rem;
     line-height: 1.75rem;
-    font-weight: 700;
 }
 
 pre {
