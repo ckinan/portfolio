@@ -26,15 +26,13 @@ body {
 }
 
 /* Markdown */
-
 h1, h2, h3, h4, h5, h6 {
     font-size: 1.125rem;
     line-height: 1.75rem;
 }
 
 pre {
-    --tw-bg-opacity: 1;
-    background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+    background-color: rgba(229, 231, 235, 1);
     overflow-x: auto;
     overflow-wrap: normal;
     word-break: normal;
@@ -42,19 +40,16 @@ pre {
 }
 
 pre code {
-    --tw-bg-opacity: 1;
-    background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+    background-color: rgba(229, 231, 235, 1);
 }
 
 p code {
-    --tw-bg-opacity: 1;
-    background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+    background-color: rgba(229, 231, 235, 1);
     padding: 0.125rem 0.25rem;
 }
 
 li code {
-    --tw-bg-opacity: 1;
-    background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+    background-color: rgba(229, 231, 235, 1);
     padding: 0.125rem 0.25rem;
 }
 
