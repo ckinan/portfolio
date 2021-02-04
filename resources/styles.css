@@ -37,7 +37,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 pre {
-    background-color: rgba(229, 231, 235, 1);
+    background-color: rgba(243, 244, 246, 1);
+    border: 1px solid rgba(156, 163, 175, 1);
     overflow-x: auto;
     overflow-wrap: normal;
     word-break: normal;
@@ -45,17 +46,19 @@ pre {
 }
 
 pre code {
-    background-color: rgba(229, 231, 235, 1);
+    background-color: rgba(243, 244, 246, 1);
 }
 
 p code {
-    background-color: rgba(229, 231, 235, 1);
-    padding: 0.125rem 0.25rem;
+    background-color: rgba(243, 244, 246, 1);
+    border: 1px solid rgba(156, 163, 175, 1);
+    padding: 0 0.125rem 0 0.25rem;
 }
 
 li code {
-    background-color: rgba(229, 231, 235, 1);
-    padding: 0.125rem 0.25rem;
+    background-color: rgba(243, 244, 246, 1);
+    border: 1px solid rgba(156, 163, 175, 1);
+    padding: 0 0.125rem 0 0.25rem;
 }
 
 img {
