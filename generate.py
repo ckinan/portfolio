@@ -114,7 +114,7 @@ error_page = render_template(
     read_file("resources/layout.html"),
     {
         "title": "Oops!",
-        "content": read_file("resources/error.html")
+        "content": read_file("resources/404.html")
     }
 )
 
@@ -130,7 +130,7 @@ shutil.copy('resources/styles.css', 'public/')
 
 write_file('public/index.html', index_page)
 write_file('public/about/index.html', about_page)
-write_file('public/error.html', error_page)
+write_file('public/404.html', error_page)
 
 for post in all_posts:
     print(f'generate.py: Processing post: {post.get("slug")}')
