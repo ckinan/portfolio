@@ -1,9 +1,10 @@
-from jinja2 import Template
-import json
 import os
-import frontmatter
 import shutil
 import commonmark
+
+from FileUtils import FileUtils
+from PostService import PostService
+from TemplateService import TemplateService
 
 
 class Generator:
@@ -91,95 +92,4 @@ class Generator:
             FileUtils.write_file(f'{path}/index.html', post_page)
 
 
-class TemplateRenderer:
 
-    @staticmethod
-    def render(template: str, data: dict) -> dict:
-        """
-            Renders the given template applying the given data
-        """
-        j2_template = Template(template)
-        return j2_template.render(data)
-
-
-class Post:
-
-    def __init__(self, title, date, slug, directory, content):
-        self.title = title
-        self.date = date
-        self.slug = slug
-        self.directory = directory
-        self.content = content
-
-    def __repr__(self):
-        return json.dumps(self.__dict__)
-
-
-class PostService:
-
-    @staticmethod
-    def find_posts_by_path(path):
-        posts = os.listdir(path)
-        posts_unsorted = list()
-
-        for directory in posts:
-            post = frontmatter.load(f'../blog/{directory}/index.mdx')
-            posts_unsorted.append(
-                Post(
-                    post["title"],
-                    post["date"],
-                    post["slug"],
-                    directory,
-                    post.content
-                )
-            )
-
-        return sorted(
-            posts_unsorted,
-            key=lambda x: x.date,
-            reverse=True
-        )
-
-    @staticmethod
-    def calculate_posts_by_year(all_posts: list) -> dict:
-        posts_by_year = list()
-        current_year = -1
-
-        for post in all_posts:
-            if post.date.year != current_year:
-                current_year = post.date.year
-                year = dict()
-                year['value'] = current_year
-                year['posts'] = list()
-                posts_by_year.append(year)
-
-            current_year_object = posts_by_year[-1]
-            posts = current_year_object['posts']
-            posts.append(post)
-
-        return posts_by_year
-
-
-class TemplateService:
-
-    @staticmethod
-    def render(template: str, data: dict) -> dict:
-        """
-            Renders the given template applying the given data
-        """
-        j2_template = Template(template)
-        return j2_template.render(data)
-
-
-class FileUtils:
-
-    @staticmethod
-    def read_file(path: str) -> str:
-        f = open(path, "r")
-        return f.read()
-
-    @staticmethod
-    def write_file(absolute_path: str, content: str):
-        f = open(absolute_path, "w")
-        f.write(content)
-        f.close()

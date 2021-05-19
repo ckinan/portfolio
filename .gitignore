@@ -2,3 +2,4 @@
 venv
 .DS_Store
 public
+__pycache__
