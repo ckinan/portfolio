@@ -1,95 +1,67 @@
 import os
 import shutil
-import commonmark
 
 from FileUtils import FileUtils
 from PostService import PostService
 from TemplateService import TemplateService
+from PageService import PageService
 
 
 class Generator:
 
     @staticmethod
     def generate():
+        # Clean public dir
+        Generator.__clean_target_directory()
+        Generator.__copy_resources()
+
         # Read posts
         all_posts = PostService.find_posts_by_path('../blog')
         all_posts_by_year = PostService.calculate_posts_by_year(all_posts)
 
-        # Render pages
-        index_page = TemplateService.render(
-            FileUtils.read_file("../resources/layout.html"),
-            {
-                "title": "Home",
-                "content": TemplateService.render(
-                    FileUtils.read_file("../resources/index.html"),
-                    {
-                        "posts_by_year": all_posts_by_year
-                    }
-                )
-            }
-        )
+        # Generate content
+        index_page, about_page, error_page = Generator.__generate_pages(all_posts_by_year)
 
-        about_page = TemplateService.render(
-            FileUtils.read_file("../resources/layout.html"),
-            {
-                "title": "About",
-                "content": FileUtils.read_file("../resources/about.html")
-            }
-        )
+        # Write!
+        FileUtils.write_file('../public/index.html', index_page)
+        FileUtils.write_file('../public/about/index.html', about_page)
+        FileUtils.write_file('../public/404.html', error_page)
+        PostService.write_posts(all_posts)
 
-        error_page = TemplateService.render(
-            FileUtils.read_file("../resources/layout.html"),
-            {
-                "title": "Oops!",
-                "content": FileUtils.read_file("../resources/404.html")
-            }
-        )
-
-        # Write pages (Home, About, 404)
+    @staticmethod
+    def __clean_target_directory():
         if os.path.isdir('../public'):
             shutil.rmtree('../public')
 
         os.makedirs('../public')
         os.makedirs('../public/about')
         os.makedirs('../public/blog')
+
+    @staticmethod
+    def __copy_resources():
         shutil.copy('../resources/styles.css', '../public/')
         shutil.copy('../resources/favicon.ico', '../public/')
 
-        FileUtils.write_file('../public/index.html', index_page)
-        FileUtils.write_file('../public/about/index.html', about_page)
-        FileUtils.write_file('../public/404.html', error_page)
-
-        # Write posts
-        for post in all_posts:
-            print(f'generate.py: Processing post: {post.slug}')
-
-            path = f'../public/blog/{post.slug}'
-            os.makedirs(path)
-
-            images_dir = f'../blog/{post.directory}/images'
-            if os.path.isdir(images_dir):
-                shutil.copytree(images_dir, f'../public/blog/{post.slug}/images')
-
-            html = commonmark.commonmark(post.content)
-
-            post_content = TemplateService.render(
-                FileUtils.read_file("../resources/post.html"),
+    @staticmethod
+    def __generate_pages(all_posts_by_year):
+        index_page = PageService.render_page(
+            "Home",
+            TemplateService.render(
+                FileUtils.read_file("../resources/index.html"),
                 {
-                    "title": post.title,
-                    "date": post.date,
-                    "content": html
+                    "posts_by_year": all_posts_by_year
                 }
             )
+        )
 
-            post_page = TemplateService.render(
-                FileUtils.read_file("../resources/layout.html"),
-                {
-                    "title": post.title,
-                    "content": post_content
-                }
-            )
+        about_page = PageService.render_page(
+            "About",
+            FileUtils.read_file("../resources/about.html")
+        )
 
-            FileUtils.write_file(f'{path}/index.html', post_page)
+        error_page = PageService.render_page(
+            "Oops!",
+            FileUtils.read_file("../resources/404.html")
+        )
 
-
-
+        return index_page, about_page, error_page

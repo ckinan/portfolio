@@ -1,6 +1,11 @@
 import os
 import frontmatter
+import shutil
+import commonmark
+
 from Post import Post
+from TemplateService import TemplateService
+from FileUtils import FileUtils
 
 
 class PostService:
@@ -46,3 +51,36 @@ class PostService:
             posts.append(post)
 
         return posts_by_year
+
+    @staticmethod
+    def write_posts(all_posts: list):
+        for post in all_posts:
+            print(f'generate.py: Processing post: {post.slug}')
+
+            path = f'../public/blog/{post.slug}'
+            os.makedirs(path)
+
+            images_dir = f'../blog/{post.directory}/images'
+            if os.path.isdir(images_dir):
+                shutil.copytree(images_dir, f'../public/blog/{post.slug}/images')
+
+            html = commonmark.commonmark(post.content)
+
+            post_content = TemplateService.render(
+                FileUtils.read_file("../resources/post.html"),
+                {
+                    "title": post.title,
+                    "date": post.date,
+                    "content": html
+                }
+            )
+
+            post_page = TemplateService.render(
+                FileUtils.read_file("../resources/layout.html"),
+                {
+                    "title": post.title,
+                    "content": post_content
+                }
+            )
+
+            FileUtils.write_file(f'{path}/index.html', post_page)
