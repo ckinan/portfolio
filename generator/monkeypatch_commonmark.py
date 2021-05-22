@@ -18,7 +18,7 @@ class HtmlRendererExtension(HtmlRenderer):
     def heading(self, node, entering):
         tagname = 'h' + str(node.level)
         # Give id to the header
-        print(re.sub(r'[^a-z0-9]', '_', node.first_child.literal.lower()))<
+        print(re.sub(r'[^a-z0-9]', '_', node.first_child.literal.lower()))
         attrs = [['id', re.sub(r'[^a-z0-9]', '_', node.first_child.literal.lower())]]
         if entering:
             self.cr()

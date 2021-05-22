@@ -1,0 +1,61 @@
+---
+title: Cheat Sheet - Python
+date: 2021-05-22
+slug: cheat-sheet-python
+---
+
+My Cheat Sheet for: Python (it's supposed to (slowly) grow)
+
+Create virtual environment with name `venv`
+
+```
+python3 -m venv venv
+```
+
+Activate virtual environment `venv`
+
+```
+source venv/bin/activate
+```
+
+Exit virtual environment
+
+```
+deactivate
+```
+
+Save packages to requirements.txt
+
+```
+pip freeze > requirements.txt
+```
+
+Install packages from requirements.txt
+
+```
+pip install -r requirements.txt
+```
+
+Clean ALL packages. Credits: <https://stackoverflow.com/questions/11248073/what-is-the-easiest-way-to-remove-all-packages-installed-by-pip>
+
+```
+pip freeze | xargs pip uninstall -y
+```
+
+[pipdeptree](https://pypi.org/project/pipdeptree/): Useful python command to see packages in dependency tree format
+
+```
+# Command:
+$ pipdeptree
+
+# Output:
+commonmark==0.9.1
+Jinja2==2.11.3
+  - MarkupSafe [required: >=0.23, installed: 1.1.1]
+pipdeptree==2.0.0
+  - pip [required: >=6.0.0, installed: 21.0.1]
+python-frontmatter==0.5.0
+  - PyYAML [required: Any, installed: 5.4]
+  - six [required: Any, installed: 1.15.0]
+setuptools==54.2.0
+```
