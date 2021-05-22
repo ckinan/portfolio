@@ -20,10 +20,11 @@ class Generator:
         all_posts_by_year = PostService.calculate_posts_by_year(all_posts)
 
         # Generate content
-        index_page, about_page, error_page = Generator.__generate_pages(all_posts_by_year)
+        index_page, cheatsheets, about_page, error_page = Generator.__generate_pages(all_posts_by_year)
 
         # Write!
         FileUtils.write_file('public/index.html', index_page)
+        FileUtils.write_file('public/cheatsheets/index.html', cheatsheets)
         FileUtils.write_file('public/about/index.html', about_page)
         FileUtils.write_file('public/404.html', error_page)
         PostService.write_posts(all_posts)
@@ -34,6 +35,7 @@ class Generator:
             shutil.rmtree('public')
 
         os.makedirs('public')
+        os.makedirs('public/cheatsheets')
         os.makedirs('public/about')
         os.makedirs('public/blog')
 
@@ -54,6 +56,11 @@ class Generator:
             )
         )
 
+        cheatsheets = PageService.render_page(
+            "Cheatsheets",
+            FileUtils.read_file("resources/cheatsheets.html")
+        )
+
         about_page = PageService.render_page(
             "About",
             FileUtils.read_file("resources/about.html")
@@ -64,4 +71,4 @@ class Generator:
             FileUtils.read_file("resources/404.html")
         )
 
-        return index_page, about_page, error_page
+        return index_page, cheatsheets, about_page, error_page
