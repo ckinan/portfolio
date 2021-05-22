@@ -3,9 +3,9 @@ import frontmatter
 import shutil
 import commonmark
 
-from Post import Post
-from TemplateService import TemplateService
-from FileUtils import FileUtils
+from generator.Post import Post
+from generator.TemplateService import TemplateService
+from generator.FileUtils import FileUtils
 
 
 class PostService:
@@ -16,7 +16,7 @@ class PostService:
         posts_unsorted = list()
 
         for directory in posts:
-            post = frontmatter.load(f'../blog/{directory}/index.mdx')
+            post = frontmatter.load(f'blog/{directory}/index.mdx')
             posts_unsorted.append(
                 Post(
                     post["title"],
@@ -57,17 +57,17 @@ class PostService:
         for post in all_posts:
             print(f'generate.py: Processing post: {post.slug}')
 
-            path = f'../public/blog/{post.slug}'
+            path = f'public/blog/{post.slug}'
             os.makedirs(path)
 
-            images_dir = f'../blog/{post.directory}/images'
+            images_dir = f'blog/{post.directory}/images'
             if os.path.isdir(images_dir):
-                shutil.copytree(images_dir, f'../public/blog/{post.slug}/images')
+                shutil.copytree(images_dir, f'public/blog/{post.slug}/images')
 
             html = commonmark.commonmark(post.content)
 
             post_content = TemplateService.render(
-                FileUtils.read_file("../resources/post.html"),
+                FileUtils.read_file("resources/post.html"),
                 {
                     "title": post.title,
                     "date": post.date,
@@ -76,7 +76,7 @@ class PostService:
             )
 
             post_page = TemplateService.render(
-                FileUtils.read_file("../resources/layout.html"),
+                FileUtils.read_file("resources/layout.html"),
                 {
                     "title": post.title,
                     "content": post_content
