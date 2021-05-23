@@ -28,7 +28,7 @@ class Generator:
         FileUtils.write_file('public/cheatsheets/index.html', cheatsheets)
         FileUtils.write_file('public/about/index.html', about_page)
         FileUtils.write_file('public/404.html', error_page)
-        FileUtils.write_file('public/rss.xml', feed)
+        FileUtils.write_file('public/rss.xml', feed):q
         PostService.write_posts(all_posts)
 
     @staticmethod
@@ -49,7 +49,7 @@ class Generator:
     @staticmethod
     def __generate_feed(items):
         return TemplateService.render(
-            FileUtils.read_file("resources/feed.xml"),
+            FileUtils.read_file("resources/rss.xml"),
             {
                 "items": items
             }

@@ -6,7 +6,11 @@
         <description>Blog: ckinan.com</description>
         {% for item in items %}
         <item>
-            <title>{{ item.title }}</title>
+            <title>
+                <![CDATA[
+                {{ item.title }}
+                ]]>
+            </title>
             <link>https://ckinan.com/blog/{{ item.slug }}/</link>
             <pubDate>{{ item.date }}</pubDate>
         </item>
