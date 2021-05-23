@@ -13,6 +13,11 @@
             </title>
             <link>https://ckinan.com/blog/{{ item.slug }}/</link>
             <pubDate>{{ item.date.strftime('%a, %d %b %Y') }}</pubDate>
+            <description>
+                <![CDATA[
+                {{ item.html }}
+                ]]>
+            </description>
         </item>
         {% endfor %}
     </channel>
