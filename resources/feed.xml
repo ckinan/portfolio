@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+        <title>ckinan.com</title>
+        <link>https://ckinan.com</link>
+        <description>Blog: ckinan.com</description>
+        {% for item in items %}
+        <item>
+            <title>{{ item.title }}</title>
+            <link>https://ckinan.com/blog/{{ item.slug }}/</link>
+            <pubDate>{{ item.date }}</pubDate>
+        </item>
+        {% endfor %}
+    </channel>
+</rss>

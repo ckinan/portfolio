@@ -21,12 +21,14 @@ class Generator:
 
         # Generate content
         index_page, cheatsheets, about_page, error_page = Generator.__generate_pages(all_posts_by_year)
+        feed = Generator.__generate_feed(all_posts)
 
         # Write!
         FileUtils.write_file('public/index.html', index_page)
         FileUtils.write_file('public/cheatsheets/index.html', cheatsheets)
         FileUtils.write_file('public/about/index.html', about_page)
         FileUtils.write_file('public/404.html', error_page)
+        FileUtils.write_file('public/feed', feed)
         PostService.write_posts(all_posts)
 
     @staticmethod
@@ -43,6 +45,15 @@ class Generator:
     def __copy_resources():
         shutil.copy('resources/styles.css', 'public/')
         shutil.copy('resources/favicon.ico', 'public/')
+
+    @staticmethod
+    def __generate_feed(items):
+        return TemplateService.render(
+            FileUtils.read_file("resources/feed.xml"),
+            {
+                "items": items
+            }
+        )
 
     @staticmethod
     def __generate_pages(all_posts_by_year):
