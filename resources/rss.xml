@@ -12,7 +12,7 @@
                 ]]>
             </title>
             <link>https://ckinan.com/blog/{{ item.slug }}/</link>
-            <pubDate>{{ item.date }}</pubDate>
+            <pubDate>{{ item.date.strftime('%a, %d %b %Y') }}</pubDate>
         </item>
         {% endfor %}
     </channel>
