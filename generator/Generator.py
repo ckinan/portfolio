@@ -28,7 +28,7 @@ class Generator:
         FileUtils.write_file('public/cheatsheets/index.html', cheatsheets)
         FileUtils.write_file('public/about/index.html', about_page)
         FileUtils.write_file('public/404.html', error_page)
-        FileUtils.write_file('public/feed', feed)
+        FileUtils.write_file('public/rss.xml', feed)
         PostService.write_posts(all_posts)
 
     @staticmethod
