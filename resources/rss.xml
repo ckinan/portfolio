@@ -4,6 +4,9 @@
         <title>ckinan.com</title>
         <link>https://ckinan.com</link>
         <description>Blog: ckinan.com</description>
+        <language>en-us</language>
+        <pubDate>{{ currentDate.strftime('%a, %d %b %Y %H:%M:%S UTC')}}</pubDate>
+        <lastBuildDate>{{ currentDate.strftime('%a, %d %b %Y %H:%M:%S UTC')}}</lastBuildDate>
         {% for item in items %}
         <item>
             <title>
@@ -12,7 +15,8 @@
                 ]]>
             </title>
             <link>https://ckinan.com/blog/{{ item.slug }}/</link>
-            <pubDate>{{ item.date.strftime('%a, %d %b %Y 00:00:00 GMT')}}</pubDate>
+            <pubDate>{{ item.date.strftime('%a, %d %b %Y 00:00:01 UTC')}}</pubDate>
+            <author>ckinan</author>
         </item>
         {% endfor %}
     </channel>

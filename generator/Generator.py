@@ -1,6 +1,7 @@
 import os
 import shutil
 
+from datetime import datetime
 from generator.FileUtils import FileUtils
 from generator.PostService import PostService
 from generator.TemplateService import TemplateService
@@ -51,7 +52,8 @@ class Generator:
         return TemplateService.render(
             FileUtils.read_file("resources/rss.xml"),
             {
-                "items": items
+                "items": items,
+                "currentDate": datetime.utcnow()
             }
         )
 
