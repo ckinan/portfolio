@@ -23,7 +23,6 @@ class Generator:
         # Generate content
         index_page, cheatsheets, about_page, error_page = Generator.__generate_pages(all_posts_by_year)
         rss = Generator.__generate_feed(all_posts, "resources/rss.xml")
-        atom = Generator.__generate_feed(all_posts, "resources/atom.xml")
 
         # Write!
         FileUtils.write_file('public/index.html', index_page)
@@ -31,7 +30,6 @@ class Generator:
         FileUtils.write_file('public/about/index.html', about_page)
         FileUtils.write_file('public/404.html', error_page)
         FileUtils.write_file('public/rss.xml', rss)
-        FileUtils.write_file('public/atom.xml', atom)
         PostService.write_posts(all_posts)
 
     @staticmethod

@@ -11,9 +11,8 @@
         <item>
             <title><![CDATA[{{ item.title }}]]></title>
             <link>https://ckinan.com/blog/{{ item.slug }}/</link>
-            <pubDate>{{ item.date.strftime('%a, %d %b %Y 00:00:01 GMT')}}</pubDate>
+            <pubDate>{{ item.date.strftime('%a, %d %b %Y 00:00:00 GMT')}}</pubDate>
             <author>ckinan</author>
-            <description><![CDATA[{{ item.html }}]]></description>
         </item>
         {% endfor %}
     </channel>
