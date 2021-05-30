@@ -5,13 +5,13 @@
         <link>https://ckinan.com</link>
         <description>Blog: ckinan.com</description>
         <language>en-us</language>
-        <pubDate>{{ currentDate.strftime('%a, %d %b %Y %H:%M:%S UTC')}}</pubDate>
-        <lastBuildDate>{{ currentDate.strftime('%a, %d %b %Y %H:%M:%S UTC')}}</lastBuildDate>
+        <pubDate>{{ currentDate.strftime('%a, %d %b %Y %H:%M:%S GMT')}}</pubDate>
+        <lastBuildDate>{{ currentDate.strftime('%a, %d %b %Y %H:%M:%S GMT')}}</lastBuildDate>
         {% for item in items %}
         <item>
             <title><![CDATA[{{ item.title }}]]></title>
             <link>https://ckinan.com/blog/{{ item.slug }}/</link>
-            <pubDate>{{ item.date.strftime('%a, %d %b %Y 00:00:01 UTC')}}</pubDate>
+            <pubDate>{{ item.date.strftime('%a, %d %b %Y 00:00:01 GMT')}}</pubDate>
             <author>ckinan</author>
             <description><![CDATA[{{ item.html }}]]></description>
         </item>
