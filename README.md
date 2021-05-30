@@ -22,3 +22,4 @@ python3 -m http.server
 
 ## Links
 - https://validator.w3.org/feed/docs/rss2.html
+- https://validator.w3.org/feed/docs/atom.html

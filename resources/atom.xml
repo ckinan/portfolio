@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>ckinan.com</title>
+    <link href="https://ckinan.com"/>
+    <updated>{{ currentDate.strftime('%a, %d %b %Y %H:%M:%S+00:00')}}</updated>
+    <author>
+        <name>ckinan</name>
+    </author>
+    <id>https://ckinan.com</id>
+    {% for item in items %}
+    <entry>
+        <title><![CDATA[{{ item.title }}]]></title>
+        <link href="https://ckinan.com/blog/{{ item.slug }}/"/>
+        <id>https://ckinan.com/blog/{{ item.slug }}/</id>
+        <updated>{{ item.date.strftime('%a, %d %b %Y 00:00:00+00:00')}}</updated>
+        <content type="html"><![CDATA[{{ item.content }}]]></content>
+        <author>
+            <name>ckinan</name>
+        </author>
+    </entry>
+    {% endfor %}
+</feed>
