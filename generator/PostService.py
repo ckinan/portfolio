@@ -24,7 +24,7 @@ class PostService:
                     post["date"],
                     post["slug"],
                     directory,
-                    post.content
+                    commonmark.commonmark(post.content)
                 )
             )
 
@@ -65,14 +65,12 @@ class PostService:
             if os.path.isdir(images_dir):
                 shutil.copytree(images_dir, f'public/blog/{post.slug}/images')
 
-            html = commonmark.commonmark(post.content)
-
             post_content = TemplateService.render(
                 FileUtils.read_file("resources/post.html"),
                 {
                     "title": post.title,
                     "date": post.date,
-                    "content": html
+                    "content": post.html
                 }
             )
 

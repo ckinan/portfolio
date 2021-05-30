@@ -13,7 +13,7 @@
         <link href="https://ckinan.com/blog/{{ item.slug }}/"/>
         <id>https://ckinan.com/blog/{{ item.slug }}/</id>
         <updated>{{ item.date.strftime('%a, %d %b %Y 00:00:00+00:00')}}</updated>
-        <content type="html"><![CDATA[{{ item.content }}]]></content>
+        <content type="html"><![CDATA[{{ item.html }}]]></content>
         <author>
             <name>ckinan</name>
         </author>
