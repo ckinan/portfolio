@@ -2,6 +2,7 @@ Jinja2==2.11.3
 MarkupSafe==1.1.1
 mistune==0.8.4
 pipdeptree==2.0.0
+Pygments==2.9.0
 python-frontmatter==0.5.0
 PyYAML==5.4
 six==1.15.0
