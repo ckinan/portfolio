@@ -29,9 +29,9 @@ class HighlightRenderer(mistune.Renderer):
             code = highlight(
                 code,
                 get_lexer_by_name(lang, stripall=True),
-                HtmlFormatter(
+                HtmlFormatterMonkeyPatch(
                     noclasses=True,
-                    # linenos='table',
+                    linenos='inline',
                 )
             )
             return code
@@ -40,3 +40,58 @@ class HighlightRenderer(mistune.Renderer):
             traceback.print_exc()
             return f'<pre class="{lang}"><code>{mistune.escape(code)}</code></pre>\n'
 
+
+class HtmlFormatterMonkeyPatch(HtmlFormatter):
+
+    def _wrap_inlinelinenos(self, inner):
+        # need a list of lines since we need the width of a single number :(
+        inner_lines = list(inner)
+        sp = self.linenospecial
+        st = self.linenostep
+        num = self.linenostart
+        mw = len(str(len(inner_lines) + num - 1))
+        la = self.lineanchors
+        aln = self.anchorlinenos
+        nocls = self.noclasses
+
+        for _, inner_line in inner_lines:
+            print_line = num % st == 0
+            special_line = sp and num % sp == 0
+
+            if print_line:
+                line = '%*d' % (mw, num)
+            else:
+                line = ' ' * mw
+
+            # ckinan: Add separator
+            line = line + ' |'
+            # ./ckinan: Add separator
+
+            if nocls:
+                if special_line:
+                    style = ' style="%s"' % self._linenos_special_style
+                else:
+                    style = ' style="%s"' % self._linenos_style
+            else:
+                if special_line:
+                    style = ' class="linenos special"'
+                else:
+                    style = ' class="linenos"'
+
+            if style:
+                linenos = '<span%s>%s</span>' % (style, line)
+            else:
+                linenos = line
+
+            if aln:
+                yield 1, ('<a href="#%s-%d">%s</a>' % (la, num, linenos) +
+                          inner_line)
+            else:
+                yield 1, linenos + inner_line
+            num += 1
+
+    @property
+    def _linenos_style(self):
+        # Override this method to include css, so line number is not selectable
+        no_select = '-webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;'
+        return f'color: {self.style.line_number_color}; background-color: {self.style.line_number_background_color}; padding-left: 5px; padding-right: 5px; {no_select}'
