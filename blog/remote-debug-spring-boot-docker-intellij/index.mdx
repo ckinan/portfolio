@@ -66,7 +66,7 @@ You should have the `jar` file created in the `./target` folder. In this example
 
 Create a `Dockerfile` in the root of the project.
 
-```
+```docker
 FROM openjdk:14-jdk-alpine
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
@@ -101,7 +101,7 @@ docker run --name demo-spring-boot-docker-debug -e "JAVA_TOOL_OPTIONS=-agentlib:
 
 Create a `docker-compose.yml` file and execute `docker-compose`.
 
-```yml
+```yaml
 version: '3.3'
 
 services:

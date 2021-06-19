@@ -1,9 +1,8 @@
 import os
 import frontmatter
 import shutil
-# from generator.monkeypatch_commonmark import commonmark
-import commonmark
 
+from generator.MarkdownRenderer import MarkdownRenderer
 from generator.Post import Post
 from generator.TemplateService import TemplateService
 from generator.FileUtils import FileUtils
@@ -24,7 +23,7 @@ class PostService:
                     post["date"],
                     post["slug"],
                     directory,
-                    commonmark.commonmark(post.content)
+                    MarkdownRenderer.render(post.content)
                 )
             )
 

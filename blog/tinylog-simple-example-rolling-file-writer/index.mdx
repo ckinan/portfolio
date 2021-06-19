@@ -23,7 +23,7 @@ This is a simple example of how to configure a Rolling File Writer with [Tinylog
 
 Create the `pom.xml` and add the two dependencies required to work with Tinylog.
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -59,7 +59,7 @@ Create the `pom.xml` and add the two dependencies required to work with Tinylog.
 
 Create a java class, I'll name it `App.java` with a main method that will just log a `Hello World` (for now).
 
-```
+```java
 package com.ckinan;
 
 import org.tinylog.Logger;
@@ -87,7 +87,7 @@ documentation. Now, let's configure the Rolling File Writer.
 
 Create a file `tinylog.properties` in `src/main/resources`:
 
-```
+```properties
 writer          = rolling file
 writer.file     = log/app_{count}.log
 ```
@@ -129,7 +129,7 @@ details about this configuration, go to [https://tinylog.org/v2/configuration](h
 
 In order to meet the said criteria, let's update our `tinylog.properties` file:
 
-```
+```properties
 writer          = rolling file
 writer.level    = info
 writer.format   = {date: yyyy-MM-dd HH:mm:ss.SSS} {pid}/{thread-id} {class}:{line} {level}: {message}
@@ -142,7 +142,7 @@ writer.append   = true
 
 Also, let's update our java application to print more entries in the log, so that the log files can be rotated:
 
-```
+```java
 package com.ckinan;
 
 import org.tinylog.Logger;
