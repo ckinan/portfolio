@@ -31,6 +31,7 @@ class HighlightRenderer(mistune.Renderer):
                 get_lexer_by_name(lang, stripall=True),
                 HtmlFormatterMonkeyPatch(
                     noclasses=True,
+                    cssclass='code',
                     linenos='inline',
                 )
             )
@@ -63,10 +64,6 @@ class HtmlFormatterMonkeyPatch(HtmlFormatter):
             else:
                 line = ' ' * mw
 
-            # ckinan: Add separator
-            line = line + ' |'
-            # ./ckinan: Add separator
-
             if nocls:
                 if special_line:
                     style = ' style="%s"' % self._linenos_special_style
@@ -87,11 +84,5 @@ class HtmlFormatterMonkeyPatch(HtmlFormatter):
                 yield 1, ('<a href="#%s-%d">%s</a>' % (la, num, linenos) +
                           inner_line)
             else:
-                yield 1, linenos + inner_line
+                yield 1, '<span class="l">' + inner_line + '</span>'
             num += 1
-
-    @property
-    def _linenos_style(self):
-        # Override this method to include css, so line number is not selectable
-        no_select = '-webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;'
-        return f'color: {self.style.line_number_color}; background-color: {self.style.line_number_background_color}; padding-left: 5px; padding-right: 5px; {no_select}'

@@ -35,11 +35,34 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.75rem;
 }
 
+/*
+Credits:
+- https://www.reddit.com/r/css/comments/4t2ef6/how_to_add_a_number_line_to_your_code_using_only/d5ebx18?utm_source=share&utm_medium=web2x&context=3
+*/
 pre {
     background-color: rgba(243, 244, 246, 1);
     border: 1px solid rgba(156, 163, 175, 1);
     white-space: pre-wrap;
-    padding: 0.5rem;
+    padding: 10px 10px 10px 50px;
+    counter-reset: step;
+    counter-increment: step 0;
+    position: relative;
+}
+
+.code pre .l:before {
+     position: absolute;
+     left: 5px;
+     content: counter(step);
+     counter-increment: step;
+     /*
+     Credits: https://stackoverflow.com/questions/16533582/right-align-css-counters-in-before-pseudo-element
+     */
+     margin-right: 10px;
+     padding-right: 10px;
+     width:2em;
+     text-align: right;
+     border-right: 1px solid rgba(156, 163, 175, 1);
+     color: rgba(107, 114, 128, 1);
 }
 
 pre code {
