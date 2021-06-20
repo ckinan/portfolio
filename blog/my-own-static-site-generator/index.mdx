@@ -29,7 +29,7 @@ I don't really want to complicate myself with javascript. So, all my pages will 
 I just wrote a very simple python script that uses:
 
 - [jinja2](https://pypi.org/project/Jinja2/): To generate my pages with templates
-- [commonmark](https://pypi.org/project/commonmark/): To support markdown for my pre-existing (and new) articles
+- ~~[commonmark](https://pypi.org/project/commonmark/)~~ [mistune](https://pypi.org/project/mistune/): To support markdown for my pre-existing (and new) articles
 - [frontmatter](https://pypi.org/project/frontmatter/): To support frontmatter and read the metadata of my articles
 
 The logic is actually simple, it just reads a directory (`./blog`) which contains all the markdown files. Then iterates
@@ -46,15 +46,17 @@ network, so that I can test it in my mobile device.
 
 ## Deploy in "production"
 
-Since I'm using Netlify to host my site, there are few things I had to do to have Netlify using my brand new static site
-generator:
+EDIT: On June 2021, I moved this site from Netlify to Firebase.
 
-1) `runtime.txt`: Needed to specify the python version that should be used to run my script. In my case I set it `3.7`.
-2) `netlify.toml`: Included a rule to redirect all "not found" resources to a custom `404.html` page.
-3) Changed the "Build command" to have `python generate.py`, so that Netlify will ran that command to actually build the
-site per my requirement.
-4) Changed the "Publish directory" to be `./public`, since I am giving instructions to the python script to generate all
-static files to that folder.
+~~Since I'm using Netlify to host my site, there are few things I had to do to have Netlify using my brand new static site
+generator:~~
+
+~~1) `runtime.txt`: Needed to specify the python version that should be used to run my script. In my case I set it `3.7`.~~
+~~2) `netlify.toml`: Included a rule to redirect all "not found" resources to a custom `404.html` page.~~
+~~3) Changed the "Build command" to have `python generate.py`, so that Netlify will ran that command to actually build the
+site per my requirement.~~
+~~4) Changed the "Publish directory" to be `./public`, since I am giving instructions to the python script to generate all
+static files to that folder.~~
 
 ## Final thoughts
 
