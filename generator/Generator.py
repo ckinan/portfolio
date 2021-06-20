@@ -1,11 +1,11 @@
 import os
 import shutil
-
 from datetime import datetime
+
 from generator.FileUtils import FileUtils
+from generator.PageService import PageService
 from generator.PostService import PostService
 from generator.TemplateService import TemplateService
-from generator.PageService import PageService
 
 
 class Generator:
@@ -18,10 +18,9 @@ class Generator:
 
         # Read posts
         all_posts = PostService.find_posts_by_path('blog')
-        all_posts_by_year = PostService.calculate_posts_by_year(all_posts)
 
         # Generate content
-        index_page, notes, about_page, error_page = Generator.__generate_pages(all_posts_by_year)
+        index_page, notes, about_page, error_page = Generator.__generate_pages(all_posts)
         rss = Generator.__generate_feed(all_posts, "resources/rss.xml")
 
         # Write!
@@ -58,7 +57,9 @@ class Generator:
         )
 
     @staticmethod
-    def __generate_pages(all_posts_by_year):
+    def __generate_pages(all_posts):
+        all_posts_by_year = PostService.calculate_posts_by_year(all_posts)
+
         index_page = PageService.render_page(
             "Home",
             TemplateService.render(
@@ -76,7 +77,13 @@ class Generator:
 
         about_page = PageService.render_page(
             "About",
-            FileUtils.read_file("resources/about.html")
+            TemplateService.render(
+                FileUtils.read_file("resources/about.html"),
+                {
+                    "total_posts": len(all_posts),
+                    "last_post_date": all_posts[0].date
+                }
+            )
         )
 
         error_page = PageService.render_page(
