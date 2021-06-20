@@ -3,3 +3,6 @@ venv
 .DS_Store
 public
 __pycache__
+.firebaserc
+.firebase
+firebase.json
