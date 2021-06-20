@@ -42,13 +42,18 @@ Credits:
 pre {
     background-color: rgba(243, 244, 246, 1);
     border: 1px solid rgba(156, 163, 175, 1);
-    white-space: pre-wrap;
+    overflow-x: auto;
+    overflow-wrap: normal;
+    word-break: normal;
+    /* padding: 0.5rem; */
+    /* Pygments line numbers css below */
     padding: 10px 10px 10px 50px;
     counter-reset: step;
     counter-increment: step 0;
     position: relative;
 }
 
+/* Pygments line numbers css below */
 .code pre .l:before {
      position: absolute;
      left: 5px;

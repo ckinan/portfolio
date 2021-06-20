@@ -84,5 +84,7 @@ class HtmlFormatterMonkeyPatch(HtmlFormatter):
                 yield 1, ('<a href="#%s-%d">%s</a>' % (la, num, linenos) +
                           inner_line)
             else:
+                # yield 1, linenos + inner_line
+                # ckinan: Use custom class to render line number
                 yield 1, '<span class="l">' + inner_line + '</span>'
             num += 1
